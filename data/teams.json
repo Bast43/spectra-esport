@@ -1,0 +1,298 @@
+{
+  "teams": [
+    {
+      "id": "r6s-main",
+      "name": "Rainbow Six Siege - Main",
+      "shortName": "R6S Main",
+      "game": "Rainbow Six Siege",
+      "description": "Our main Rainbow Six Siege team, competing at the highest European level.",
+      "coach": {
+        "id": "r6s-main-coach",
+        "name": "Coach Name",
+        "photo": "/images/default-coach.jpg",
+        "socials": {
+          "twitter": "",
+          "linkedin": ""
+        }
+      },
+      "players": [
+        {
+          "id": "r6s-main-p1",
+          "name": "Player1",
+          "role": "Entry Fragger",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        },
+        {
+          "id": "r6s-main-p2",
+          "name": "Player2",
+          "role": "Support",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        },
+        {
+          "id": "r6s-main-p3",
+          "name": "Player3",
+          "role": "IGL",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        },
+        {
+          "id": "r6s-main-p4",
+          "name": "Player4",
+          "role": "Flex",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        },
+        {
+          "id": "r6s-main-p5",
+          "name": "Player5",
+          "role": "Anchor",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        },
+        {
+          "id": "r6s-main-p6",
+          "name": "Player6",
+          "role": "Substitute",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "r6s-academy",
+      "name": "Rainbow Six Siege - Academy",
+      "shortName": "R6S Academy",
+      "game": "Rainbow Six Siege",
+      "description": "Our Academy team, training ground for future champions.",
+      "coach": {
+        "id": "r6s-academy-coach",
+        "name": "Coach Name",
+        "photo": "/images/default-coach.jpg",
+        "socials": {
+          "twitter": "",
+          "linkedin": ""
+        }
+      },
+      "players": [
+        {
+          "id": "r6s-academy-p1",
+          "name": "Player1",
+          "role": "Entry Fragger",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        },
+        {
+          "id": "r6s-academy-p2",
+          "name": "Player2",
+          "role": "Support",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        },
+        {
+          "id": "r6s-academy-p3",
+          "name": "Player3",
+          "role": "IGL",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        },
+        {
+          "id": "r6s-academy-p4",
+          "name": "Player4",
+          "role": "Flex",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        },
+        {
+          "id": "r6s-academy-p5",
+          "name": "Player5",
+          "role": "Anchor",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        },
+        {
+          "id": "r6s-academy-p6",
+          "name": "Player6",
+          "role": "Substitute",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "cs2-main",
+      "name": "Counter-Strike 2 - Main",
+      "shortName": "CS2 Main",
+      "game": "Counter-Strike 2",
+      "description": "Our CS2 lineup, perfect alliance between experience and young talent.",
+      "coach": {
+        "id": "cs2-main-coach",
+        "name": "Coach Name",
+        "photo": "/images/default-coach.jpg",
+        "socials": {
+          "twitter": "",
+          "linkedin": ""
+        }
+      },
+      "players": [
+        {
+          "id": "cs2-main-p1",
+          "name": "Player1",
+          "role": "AWPer",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        },
+        {
+          "id": "cs2-main-p2",
+          "name": "Player2",
+          "role": "Entry Fragger",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        },
+        {
+          "id": "cs2-main-p3",
+          "name": "Player3",
+          "role": "IGL",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        },
+        {
+          "id": "cs2-main-p4",
+          "name": "Player4",
+          "role": "Support",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        },
+        {
+          "id": "cs2-main-p5",
+          "name": "Player5",
+          "role": "Lurker",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        },
+        {
+          "id": "cs2-main-p6",
+          "name": "Player6",
+          "role": "Substitute",
+          "photo": "/images/default-player.jpg",
+          "socials": {
+            "twitter": "",
+            "twitch": "",
+            "instagram": ""
+          }
+        }
+      ]
+    }
+  ],
+  "staff": [
+    {
+      "id": "staff-1",
+      "name": "Manager",
+      "role": "General Manager",
+      "photo": "/images/default-staff.jpg",
+      "socials": {
+        "twitter": "",
+        "linkedin": ""
+      }
+    },
+    {
+      "id": "staff-2",
+      "name": "Analyst",
+      "role": "Performance Analyst",
+      "photo": "/images/default-staff.jpg",
+      "socials": {
+        "twitter": "",
+        "linkedin": ""
+      }
+    },
+    {
+      "id": "staff-3",
+      "name": "Content Creator",
+      "role": "Content Manager",
+      "photo": "/images/default-staff.jpg",
+      "socials": {
+        "twitter": "",
+        "linkedin": ""
+      }
+    },
+    {
+      "id": "staff-4",
+      "name": "Community Manager",
+      "role": "Community Manager",
+      "photo": "/images/default-staff.jpg",
+      "socials": {
+        "twitter": "",
+        "linkedin": ""
+      }
+    }
+  ]
+}

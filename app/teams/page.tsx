@@ -1,0 +1,455 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import Image from 'next/image'
+import { Twitter, Twitch, Instagram, Users, Linkedin, Trophy } from 'lucide-react'
+
+interface Player {
+  id: string
+  name: string
+  role: string
+  photo: string
+  socials: {
+    twitter?: string
+    twitch?: string
+    instagram?: string
+  }
+}
+
+interface Team {
+  id: string
+  name: string
+  shortName: string
+  game: string
+  description: string
+  coach?: {
+    id: string
+    name: string
+    photo: string
+    socials: {
+      twitter?: string
+      linkedin?: string
+    }
+  }
+  players: Player[]
+}
+
+interface StaffMember {
+  id: string
+  name: string
+  role: string
+  photo: string
+  socials: {
+    twitter?: string
+    linkedin?: string
+  }
+}
+
+interface Result {
+  id: string
+  opponent: string
+  game: string
+  teamId: string
+  teamName: string
+  date: string
+  score: string
+  result: 'Win' | 'Loss'
+  competition: string
+}
+
+export default function TeamsPage() {
+  const [teams, setTeams] = useState<Team[]>([])
+  const [staff, setStaff] = useState<StaffMember[]>([])
+  const [results, setResults] = useState<Result[]>([])
+  const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState<string>('r6s-main')
+
+  useEffect(() => {
+    Promise.all([
+      fetch('/api/teams').then((res) => res.json()),
+      fetch('/api/results').then((res) => res.json()),
+    ])
+      .then(([teamsData, resultsData]) => {
+        setTeams(teamsData.teams || [])
+        setStaff(teamsData.staff || [])
+        setResults(resultsData.results || [])
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.error('Error loading data:', error)
+        setLoading(false)
+      })
+  }, [])
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    })
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center pt-20">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-spectra-violet border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-400">Loading teams...</p>
+        </div>
+      </div>
+    )
+  }
+
+  const activeTeam = teams.find((team) => team.id === activeTab)
+  const teamResults = results.filter((result) => result.teamId === activeTab)
+
+  return (
+    <div className="pt-32 pb-20">
+      <div className="container mx-auto px-4 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-5xl md:text-6xl font-display font-bold text-white mb-4">
+            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-spectra-violet to-spectra-mauve">Teams</span>
+          </h1>
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            Découvrez les rosters d'élite qui composent l'organisation Spectra
+          </p>
+        </div>
+
+        {/* Tabs */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {teams.map((team) => (
+            <button
+              key={team.id}
+              onClick={() => setActiveTab(team.id)}
+              className={`px-6 py-3 rounded-lg font-display font-semibold transition-all duration-300 ${
+                activeTab === team.id
+                  ? 'bg-gradient-to-r from-spectra-violet to-spectra-purple text-white shadow-lg shadow-spectra-violet/30 scale-105'
+                  : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10'
+              }`}
+            >
+              {team.shortName}
+            </button>
+          ))}
+          <button
+            onClick={() => setActiveTab('staff')}
+            className={`px-6 py-3 rounded-lg font-display font-semibold transition-all duration-300 ${
+              activeTab === 'staff'
+                ? 'bg-gradient-to-r from-spectra-violet to-spectra-purple text-white shadow-lg shadow-spectra-violet/30 scale-105'
+                : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10'
+            }`}
+          >
+            Staff
+          </button>
+        </div>
+
+        {/* Team Content */}
+        {activeTab !== 'staff' && activeTeam && (
+          <div className="fade-in">
+            {/* Team Header */}
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-3 mb-4 px-6 py-2 bg-spectra-violet/10 border border-spectra-violet/30 rounded-full">
+                <Users className="w-5 h-5 text-spectra-violet" />
+                <span className="text-spectra-mauve font-medium">{activeTeam.game}</span>
+              </div>
+              <h2 className="text-4xl font-display font-bold text-white mb-4">{activeTeam.name}</h2>
+              <p className="text-lg text-gray-400 max-w-2xl mx-auto">{activeTeam.description}</p>
+            </div>
+
+            {/* Players Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+              {activeTeam.players.map((player, index) => (
+                <div
+                  key={player.id}
+                  className="glass-card group"
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  {/* Player Photo */}
+                  <div className="relative w-full h-64 mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
+                    <div className="absolute inset-0 bg-gradient-to-br from-spectra-violet/20 to-spectra-purple/20" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      {player.photo && player.photo !== '/images/default-player.jpg' ? (
+                        <img
+                          src={player.photo}
+                          alt={player.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          onError={(e) => {
+                            // Fallback to initials if image fails to load
+                            e.currentTarget.style.display = 'none'
+                            const fallback = e.currentTarget.nextElementSibling
+                            if (fallback) fallback.classList.remove('hidden')
+                          }}
+                        />
+                      ) : null}
+                      <div className={`w-32 h-32 rounded-full bg-spectra-violet/20 border-4 border-spectra-violet/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 ${player.photo && player.photo !== '/images/default-player.jpg' ? 'hidden' : ''}`}>
+                        <span className="text-4xl font-display font-bold text-white">
+                          {player.name.charAt(0)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Player Info */}
+                  <div className="space-y-3">
+                    <div>
+                      <h3 className="text-2xl font-display font-bold text-white mb-1">
+                        {player.name}
+                      </h3>
+                      <p className="text-spectra-mauve text-sm font-medium uppercase tracking-wider">
+                        {player.role}
+                      </p>
+                    </div>
+
+                    {/* Social Links */}
+                    {(player.socials.twitter || player.socials.twitch || player.socials.instagram) && (
+                      <div className="flex gap-2 pt-2">
+                        {player.socials.twitter && (
+                          <a
+                            href={player.socials.twitter}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#1DA1F2] hover:bg-white/10 hover:border-[#1DA1F2]/50 transition-all duration-300"
+                          >
+                            <Twitter size={18} />
+                          </a>
+                        )}
+                        {player.socials.twitch && (
+                          <a
+                            href={player.socials.twitch}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#9146FF] hover:bg-white/10 hover:border-[#9146FF]/50 transition-all duration-300"
+                          >
+                            <Twitch size={18} />
+                          </a>
+                        )}
+                        {player.socials.instagram && (
+                          <a
+                            href={player.socials.instagram}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#E4405F] hover:bg-white/10 hover:border-[#E4405F]/50 transition-all duration-300"
+                          >
+                            <Instagram size={18} />
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Coach */}
+            {activeTeam.coach && (
+              <div className="mb-16">
+                <div className="flex items-center gap-3 mb-6">
+                  <Users className="w-6 h-6 text-spectra-violet" />
+                  <h3 className="text-2xl font-display font-bold text-white">
+                    Coach
+                  </h3>
+                </div>
+                <div className="max-w-md mx-auto">
+                  <div className="glass-card group">
+                    {/* Coach Photo */}
+                    <div className="relative w-full h-64 mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
+                      <div className="absolute inset-0 bg-gradient-to-br from-spectra-purple/20 to-spectra-mauve/20" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        {activeTeam.coach.photo && activeTeam.coach.photo !== '/images/default-coach.jpg' ? (
+                          <img
+                            src={activeTeam.coach.photo}
+                            alt={activeTeam.coach.name}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none'
+                              const fallback = e.currentTarget.nextElementSibling
+                              if (fallback) fallback.classList.remove('hidden')
+                            }}
+                          />
+                        ) : null}
+                        <div className={`w-32 h-32 rounded-full bg-spectra-purple/20 border-4 border-spectra-purple/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 ${activeTeam.coach.photo && activeTeam.coach.photo !== '/images/default-coach.jpg' ? 'hidden' : ''}`}>
+                          <span className="text-4xl font-display font-bold text-white">
+                            {activeTeam.coach.name.charAt(0)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Coach Info */}
+                    <div className="space-y-3">
+                      <div>
+                        <h3 className="text-2xl font-display font-bold text-white mb-1">
+                          {activeTeam.coach.name}
+                        </h3>
+                        <p className="text-spectra-mauve text-sm font-medium uppercase tracking-wider">
+                          Coach
+                        </p>
+                      </div>
+
+                      {/* Social Links */}
+                      {(activeTeam.coach.socials?.twitter || activeTeam.coach.socials?.linkedin) && (
+                        <div className="flex gap-2 pt-2">
+                          {activeTeam.coach.socials.twitter && (
+                            <a
+                              href={activeTeam.coach.socials.twitter}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#1DA1F2] hover:bg-white/10 hover:border-[#1DA1F2]/50 transition-all duration-300"
+                            >
+                              <Twitter size={18} />
+                            </a>
+                          )}
+                          {activeTeam.coach.socials.linkedin && (
+                            <a
+                              href={activeTeam.coach.socials.linkedin}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#0077B5] hover:bg-white/10 hover:border-[#0077B5]/50 transition-all duration-300"
+                            >
+                              <Linkedin size={18} />
+                            </a>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Team Results */}
+            {teamResults.length > 0 && (
+              <div className="mt-12">
+                <div className="flex items-center gap-3 mb-6">
+                  <Trophy className="w-6 h-6 text-spectra-violet" />
+                  <h3 className="text-2xl font-display font-bold text-white">
+                    Recent Matches
+                  </h3>
+                </div>
+                <div className="space-y-4">
+                  {teamResults.map((result) => (
+                    <div key={result.id} className="glass-card">
+                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div className="flex items-start gap-4">
+                          <div className={`flex-shrink-0 w-14 h-14 rounded-full flex items-center justify-center shadow-lg ${
+                            result.result === 'Win'
+                              ? 'bg-gradient-to-br from-green-500 to-emerald-600 shadow-green-500/30'
+                              : 'bg-gradient-to-br from-red-500 to-rose-600 shadow-red-500/30'
+                          }`}>
+                            <span className="text-xl font-display font-bold text-white">
+                              {result.result === 'Win' ? 'W' : 'L'}
+                            </span>
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2 mb-1">
+                              <h4 className="text-lg font-display font-bold text-white">
+                                vs {result.opponent}
+                              </h4>
+                              <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
+                                result.result === 'Win'
+                                  ? 'bg-green-500/20 text-green-400'
+                                  : 'bg-red-500/20 text-red-400'
+                              }`}>
+                                {result.score}
+                              </span>
+                            </div>
+                            <p className="text-sm text-gray-400">{result.competition} • {formatDate(result.date)}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Staff Content */}
+        {activeTab === 'staff' && (
+          <div className="fade-in">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-display font-bold text-white mb-4">Our Staff</h2>
+              <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+                The team working behind the scenes to bring our players to excellence
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {staff.map((member, index) => (
+                <div
+                  key={member.id}
+                  className="glass-card text-center group"
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  {/* Staff Photo */}
+                  <div className="relative w-full h-48 mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
+                    <div className="absolute inset-0 bg-gradient-to-br from-spectra-purple/20 to-spectra-mauve/20" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      {member.photo && member.photo !== '/images/default-staff.jpg' ? (
+                        <img
+                          src={member.photo}
+                          alt={member.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none'
+                            const fallback = e.currentTarget.nextElementSibling
+                            if (fallback) fallback.classList.remove('hidden')
+                          }}
+                        />
+                      ) : null}
+                      <div className={`w-24 h-24 rounded-full bg-spectra-purple/20 border-4 border-spectra-purple/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 ${member.photo && member.photo !== '/images/default-staff.jpg' ? 'hidden' : ''}`}>
+                        <span className="text-3xl font-display font-bold text-white">
+                          {member.name.charAt(0)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Staff Info */}
+                  <div className="space-y-3">
+                    <div>
+                      <h3 className="text-xl font-display font-bold text-white mb-1">
+                        {member.name}
+                      </h3>
+                      <p className="text-spectra-mauve text-sm font-medium uppercase tracking-wider">
+                        {member.role}
+                      </p>
+                    </div>
+
+                    {/* Social Links */}
+                    {(member.socials.twitter || member.socials.linkedin) && (
+                      <div className="flex justify-center gap-2 pt-2">
+                        {member.socials.twitter && (
+                          <a
+                            href={member.socials.twitter}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#1DA1F2] hover:bg-white/10 hover:border-[#1DA1F2]/50 transition-all duration-300"
+                          >
+                            <Twitter size={18} />
+                          </a>
+                        )}
+                        {member.socials.linkedin && (
+                          <a
+                            href={member.socials.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#0A66C2] hover:bg-white/10 hover:border-[#0A66C2]/50 transition-all duration-300"
+                          >
+                            <Linkedin size={18} />
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}

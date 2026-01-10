@@ -1,0 +1,12 @@
+{
+  "news": [
+    {
+      "id": "news-1",
+      "title": "Bienvenue sur le site de Spectra",
+      "date": "2025-01-09",
+      "content": "Nous sommes ravis de vous présenter le nouveau site officiel de Spectra Esport. Suivez toutes nos actualités, résultats et découvrez nos équipes !",
+      "image": "/images/news-placeholder.jpg",
+      "category": "Annonce"
+    }
+  ]
+}

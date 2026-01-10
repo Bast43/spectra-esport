@@ -1,0 +1,7 @@
+{
+  "twitterUsername": "SpectraEU",
+  "twitterUrl": "https://x.com/SpectraEU",
+  "autoImportEnabled": true,
+  "importInterval": 3600000,
+  "note": "Les tweets sont automatiquement importés depuis le compte Twitter @SpectraEU"
+}

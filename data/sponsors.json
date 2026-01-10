@@ -1,0 +1,16 @@
+{
+  "sponsors": [
+    {
+      "id": "sponsor-1",
+      "name": "Your Sponsor",
+      "logo": "/images/sponsor-placeholder.jpg",
+      "website": "https://example.com",
+      "tier": "premium"
+    }
+  ],
+  "contact": {
+    "email": "contact@spectra-esport.com",
+    "discord": "https://discord.gg/spectra",
+    "description": "Interested in a partnership with Spectra? Contact us!"
+  }
+}

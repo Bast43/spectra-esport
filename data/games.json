@@ -1,0 +1,18 @@
+{
+  "games": [
+    {
+      "id": "rainbow-six-siege",
+      "name": "Rainbow Six Siege",
+      "shortName": "R6S",
+      "image": "/images/games/r6s.jpg",
+      "description": "Two elite teams (Main and Academy) dominate European competitive rankings. Tactics, precision and coordination are our watchwords."
+    },
+    {
+      "id": "counter-strike-2",
+      "name": "Counter-Strike 2",
+      "shortName": "CS2",
+      "image": "/images/games/cs2.jpg",
+      "description": "Our CS2 lineup combines experience and young talent to create explosive synergy on the competitive scene."
+    }
+  ]
+}
