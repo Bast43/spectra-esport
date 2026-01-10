@@ -221,6 +221,37 @@ function TeamsEditor({ data, onSave }: any) {
     setTeams(newTeams)
   }
 
+  const updateCoach = (teamIndex: number, field: string, value: string) => {
+    const newTeams = [...teams]
+    if (!newTeams[teamIndex].coach) {
+      newTeams[teamIndex].coach = {
+        id: `${newTeams[teamIndex].id}-coach`,
+        name: '',
+        photo: '/images/default-coach.jpg',
+        socials: { twitter: '', linkedin: '' }
+      }
+    }
+    newTeams[teamIndex].coach[field] = value
+    setTeams(newTeams)
+  }
+
+  const updateCoachSocial = (teamIndex: number, platform: string, value: string) => {
+    const newTeams = [...teams]
+    if (!newTeams[teamIndex].coach) {
+      newTeams[teamIndex].coach = {
+        id: `${newTeams[teamIndex].id}-coach`,
+        name: '',
+        photo: '/images/default-coach.jpg',
+        socials: { twitter: '', linkedin: '' }
+      }
+    }
+    if (!newTeams[teamIndex].coach.socials) {
+      newTeams[teamIndex].coach.socials = {}
+    }
+    newTeams[teamIndex].coach.socials[platform] = value
+    setTeams(newTeams)
+  }
+
   const updateStaffMember = (index: number, field: string, value: string) => {
     const newStaff = [...staff]
     newStaff[index][field] = value
@@ -316,6 +347,48 @@ function TeamsEditor({ data, onSave }: any) {
                     </div>
                   </div>
                 ))}
+              </div>
+
+              {/* Coach Section */}
+              <div className="mt-6 p-4 bg-spectra-violet/10 border border-spectra-violet/30 rounded-lg">
+                <h4 className="text-lg font-display font-bold text-white mb-4 flex items-center gap-2">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  Coach
+                </h4>
+                <div className="space-y-3">
+                  <input
+                    type="text"
+                    value={team.coach?.name || ''}
+                    onChange={(e) => updateCoach(teamIndex, 'name', e.target.value)}
+                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
+                    placeholder="Coach name"
+                  />
+                  <input
+                    type="text"
+                    value={team.coach?.photo || ''}
+                    onChange={(e) => updateCoach(teamIndex, 'photo', e.target.value)}
+                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
+                    placeholder="Coach photo URL (ex: https://i.imgur.com/abc123.jpg)"
+                  />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <input
+                      type="text"
+                      value={team.coach?.socials?.twitter || ''}
+                      onChange={(e) => updateCoachSocial(teamIndex, 'twitter', e.target.value)}
+                      className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
+                      placeholder="Twitter URL"
+                    />
+                    <input
+                      type="text"
+                      value={team.coach?.socials?.linkedin || ''}
+                      onChange={(e) => updateCoachSocial(teamIndex, 'linkedin', e.target.value)}
+                      className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
+                      placeholder="LinkedIn URL"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           ))}
