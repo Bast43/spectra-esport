@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { Twitter, Twitch, Instagram, ExternalLink } from 'lucide-react'
 
 export default function NewsPage() {
@@ -9,6 +10,64 @@ export default function NewsPage() {
     { icon: Instagram, href: 'https://www.instagram.com/spectraeu/', label: 'Instagram', color: 'hover:text-[#E4405F]' },
     { icon: ExternalLink, href: 'https://linktr.ee/spectraeu', label: 'Linktree', color: 'hover:text-spectra-mauve' },
   ]
+
+  useEffect(() => {
+    // Load Twitter widget script
+    const script = document.createElement('script')
+    script.src = 'https://platform.twitter.com/widgets.js'
+    script.async = true
+    script.charset = 'utf-8'
+    document.body.appendChild(script)
+
+    script.onload = () => {
+      // Wait for twttr to be available
+      const checkTwitter = setInterval(() => {
+        if (window.twttr && window.twttr.widgets) {
+          clearInterval(checkTwitter)
+          
+          // Clear container first
+          const container = document.getElementById('twitter-timeline-container')
+          if (container) {
+            container.innerHTML = ''
+            
+            // Create timeline
+            window.twttr.widgets.createTimeline(
+              {
+                sourceType: 'profile',
+                screenName: 'SpectraEU'
+              },
+              container,
+              {
+                theme: 'dark',
+                chrome: 'noheader nofooter noborders transparent',
+                height: 800,
+                tweetLimit: 10
+              }
+            ).then(() => {
+              console.log('Twitter timeline loaded successfully')
+            }).catch((error) => {
+              console.error('Twitter timeline error:', error)
+              if (container) {
+                container.innerHTML = '<p class="text-gray-400">Unable to load tweets. Please visit <a href="https://x.com/SpectraEU" target="_blank" class="text-spectra-violet hover:underline">@SpectraEU</a> on Twitter.</p>'
+              }
+            })
+          }
+        }
+      }, 100)
+
+      // Timeout after 10 seconds
+      setTimeout(() => {
+        clearInterval(checkTwitter)
+      }, 10000)
+    }
+
+    return () => {
+      // Cleanup
+      if (script.parentNode) {
+        script.parentNode.removeChild(script)
+      }
+    }
+  }, [])
 
   return (
     <div className="pt-32 pb-20">
@@ -61,7 +120,11 @@ export default function NewsPage() {
           <div className="glass-card">
             <div className="relative w-full" style={{ height: '800px' }}>
               <div id="twitter-timeline-container" className="w-full h-full flex items-center justify-center">
-                <p className="text-gray-400">Loading tweets...</p>
+                <div className="text-center">
+                  <div className="w-16 h-16 border-4 border-spectra-violet border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                  <p className="text-gray-400">Loading tweets from @SpectraEU...</p>
+                  <p className="text-gray-500 text-sm mt-2">This may take 10-20 seconds</p>
+                </div>
               </div>
             </div>
           </div>
@@ -86,33 +149,6 @@ export default function NewsPage() {
           </div>
         </div>
       </div>
-
-      {/* Twitter Widget Script */}
-      <script
-        async
-        src="https://platform.twitter.com/widgets.js"
-        charSet="utf-8"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.addEventListener('load', function() {
-              if (window.twttr) {
-                twttr.widgets.createTimeline(
-                  {
-                    sourceType: 'profile',
-                    screenName: 'SpectraEU'
-                  },
-                  document.getElementById('twitter-timeline-container'),
-                  {
-                    theme: 'dark',
-                    chrome: 'noheader nofooter noborders transparent',
-                    height: 800
-                  }
-                );
-              }
-            });
-          `,
-        }}
-      />
     </div>
   )
 }
