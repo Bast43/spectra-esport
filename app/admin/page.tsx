@@ -295,6 +295,68 @@ function TeamsEditor({ data, onSave }: any) {
     }
   }
 
+  const addTeam = () => {
+    const teamName = prompt('Team name (e.g., "Valorant Main"):')
+    if (!teamName) return
+
+    const gameName = prompt('Game name (e.g., "Valorant"):')
+    if (!gameName) return
+
+    // Generate ID from name and game
+    const teamId = `${gameName.toLowerCase().replace(/\s+/g, '-')}-${teamName.toLowerCase().replace(/\s+/g, '-')}`
+
+    const newTeam = {
+      id: teamId,
+      name: `${gameName} - ${teamName}`,
+      game: gameName,
+      description: `Our ${gameName} ${teamName} roster`,
+      logo: '/images/default-team.png',
+      players: [
+        {
+          id: `${teamId}-player-1`,
+          name: '',
+          role: '',
+          photo: '',
+          socials: { twitter: '', twitch: '', instagram: '' }
+        }
+      ],
+      coach: {
+        id: `${teamId}-coach`,
+        name: '',
+        photo: '/images/default-coach.jpg',
+        socials: { twitter: '', linkedin: '' }
+      }
+    }
+
+    const newTeams = [...teams, newTeam]
+    setTeams(newTeams)
+    alert(`Team "${newTeam.name}" created successfully! Don't forget to save!`)
+  }
+
+  const deleteTeam = (teamIndex: number) => {
+    const newTeams = [...teams]
+    
+    if (newTeams.length <= 1) {
+      alert('You must have at least 1 team!')
+      return
+    }
+
+    const teamName = newTeams[teamIndex].name
+    const confirm = window.confirm(`Are you sure you want to DELETE the team "${teamName}"?\n\nThis will remove:\n- All players\n- The coach\n- All related data\n\nThis action CANNOT be undone!`)
+    
+    if (confirm) {
+      newTeams.splice(teamIndex, 1)
+      setTeams(newTeams)
+      alert(`Team "${teamName}" deleted. Don't forget to save!`)
+    }
+  }
+
+  const updateTeamInfo = (teamIndex: number, field: string, value: string) => {
+    const newTeams = [...teams]
+    newTeams[teamIndex][field] = value
+    setTeams(newTeams)
+  }
+
   return (
     <div className="space-y-8">
       {/* Section Selector */}
@@ -324,9 +386,86 @@ function TeamsEditor({ data, onSave }: any) {
       {/* Teams Section */}
       {activeSection === 'teams' && (
         <>
+          {/* Add New Team Button */}
+          <button
+            onClick={addTeam}
+            className="w-full px-6 py-4 bg-gradient-to-r from-spectra-violet to-spectra-mauve hover:from-spectra-violet/80 hover:to-spectra-mauve/80 rounded-lg text-white font-bold transition-all flex items-center justify-center gap-3 border-2 border-spectra-violet/50"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Add New Team
+          </button>
+
           {teams.map((team: any, teamIndex: number) => (
-            <div key={team.id} className="p-6 bg-white/5 rounded-lg border border-white/10">
-              <h3 className="text-2xl font-display font-bold text-white mb-6">{team.name}</h3>
+            <div key={team.id} className="p-6 bg-white/5 rounded-lg border border-white/10 relative">
+              {/* Delete Team Button */}
+              <button
+                onClick={() => deleteTeam(teamIndex)}
+                className="absolute top-4 right-4 px-4 py-2 bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 rounded-lg text-red-400 font-medium transition-all flex items-center gap-2"
+                title="Delete this team"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+                Delete Team
+              </button>
+
+              {/* Team Info Section */}
+              <div className="mb-6 pr-32">
+                <h3 className="text-2xl font-display font-bold text-white mb-4">Team Information</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-2">Team Name</label>
+                    <input
+                      type="text"
+                      value={team.name}
+                      onChange={(e) => updateTeamInfo(teamIndex, 'name', e.target.value)}
+                      className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
+                      placeholder="e.g., Valorant - Main"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-2">Game</label>
+                    <input
+                      type="text"
+                      value={team.game}
+                      onChange={(e) => updateTeamInfo(teamIndex, 'game', e.target.value)}
+                      className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
+                      placeholder="e.g., Valorant"
+                    />
+                  </div>
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm text-gray-400 mb-2">Description</label>
+                  <textarea
+                    value={team.description || ''}
+                    onChange={(e) => updateTeamInfo(teamIndex, 'description', e.target.value)}
+                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
+                    placeholder="e.g., Our competitive Valorant roster"
+                    rows={2}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-400 mb-2">Logo URL (optional)</label>
+                  <input
+                    type="text"
+                    value={team.logo || ''}
+                    onChange={(e) => updateTeamInfo(teamIndex, 'logo', e.target.value)}
+                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
+                    placeholder="https://i.imgur.com/..."
+                  />
+                </div>
+              </div>
+
+              {/* Players Section */}
+              <div className="mb-6">
+                <h4 className="text-xl font-display font-bold text-white mb-4 flex items-center gap-2">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                  Players
+                </h4>
               <div className="space-y-4">
                 {team.players.map((player: any, playerIndex: number) => (
                   <div key={player.id} className="p-4 bg-black/20 rounded-lg space-y-3 relative">
