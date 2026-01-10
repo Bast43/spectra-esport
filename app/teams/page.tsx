@@ -173,7 +173,7 @@ export default function TeamsPage() {
                         <img
                           src={player.photo}
                           alt={player.name}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                           onError={(e) => {
                             // Fallback to initials if image fails to load
                             e.currentTarget.style.display = 'none'
@@ -260,7 +260,7 @@ export default function TeamsPage() {
                           <img
                             src={activeTeam.coach.photo}
                             alt={activeTeam.coach.name}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                            className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                             onError={(e) => {
                               e.currentTarget.style.display = 'none'
                               const fallback = e.currentTarget.nextElementSibling
@@ -391,7 +391,7 @@ export default function TeamsPage() {
                         <img
                           src={member.photo}
                           alt={member.name}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                           onError={(e) => {
                             e.currentTarget.style.display = 'none'
                             const fallback = e.currentTarget.nextElementSibling

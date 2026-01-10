@@ -8,8 +8,8 @@
       "description": "Our main Rainbow Six Siege team, competing at the highest European level.",
       "coach": {
         "id": "r6s-main-coach",
-        "name": "Coach Name",
-        "photo": "/images/default-coach.jpg",
+        "name": "Rom",
+        "photo": "https://i.imgur.com/bpcDE8t.png",
         "socials": {
           "twitter": "",
           "linkedin": ""
@@ -18,9 +18,9 @@
       "players": [
         {
           "id": "r6s-main-p1",
-          "name": "Player1",
-          "role": "Entry Fragger",
-          "photo": "/images/default-player.jpg",
+          "name": "Dogewyn",
+          "role": "",
+          "photo": "https://i.imgur.com/31mo0bZ.jpeg",
           "socials": {
             "twitter": "",
             "twitch": "",
@@ -29,9 +29,9 @@
         },
         {
           "id": "r6s-main-p2",
-          "name": "Player2",
-          "role": "Support",
-          "photo": "/images/default-player.jpg",
+          "name": "Sopra",
+          "role": "",
+          "photo": "https://i.imgur.com/LbElqz9.png",
           "socials": {
             "twitter": "",
             "twitch": "",
@@ -40,9 +40,9 @@
         },
         {
           "id": "r6s-main-p3",
-          "name": "Player3",
-          "role": "IGL",
-          "photo": "/images/default-player.jpg",
+          "name": "Ayow",
+          "role": "",
+          "photo": "https://i.imgur.com/wCmesX4.png",
           "socials": {
             "twitter": "",
             "twitch": "",
@@ -51,9 +51,9 @@
         },
         {
           "id": "r6s-main-p4",
-          "name": "Player4",
-          "role": "Flex",
-          "photo": "/images/default-player.jpg",
+          "name": "Anton",
+          "role": "",
+          "photo": "https://i.imgur.com/pdy6bX9.jpeg",
           "socials": {
             "twitter": "",
             "twitch": "",
@@ -62,19 +62,8 @@
         },
         {
           "id": "r6s-main-p5",
-          "name": "Player5",
-          "role": "Anchor",
-          "photo": "/images/default-player.jpg",
-          "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
-          }
-        },
-        {
-          "id": "r6s-main-p6",
-          "name": "Player6",
-          "role": "Substitute",
+          "name": "Psy4",
+          "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
             "twitter": "",
@@ -92,8 +81,8 @@
       "description": "Our Academy team, training ground for future champions.",
       "coach": {
         "id": "r6s-academy-coach",
-        "name": "Coach Name",
-        "photo": "/images/default-coach.jpg",
+        "name": "Rom",
+        "photo": "https://i.imgur.com/bpcDE8t.png",
         "socials": {
           "twitter": "",
           "linkedin": ""
@@ -102,7 +91,7 @@
       "players": [
         {
           "id": "r6s-academy-p1",
-          "name": "Player1",
+          "name": "Aieroz",
           "role": "Entry Fragger",
           "photo": "/images/default-player.jpg",
           "socials": {
@@ -113,7 +102,7 @@
         },
         {
           "id": "r6s-academy-p2",
-          "name": "Player2",
+          "name": "Luizi",
           "role": "Support",
           "photo": "/images/default-player.jpg",
           "socials": {
@@ -186,8 +175,8 @@
       "players": [
         {
           "id": "cs2-main-p1",
-          "name": "Player1",
-          "role": "AWPer",
+          "name": "SKETA",
+          "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
             "twitter": "",
@@ -197,8 +186,8 @@
         },
         {
           "id": "cs2-main-p2",
-          "name": "Player2",
-          "role": "Entry Fragger",
+          "name": "HEJZ",
+          "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
             "twitter": "",
@@ -208,8 +197,8 @@
         },
         {
           "id": "cs2-main-p3",
-          "name": "Player3",
-          "role": "IGL",
+          "name": "DJOLERDY",
+          "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
             "twitter": "",
@@ -219,8 +208,8 @@
         },
         {
           "id": "cs2-main-p4",
-          "name": "Player4",
-          "role": "Support",
+          "name": "DZOK",
+          "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
             "twitter": "",
@@ -230,19 +219,8 @@
         },
         {
           "id": "cs2-main-p5",
-          "name": "Player5",
-          "role": "Lurker",
-          "photo": "/images/default-player.jpg",
-          "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
-          }
-        },
-        {
-          "id": "cs2-main-p6",
-          "name": "Player6",
-          "role": "Substitute",
+          "name": "ZUUPHLER",
+          "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
             "twitter": "",
@@ -256,9 +234,9 @@
   "staff": [
     {
       "id": "staff-1",
-      "name": "Manager",
-      "role": "General Manager",
-      "photo": "/images/default-staff.jpg",
+      "name": "Neio",
+      "role": "CEO",
+      "photo": "https://i.imgur.com/qzx8kAB.png",
       "socials": {
         "twitter": "",
         "linkedin": ""
@@ -266,9 +244,9 @@
     },
     {
       "id": "staff-2",
-      "name": "Analyst",
-      "role": "Performance Analyst",
-      "photo": "/images/default-staff.jpg",
+      "name": "Kalt",
+      "role": "CEO",
+      "photo": "https://i.imgur.com/RbteMXZ.png",
       "socials": {
         "twitter": "",
         "linkedin": ""
@@ -276,9 +254,9 @@
     },
     {
       "id": "staff-3",
-      "name": "Content Creator",
-      "role": "Content Manager",
-      "photo": "/images/default-staff.jpg",
+      "name": "Maverick",
+      "role": "Moderator",
+      "photo": "https://i.imgur.com/uM2rjqB.png",
       "socials": {
         "twitter": "",
         "linkedin": ""
@@ -286,9 +264,9 @@
     },
     {
       "id": "staff-4",
-      "name": "Community Manager",
-      "role": "Community Manager",
-      "photo": "/images/default-staff.jpg",
+      "name": "Darkfox",
+      "role": "Moderator",
+      "photo": "https://i.imgur.com/vYDvGV1.png",
       "socials": {
         "twitter": "",
         "linkedin": ""

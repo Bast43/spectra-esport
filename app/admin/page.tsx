@@ -264,6 +264,37 @@ function TeamsEditor({ data, onSave }: any) {
     setStaff(newStaff)
   }
 
+  const addPlayer = (teamIndex: number) => {
+    const newTeams = [...teams]
+    const teamId = newTeams[teamIndex].id
+    const newPlayerId = `${teamId}-player-${Date.now()}`
+    
+    const newPlayer = {
+      id: newPlayerId,
+      name: '',
+      role: '',
+      photo: '',
+      socials: {
+        twitter: '',
+        twitch: '',
+        instagram: ''
+      }
+    }
+    
+    newTeams[teamIndex].players.push(newPlayer)
+    setTeams(newTeams)
+  }
+
+  const removePlayer = (teamIndex: number, playerIndex: number) => {
+    const newTeams = [...teams]
+    if (newTeams[teamIndex].players.length > 1) {
+      newTeams[teamIndex].players.splice(playerIndex, 1)
+      setTeams(newTeams)
+    } else {
+      alert('A team must have at least 1 player!')
+    }
+  }
+
   return (
     <div className="space-y-8">
       {/* Section Selector */}
@@ -298,7 +329,18 @@ function TeamsEditor({ data, onSave }: any) {
               <h3 className="text-2xl font-display font-bold text-white mb-6">{team.name}</h3>
               <div className="space-y-4">
                 {team.players.map((player: any, playerIndex: number) => (
-                  <div key={player.id} className="p-4 bg-black/20 rounded-lg space-y-3">
+                  <div key={player.id} className="p-4 bg-black/20 rounded-lg space-y-3 relative">
+                    {/* Remove Button */}
+                    <button
+                      onClick={() => removePlayer(teamIndex, playerIndex)}
+                      className="absolute top-2 right-2 p-2 bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 rounded text-red-400 transition-all"
+                      title="Remove player"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                    
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <input
                         type="text"
@@ -348,6 +390,17 @@ function TeamsEditor({ data, onSave }: any) {
                   </div>
                 ))}
               </div>
+
+              {/* Add Player Button */}
+              <button
+                onClick={() => addPlayer(teamIndex)}
+                className="mt-4 w-full px-4 py-3 bg-spectra-violet/20 hover:bg-spectra-violet/30 border-2 border-dashed border-spectra-violet/50 rounded-lg text-spectra-violet font-medium transition-all flex items-center justify-center gap-2"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                Add Player
+              </button>
 
               {/* Coach Section */}
               <div className="mt-6 p-4 bg-spectra-violet/10 border border-spectra-violet/30 rounded-lg">
