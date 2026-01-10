@@ -3,6 +3,13 @@
 import { useEffect } from 'react'
 import { Twitter, Twitch, Instagram, ExternalLink } from 'lucide-react'
 
+// Déclaration TypeScript pour le widget Twitter
+declare global {
+  interface Window {
+    twttr: any
+  }
+}
+
 export default function NewsPage() {
   const socialLinks = [
     { icon: Twitter, href: 'https://x.com/SpectraEU', label: 'Twitter', color: 'hover:text-[#1DA1F2]' },
