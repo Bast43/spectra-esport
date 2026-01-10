@@ -52,7 +52,7 @@ export default function NewsPage() {
               }
             ).then(() => {
               console.log('Twitter timeline loaded successfully')
-            }).catch((error) => {
+            }).catch((error: any) => {
               console.error('Twitter timeline error:', error)
               if (container) {
                 container.innerHTML = '<p class="text-gray-400">Unable to load tweets. Please visit <a href="https://x.com/SpectraEU" target="_blank" class="text-spectra-violet hover:underline">@SpectraEU</a> on Twitter.</p>'
