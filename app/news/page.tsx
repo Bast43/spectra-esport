@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Twitter, Twitch, Instagram, ExternalLink, Heart, MessageCircle, Repeat2, Calendar } from 'lucide-react'
+import { Twitch, Instagram, ExternalLink, Heart, MessageCircle, Repeat2, Calendar } from 'lucide-react'
+import { XIcon } from '@/components/XIcon'
 
 interface Tweet {
   id: string
@@ -21,7 +22,7 @@ export default function NewsPage() {
   const [lastUpdate, setLastUpdate] = useState('')
 
   const socialLinks = [
-    { icon: Twitter, href: 'https://x.com/SpectraEU', label: 'Twitter', color: 'hover:text-[#1DA1F2]' },
+    { icon: XIcon, label: 'X', color: 'hover:text-white' },
     { icon: Twitch, href: 'https://www.twitch.tv/spectraqg', label: 'Twitch', color: 'hover:text-[#9146FF]' },
     { icon: Instagram, href: 'https://www.instagram.com/spectraeu/', label: 'Instagram', color: 'hover:text-[#E4405F]' },
     { icon: ExternalLink, href: 'https://linktr.ee/spectraeu', label: 'Linktree', color: 'hover:text-spectra-mauve' },
@@ -81,7 +82,7 @@ export default function NewsPage() {
         {/* Header */}
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <Twitter className="w-12 h-12 text-spectra-violet" />
+            <XIcon className="w-12 h-12 text-spectra-violet" />
             <h1 className="text-5xl md:text-6xl font-display font-bold text-white">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-spectra-violet to-spectra-mauve">News</span>
             </h1>
@@ -108,7 +109,7 @@ export default function NewsPage() {
                 rel="noopener noreferrer"
                 className="btn-primary flex items-center gap-2"
               >
-                <Twitter size={20} />
+                <XIcon size={20} />
                 Follow on Twitter
               </a>
               <a
@@ -135,7 +136,7 @@ export default function NewsPage() {
           {error && !loading && (
             <div className="glass-card border-red-500/30 text-center py-12">
               <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Twitter className="w-8 h-8 text-red-400" />
+                <XIcon className="w-8 h-8 text-red-400" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Unable to Load Tweets</h3>
               <p className="text-gray-400 mb-6">{error}</p>
@@ -175,7 +176,7 @@ export default function NewsPage() {
                   {/* Tweet Header */}
                   <div className="flex items-start gap-4 mb-4">
                     <div className="w-12 h-12 bg-gradient-to-br from-spectra-violet to-spectra-mauve rounded-full flex items-center justify-center flex-shrink-0">
-                      <Twitter className="w-6 h-6 text-white" />
+                      <XIcon className="w-6 h-6 text-white" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
@@ -229,7 +230,7 @@ export default function NewsPage() {
                   rel="noopener noreferrer"
                   className="btn-secondary inline-flex items-center gap-2"
                 >
-                  <Twitter size={20} />
+                  <XIcon size={20} />
                   View More on Twitter
                 </a>
               </div>
@@ -239,7 +240,7 @@ export default function NewsPage() {
           {/* Empty State */}
           {!loading && !error && tweets.length === 0 && (
             <div className="glass-card text-center py-16">
-              <Twitter className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+              <XIcon className="w-16 h-16 text-gray-600 mx-auto mb-4" />
               <h3 className="text-xl font-bold text-white mb-2">No Tweets Yet</h3>
               <p className="text-gray-400 mb-6">Start following @SpectraEU to see the latest updates!</p>
               <a
@@ -248,7 +249,7 @@ export default function NewsPage() {
                 rel="noopener noreferrer"
                 className="btn-primary inline-flex items-center gap-2"
               >
-                <Twitter size={20} />
+                <XIcon size={20} />
                 Follow on Twitter
               </a>
             </div>

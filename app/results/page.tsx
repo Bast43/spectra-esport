@@ -15,20 +15,36 @@ interface Result {
   competition: string
 }
 
+interface Team {
+  id: string
+  name: string
+  game: string
+}
+
 export default function ResultsPage() {
   const [results, setResults] = useState<Result[]>([])
+  const [teams, setTeams] = useState<Team[]>([])
   const [loading, setLoading] = useState(true)
-  const [filter, setFilter] = useState<string>('r6s-main')
+  const [filter, setFilter] = useState<string>('')
 
   useEffect(() => {
-    fetch('/api/results')
-      .then((res) => res.json())
-      .then((data) => {
-        setResults(data.results || [])
+    Promise.all([
+      fetch('/api/data/results').then((res) => res.json()),
+      fetch('/api/data/teams').then((res) => res.json()),
+    ])
+      .then(([resultsData, teamsData]) => {
+        setResults(resultsData.results || [])
+        setTeams(teamsData.teams || [])
+        
+        // Set first team as default filter
+        if (teamsData.teams && teamsData.teams.length > 0) {
+          setFilter(teamsData.teams[0].id)
+        }
+        
         setLoading(false)
       })
       .catch((error) => {
-        console.error('Error loading results:', error)
+        console.error('Error loading data:', error)
         setLoading(false)
       })
   }, [])
@@ -43,13 +59,6 @@ export default function ResultsPage() {
   }
 
   const filteredResults = results.filter((result) => result.teamId === filter)
-
-  // Get unique teams for filters
-  const teams = [
-    { id: 'r6s-main', name: 'R6S Main' },
-    { id: 'r6s-academy', name: 'R6S Academy' },
-    { id: 'cs2-main', name: 'CS2 Main' },
-  ]
 
   if (loading) {
     return (

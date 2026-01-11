@@ -2,15 +2,16 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Twitter, Twitch, Instagram, ExternalLink } from 'lucide-react'
+import { Twitch, Instagram, ExternalLink } from 'lucide-react'
+import { XIcon } from '@/components/XIcon'
 
 export default function Footer() {
   const socialLinks = [
     { 
-      icon: Twitter, 
+      icon: XIcon, 
       href: 'https://x.com/SpectraEU', 
-      label: 'Twitter',
-      color: 'hover:text-[#1DA1F2]'
+      label: 'X',
+      color: 'hover:text-white'
     },
     { 
       icon: Twitch, 

@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { Twitter, Twitch, Instagram, Users, Linkedin, Trophy } from 'lucide-react'
+import { Twitch, Instagram, Users, Linkedin, Trophy } from 'lucide-react'
+import { XIcon } from '@/components/XIcon'
 
 interface Player {
   id: string
@@ -19,7 +20,7 @@ interface Player {
 interface Team {
   id: string
   name: string
-  shortName: string
+  shortName?: string
   game: string
   description: string
   coach?: {
@@ -66,14 +67,19 @@ export default function TeamsPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch('/api/teams').then((res) => res.json()),
-      fetch('/api/results').then((res) => res.json()),
+      fetch('/api/data/teams').then((res) => res.json()),
+      fetch('/api/data/results').then((res) => res.json()),
     ])
       .then(([teamsData, resultsData]) => {
         setTeams(teamsData.teams || [])
         setStaff(teamsData.staff || [])
         setResults(resultsData.results || [])
         setLoading(false)
+        
+        // Set first team as active if available
+        if (teamsData.teams && teamsData.teams.length > 0) {
+          setActiveTab(teamsData.teams[0].id)
+        }
       })
       .catch((error) => {
         console.error('Error loading data:', error)
@@ -129,7 +135,7 @@ export default function TeamsPage() {
                   : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10'
               }`}
             >
-              {team.shortName}
+              {team.name}
             </button>
           ))}
           <button
@@ -209,9 +215,9 @@ export default function TeamsPage() {
                             href={player.socials.twitter}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#1DA1F2] hover:bg-white/10 hover:border-[#1DA1F2]/50 transition-all duration-300"
+                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300"
                           >
-                            <Twitter size={18} />
+                            <XIcon className="w-[18px] h-[18px]" />
                           </a>
                         )}
                         {player.socials.twitch && (
@@ -295,9 +301,9 @@ export default function TeamsPage() {
                               href={activeTeam.coach.socials.twitter}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#1DA1F2] hover:bg-white/10 hover:border-[#1DA1F2]/50 transition-all duration-300"
+                              className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300"
                             >
-                              <Twitter size={18} />
+                              <XIcon className="w-[18px] h-[18px]" />
                             </a>
                           )}
                           {activeTeam.coach.socials.linkedin && (
@@ -426,9 +432,9 @@ export default function TeamsPage() {
                             href={member.socials.twitter}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#1DA1F2] hover:bg-white/10 hover:border-[#1DA1F2]/50 transition-all duration-300"
+                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300"
                           >
-                            <Twitter size={18} />
+                            <XIcon className="w-[18px] h-[18px]" />
                           </a>
                         )}
                         {member.socials.linkedin && (

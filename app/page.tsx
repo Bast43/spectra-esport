@@ -5,12 +5,41 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Trophy, Users, Target, ChevronRight } from 'lucide-react'
 
+interface Team {
+  id: string
+  name: string
+  game: string
+  description: string
+  players: any[]
+}
+
 export default function Home() {
   const [mounted, setMounted] = useState(false)
+  const [teams, setTeams] = useState<Team[]>([])
 
   useEffect(() => {
     setMounted(true)
+    loadTeams()
   }, [])
+
+  const loadTeams = async () => {
+    try {
+      const res = await fetch('/api/data/teams')
+      const data = await res.json()
+      setTeams(data.teams || [])
+    } catch (error) {
+      console.error('Error loading teams:', error)
+    }
+  }
+
+  // Group teams by game
+  const gameGroups = teams.reduce((acc, team) => {
+    if (!acc[team.game]) {
+      acc[team.game] = []
+    }
+    acc[team.game].push(team)
+    return acc
+  }, {} as Record<string, Team[]>)
 
   return (
     <div className="relative">
@@ -80,8 +109,8 @@ export default function Home() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: Users, value: '18', label: 'Professional Players', color: 'text-spectra-violet' },
-              { icon: Trophy, value: '3', label: 'Active Teams', color: 'text-spectra-purple' },
+              { icon: Users, value: teams.reduce((sum, t) => sum + t.players.length, 0).toString(), label: 'Professional Players', color: 'text-spectra-violet' },
+              { icon: Trophy, value: Object.keys(gameGroups).length.toString(), label: 'Active Disciplines', color: 'text-spectra-purple' },
               { icon: Target, value: '∞', label: 'Victories to Come', color: 'text-spectra-mauve' },
             ].map((stat, index) => (
               <div
@@ -105,37 +134,31 @@ export default function Home() {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Rainbow Six Siege */}
-            <div className="glass-card group cursor-pointer overflow-hidden">
-              <div className="relative h-48 mb-6 -mx-6 -mt-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-spectra-violet/20 to-spectra-purple/20" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <h3 className="text-3xl font-display font-bold text-white">Rainbow Six Siege</h3>
+            {Object.entries(gameGroups).map(([game, gameTeams], index) => (
+              <div key={game} className="glass-card group cursor-pointer overflow-hidden">
+                <div className="relative h-48 mb-6 -mx-6 -mt-6">
+                  <div className={`absolute inset-0 ${
+                    index % 2 === 0 
+                      ? 'bg-gradient-to-br from-spectra-violet/20 to-spectra-purple/20'
+                      : 'bg-gradient-to-br from-spectra-purple/20 to-spectra-mauve/20'
+                  }`} />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <h3 className="text-3xl font-display font-bold text-white">{game}</h3>
+                  </div>
                 </div>
+                <p className="text-gray-400 mb-4">
+                  {gameTeams.length > 1 
+                    ? `${gameTeams.length} elite teams competing at the highest level.`
+                    : gameTeams[0]?.description || 'Our competitive roster.'}
+                </p>
+                <Link 
+                  href={`/teams?team=${gameTeams[0]?.id}`} 
+                  className="text-spectra-mauve hover:text-spectra-violet transition-colors inline-flex items-center gap-2"
+                >
+                  View roster{gameTeams.length > 1 ? 's' : ''} <ChevronRight size={16} />
+                </Link>
               </div>
-              <p className="text-gray-400 mb-4">
-                Two elite teams (Main and Academy) dominate European competitive rankings. Tactics, precision and coordination are our watchwords.
-              </p>
-              <Link href="/teams?team=r6s-main" className="text-spectra-mauve hover:text-spectra-violet transition-colors inline-flex items-center gap-2">
-                View rosters <ChevronRight size={16} />
-              </Link>
-            </div>
-
-            {/* Counter-Strike 2 */}
-            <div className="glass-card group cursor-pointer overflow-hidden">
-              <div className="relative h-48 mb-6 -mx-6 -mt-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-spectra-purple/20 to-spectra-mauve/20" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <h3 className="text-3xl font-display font-bold text-white">Counter-Strike 2</h3>
-                </div>
-              </div>
-              <p className="text-gray-400 mb-4">
-                Our CS2 lineup combines experience and young talent to create explosive synergy on the competitive scene.
-              </p>
-              <Link href="/teams?team=cs2-main" className="text-spectra-mauve hover:text-spectra-violet transition-colors inline-flex items-center gap-2">
-                View roster <ChevronRight size={16} />
-              </Link>
-            </div>
+            ))}
           </div>
         </div>
       </section>
