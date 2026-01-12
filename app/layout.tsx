@@ -65,6 +65,19 @@ export const metadata: Metadata = {
     description: 'Swiss esports organization competing at the highest European level.',
     images: ['/logo.png'],
   },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/icon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+    other: [
+      { url: '/android-icon-192x192.png', sizes: '192x192', type: 'image/png' },
+    ],
+  },
   verification: {
     google: "OTs6bMCwsdiuTNVB80VUsQfK4YrLJnKTwNrRay0lgho",
   },
