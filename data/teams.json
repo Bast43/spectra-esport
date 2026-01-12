@@ -177,7 +177,7 @@
       "players": [
         {
           "id": "cs2-main-p1",
-          "name": "SKETA",
+          "name": "Sketa",
           "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
@@ -188,7 +188,7 @@
         },
         {
           "id": "cs2-main-p2",
-          "name": "HEJZ",
+          "name": "Hejz",
           "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
@@ -199,7 +199,7 @@
         },
         {
           "id": "cs2-main-p3",
-          "name": "DJOLERDY",
+          "name": "Djolerdy",
           "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
@@ -210,7 +210,7 @@
         },
         {
           "id": "cs2-main-p4",
-          "name": "DZOK",
+          "name": "DzoKARA",
           "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
@@ -221,7 +221,7 @@
         },
         {
           "id": "cs2-main-p5",
-          "name": "ZUUPHLER",
+          "name": "Zuuphler",
           "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
