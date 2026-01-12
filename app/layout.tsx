@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     images: ['/logo.png'],
   },
   verification: {
-    google: 'xj7KnN9x2r_zORoooWvyk_eh35TGfmEqphp0adSSV9k',
+    google: "OTs6bMCwsdiuTNVB80VUsQfK4YrLJnKTwNrRay0lgho",
   },
 }
 
