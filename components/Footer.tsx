@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Twitch, Instagram, ExternalLink } from 'lucide-react'
 import { XIcon } from '@/components/XIcon'
+import { SwissFlag } from '@/components/SwissFlag'
 
 export default function Footer() {
   const socialLinks = [
@@ -72,7 +73,7 @@ export default function Footer() {
               Swiss esports organization competing at the highest European level.
             </p>
             <div className="flex items-center gap-2 px-3 py-2 bg-white/5 rounded-lg border border-white/10">
-              <span className="text-2xl">🇨🇭</span>
+              <SwissFlag className="w-6 h-6" />
               <span className="text-sm font-semibold text-white">Switzerland</span>
             </div>
           </div>
@@ -116,8 +117,8 @@ export default function Footer() {
           <p className="text-sm text-gray-500">
             © {new Date().getFullYear()} Spectra Esport. All rights reserved.
           </p>
-          <p className="text-sm text-gray-500 flex items-center justify-center gap-2">
-            Made with <span className="text-red-500">❤️</span> in <span className="text-lg">🇨🇭</span> Switzerland
+          <p className="text-sm text-gray-500 inline-flex items-center justify-center gap-2 flex-wrap">
+            Made with <span className="text-red-500">❤️</span> in <SwissFlag className="w-5 h-5" /> Switzerland
           </p>
         </div>
       </div>
