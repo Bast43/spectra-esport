@@ -76,8 +76,21 @@ export default function TeamsPage() {
         setResults(resultsData.results || [])
         setLoading(false)
         
-        // Set first team as active if available
-        if (teamsData.teams && teamsData.teams.length > 0) {
+        // Check for team parameter in URL
+        const urlParams = new URLSearchParams(window.location.search)
+        const teamParam = urlParams.get('team')
+        
+        if (teamParam && teamsData.teams) {
+          // If team param exists and team is found, set it as active
+          const teamExists = teamsData.teams.find((t: Team) => t.id === teamParam)
+          if (teamExists) {
+            setActiveTab(teamParam)
+          } else if (teamsData.teams.length > 0) {
+            // Fallback to first team if param team doesn't exist
+            setActiveTab(teamsData.teams[0].id)
+          }
+        } else if (teamsData.teams && teamsData.teams.length > 0) {
+          // No param, set first team as active
           setActiveTab(teamsData.teams[0].id)
         }
       })

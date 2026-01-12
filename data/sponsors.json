@@ -2,15 +2,11 @@
   "sponsors": [
     {
       "id": "sponsor-1",
-      "name": "Your Sponsor",
-      "logo": "/images/sponsor-placeholder.jpg",
+      "name": "Offood",
+      "logo": "https://i.imgur.com/JDUzOTw.png",
       "website": "https://example.com",
-      "tier": "premium"
+      "tier": "premium",
+      "url": "https://www.offood.ch/fr"
     }
-  ],
-  "contact": {
-    "email": "contact@spectra-esport.com",
-    "discord": "https://discord.gg/spectra",
-    "description": "Interested in a partnership with Spectra? Contact us!"
-  }
+  ]
 }

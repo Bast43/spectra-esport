@@ -134,31 +134,47 @@ export default function Home() {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {Object.entries(gameGroups).map(([game, gameTeams], index) => (
-              <div key={game} className="glass-card group cursor-pointer overflow-hidden">
-                <div className="relative h-48 mb-6 -mx-6 -mt-6">
-                  <div className={`absolute inset-0 ${
-                    index % 2 === 0 
-                      ? 'bg-gradient-to-br from-spectra-violet/20 to-spectra-purple/20'
-                      : 'bg-gradient-to-br from-spectra-purple/20 to-spectra-mauve/20'
-                  }`} />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <h3 className="text-3xl font-display font-bold text-white">{game}</h3>
+            {Object.entries(gameGroups).map(([game, gameTeams], index) => {
+              // Get logo from first team of this game
+              const gameLogo = gameTeams[0]?.logo
+              
+              return (
+                <div key={game} className="glass-card group cursor-pointer overflow-hidden">
+                  <div className="relative h-48 mb-6 -mx-6 -mt-6">
+                    <div className={`absolute inset-0 ${
+                      index % 2 === 0 
+                        ? 'bg-gradient-to-br from-spectra-violet/20 to-spectra-purple/20'
+                        : 'bg-gradient-to-br from-spectra-purple/20 to-spectra-mauve/20'
+                    }`} />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      {gameLogo && gameLogo !== '/images/default-team.png' ? (
+                        <div className="relative w-32 h-32">
+                          <Image
+                            src={gameLogo}
+                            alt={`${game} logo`}
+                            fill
+                            className="object-contain drop-shadow-[0_0_20px_rgba(139,92,246,0.5)]"
+                          />
+                        </div>
+                      ) : (
+                        <h3 className="text-3xl font-display font-bold text-white">{game}</h3>
+                      )}
+                    </div>
                   </div>
+                  <p className="text-gray-400 mb-4">
+                    {gameTeams.length > 1 
+                      ? `${gameTeams.length} elite teams competing at the highest level.`
+                      : gameTeams[0]?.description || 'Our competitive roster.'}
+                  </p>
+                  <Link 
+                    href={`/teams?team=${gameTeams[0]?.id}`} 
+                    className="text-spectra-mauve hover:text-spectra-violet transition-colors inline-flex items-center gap-2"
+                  >
+                    View roster{gameTeams.length > 1 ? 's' : ''} <ChevronRight size={16} />
+                  </Link>
                 </div>
-                <p className="text-gray-400 mb-4">
-                  {gameTeams.length > 1 
-                    ? `${gameTeams.length} elite teams competing at the highest level.`
-                    : gameTeams[0]?.description || 'Our competitive roster.'}
-                </p>
-                <Link 
-                  href={`/teams?team=${gameTeams[0]?.id}`} 
-                  className="text-spectra-mauve hover:text-spectra-violet transition-colors inline-flex items-center gap-2"
-                >
-                  View roster{gameTeams.length > 1 ? 's' : ''} <ChevronRight size={16} />
-                </Link>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
