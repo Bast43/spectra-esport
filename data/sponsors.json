@@ -4,9 +4,8 @@
       "id": "sponsor-1",
       "name": "Offood",
       "logo": "https://i.imgur.com/JDUzOTw.png",
-      "website": "https://example.com",
-      "tier": "premium",
-      "url": "https://www.offood.ch/fr"
+      "website": "https://www.offood.ch/fr",
+      "tier": "premium"
     }
   ]
 }
