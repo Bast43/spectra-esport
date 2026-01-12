@@ -827,7 +827,8 @@ function SponsorsEditor({ data, onSave }: any) {
       id: `sponsor-${Date.now()}`,
       name: '',
       logo: '',
-      url: '',
+      website: '',
+      tier: 'premium'
     }
     setSponsors([...sponsors, newSponsor])
   }
@@ -882,8 +883,8 @@ function SponsorsEditor({ data, onSave }: any) {
             />
             <input
               type="text"
-              value={sponsor.url}
-              onChange={(e) => updateSponsor(index, 'url', e.target.value)}
+              value={sponsor.website || ''}
+              onChange={(e) => updateSponsor(index, 'website', e.target.value)}
               className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
               placeholder="Website URL"
             />

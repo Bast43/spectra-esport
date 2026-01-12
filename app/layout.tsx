@@ -66,8 +66,7 @@ export const metadata: Metadata = {
     images: ['/logo.png'],
   },
   verification: {
-    // Add Google Search Console verification here later
-    // google: 'xj7KnN9x2r_zORoooWvyk_eh35TGfmEqphp0adSSV9k',
+    google: 'xj7KnN9x2r_zORoooWvyk_eh35TGfmEqphp0adSSV9k',
   },
 }
 
