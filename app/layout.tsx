@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     default: 'Spectra Esport | Silent Impact - Swiss Esports Organization',
     template: '%s | Spectra Esport'
   },
-  description: 'Swiss esports organization competing at the highest European level in Rainbow Six Siege, Counter-Strike 2, and more. Professional teams, elite players, competitive results.',
+  description: 'Swiss esports organization competing at the highest European level. Professional teams in Rainbow Six Siege, Counter-Strike 2, and more.',
   keywords: [
     'Spectra Esport',
     'Spectra EU',
