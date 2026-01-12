@@ -10,6 +10,7 @@ interface Team {
   name: string
   game: string
   description: string
+  logo?: string 
   players: any[]
 }
 
