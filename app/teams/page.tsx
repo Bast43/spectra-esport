@@ -181,7 +181,7 @@ export default function TeamsPage() {
             </div>
 
             {/* Players Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
               {activeTeam.players.map((player, index) => (
                 <div
                   key={player.id}
@@ -274,8 +274,8 @@ export default function TeamsPage() {
                     Coach
                   </h3>
                 </div>
-                <div className="max-w-md mx-auto">
-                  <div className="glass-card group">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="glass-card group lg:col-start-2">
                     {/* Coach Photo */}
                     <div className="relative w-full aspect-square mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
                       <div className="absolute inset-0 bg-gradient-to-br from-spectra-purple/20 to-spectra-mauve/20" />
