@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Twitch, Instagram, Users, Linkedin, Trophy } from 'lucide-react'
 import { XIcon } from '@/components/XIcon'
+import { CountryFlag } from '@/components/CountryFlag'
 
 interface Player {
   id: string
   name: string
   role: string
   photo: string
+  country?: string
   socials: {
     twitter?: string
     twitch?: string
@@ -27,6 +29,7 @@ interface Team {
     id: string
     name: string
     photo: string
+    country?: string
     socials: {
       twitter?: string
       linkedin?: string
@@ -40,6 +43,7 @@ interface StaffMember {
   name: string
   role: string
   photo: string
+  country?: string
   socials: {
     twitter?: string
     linkedin?: string
@@ -185,23 +189,23 @@ export default function TeamsPage() {
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
                   {/* Player Photo */}
-                  <div className="relative w-full h-64 mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
+                  <div className="relative w-full aspect-square mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
                     <div className="absolute inset-0 bg-gradient-to-br from-spectra-violet/20 to-spectra-purple/20" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      {player.photo && player.photo !== '/images/default-player.jpg' ? (
-                        <img
-                          src={player.photo}
-                          alt={player.name}
-                          className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
-                          onError={(e) => {
-                            // Fallback to initials if image fails to load
-                            e.currentTarget.style.display = 'none'
-                            const fallback = e.currentTarget.nextElementSibling
-                            if (fallback) fallback.classList.remove('hidden')
-                          }}
-                        />
-                      ) : null}
-                      <div className={`w-32 h-32 rounded-full bg-spectra-violet/20 border-4 border-spectra-violet/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 ${player.photo && player.photo !== '/images/default-player.jpg' ? 'hidden' : ''}`}>
+                    {player.photo && player.photo !== '/images/default-player.jpg' ? (
+                      <img
+                        src={player.photo}
+                        alt={player.name}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        onError={(e) => {
+                          // Fallback to initials if image fails to load
+                          e.currentTarget.style.display = 'none'
+                          const fallback = e.currentTarget.nextElementSibling
+                          if (fallback) fallback.classList.remove('hidden')
+                        }}
+                      />
+                    ) : null}
+                    <div className={`absolute inset-0 flex items-center justify-center ${player.photo && player.photo !== '/images/default-player.jpg' ? 'hidden' : ''}`}>
+                      <div className="w-32 h-32 rounded-full bg-spectra-violet/20 border-4 border-spectra-violet/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                         <span className="text-4xl font-display font-bold text-white">
                           {player.name.charAt(0)}
                         </span>
@@ -212,8 +216,9 @@ export default function TeamsPage() {
                   {/* Player Info */}
                   <div className="space-y-3">
                     <div>
-                      <h3 className="text-2xl font-display font-bold text-white mb-1">
+                      <h3 className="text-2xl font-display font-bold text-white mb-1 flex items-center gap-2">
                         {player.name}
+                        {player.country && <CountryFlag countryCode={player.country} className="w-6 h-4" />}
                       </h3>
                       <p className="text-spectra-mauve text-sm font-medium uppercase tracking-wider">
                         {player.role}
@@ -272,22 +277,22 @@ export default function TeamsPage() {
                 <div className="max-w-md mx-auto">
                   <div className="glass-card group">
                     {/* Coach Photo */}
-                    <div className="relative w-full h-64 mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
+                    <div className="relative w-full aspect-square mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
                       <div className="absolute inset-0 bg-gradient-to-br from-spectra-purple/20 to-spectra-mauve/20" />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        {activeTeam.coach.photo && activeTeam.coach.photo !== '/images/default-coach.jpg' ? (
-                          <img
-                            src={activeTeam.coach.photo}
-                            alt={activeTeam.coach.name}
-                            className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
-                            onError={(e) => {
-                              e.currentTarget.style.display = 'none'
-                              const fallback = e.currentTarget.nextElementSibling
-                              if (fallback) fallback.classList.remove('hidden')
-                            }}
-                          />
-                        ) : null}
-                        <div className={`w-32 h-32 rounded-full bg-spectra-purple/20 border-4 border-spectra-purple/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 ${activeTeam.coach.photo && activeTeam.coach.photo !== '/images/default-coach.jpg' ? 'hidden' : ''}`}>
+                      {activeTeam.coach.photo && activeTeam.coach.photo !== '/images/default-coach.jpg' ? (
+                        <img
+                          src={activeTeam.coach.photo}
+                          alt={activeTeam.coach.name}
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none'
+                            const fallback = e.currentTarget.nextElementSibling
+                            if (fallback) fallback.classList.remove('hidden')
+                          }}
+                        />
+                      ) : null}
+                      <div className={`absolute inset-0 flex items-center justify-center ${activeTeam.coach.photo && activeTeam.coach.photo !== '/images/default-coach.jpg' ? 'hidden' : ''}`}>
+                        <div className="w-32 h-32 rounded-full bg-spectra-purple/20 border-4 border-spectra-purple/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                           <span className="text-4xl font-display font-bold text-white">
                             {activeTeam.coach.name.charAt(0)}
                           </span>
@@ -298,8 +303,9 @@ export default function TeamsPage() {
                     {/* Coach Info */}
                     <div className="space-y-3">
                       <div>
-                        <h3 className="text-2xl font-display font-bold text-white mb-1">
+                        <h3 className="text-2xl font-display font-bold text-white mb-1 flex items-center gap-2">
                           {activeTeam.coach.name}
+                          {activeTeam.coach.country && <CountryFlag countryCode={activeTeam.coach.country} className="w-6 h-4" />}
                         </h3>
                         <p className="text-spectra-mauve text-sm font-medium uppercase tracking-wider">
                           Coach
@@ -403,22 +409,22 @@ export default function TeamsPage() {
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
                   {/* Staff Photo */}
-                  <div className="relative w-full h-48 mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
+                  <div className="relative w-full aspect-square mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
                     <div className="absolute inset-0 bg-gradient-to-br from-spectra-purple/20 to-spectra-mauve/20" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      {member.photo && member.photo !== '/images/default-staff.jpg' ? (
-                        <img
-                          src={member.photo}
-                          alt={member.name}
-                          className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none'
-                            const fallback = e.currentTarget.nextElementSibling
-                            if (fallback) fallback.classList.remove('hidden')
-                          }}
-                        />
-                      ) : null}
-                      <div className={`w-24 h-24 rounded-full bg-spectra-purple/20 border-4 border-spectra-purple/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 ${member.photo && member.photo !== '/images/default-staff.jpg' ? 'hidden' : ''}`}>
+                    {member.photo && member.photo !== '/images/default-staff.jpg' ? (
+                      <img
+                        src={member.photo}
+                        alt={member.name}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none'
+                          const fallback = e.currentTarget.nextElementSibling
+                          if (fallback) fallback.classList.remove('hidden')
+                        }}
+                      />
+                    ) : null}
+                    <div className={`absolute inset-0 flex items-center justify-center ${member.photo && member.photo !== '/images/default-staff.jpg' ? 'hidden' : ''}`}>
+                      <div className="w-24 h-24 rounded-full bg-spectra-purple/20 border-4 border-spectra-purple/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                         <span className="text-3xl font-display font-bold text-white">
                           {member.name.charAt(0)}
                         </span>
@@ -429,8 +435,9 @@ export default function TeamsPage() {
                   {/* Staff Info */}
                   <div className="space-y-3">
                     <div>
-                      <h3 className="text-xl font-display font-bold text-white mb-1">
+                      <h3 className="text-xl font-display font-bold text-white mb-1 flex items-center justify-center gap-2">
                         {member.name}
+                        {member.country && <CountryFlag countryCode={member.country} className="w-6 h-4" />}
                       </h3>
                       <p className="text-spectra-mauve text-sm font-medium uppercase tracking-wider">
                         {member.role}

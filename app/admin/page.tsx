@@ -6,7 +6,7 @@ import { Save, Plus, Trash2, LogOut, Users, Trophy, X } from 'lucide-react'
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [password, setPassword] = useState('')
-  const [activeTab, setActiveTab] = useState<'teams' | 'results' | 'sponsors'>('teams')
+  const [activeTab, setActiveTab] = useState<'teams' | 'results' | 'sponsors' | 'settings'>('teams')
   const [loading, setLoading] = useState(false)
   const [saveMessage, setSaveMessage] = useState('')
 
@@ -14,6 +14,7 @@ export default function AdminPage() {
   const [teamsData, setTeamsData] = useState<any>(null)
   const [resultsData, setResultsData] = useState<any>(null)
   const [sponsorsData, setSponsorsData] = useState<any>(null)
+  const [settingsData, setSettingsData] = useState<any>(null)
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -50,19 +51,22 @@ export default function AdminPage() {
   const loadAllData = async () => {
     setLoading(true)
     try {
-      const [teamsRes, resultsRes, sponsorsRes] = await Promise.all([
+      const [teamsRes, resultsRes, sponsorsRes, settingsRes] = await Promise.all([
         fetch('/api/data/teams'),
         fetch('/api/data/results'),
         fetch('/api/data/sponsors'),
+        fetch('/api/settings'),
       ])
 
       const teams = await teamsRes.json()
       const results = await resultsRes.json()
       const sponsors = await sponsorsRes.json()
+      const settings = await settingsRes.json()
 
       setTeamsData(teams)
       setResultsData(results)
       setSponsorsData(sponsors)
+      setSettingsData(settings)
     } catch (error) {
       alert('Erreur lors du chargement des données')
     } finally {
@@ -206,6 +210,20 @@ export default function AdminPage() {
           >
             Sponsors
           </button>
+          <button
+            onClick={() => setActiveTab('settings')}
+            className={`px-6 py-3 rounded-lg font-medium transition-all flex items-center gap-2 ${
+              activeTab === 'settings'
+                ? 'bg-spectra-violet text-white'
+                : 'bg-white/5 text-gray-400 hover:bg-white/10'
+            }`}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            Settings
+          </button>
         </div>
 
         {/* Content */}
@@ -244,9 +262,126 @@ export default function AdminPage() {
                 }}
               />
             )}
+
+            {activeTab === 'settings' && settingsData && (
+              <SettingsEditor
+                data={settingsData}
+                onSave={async (data: any) => {
+                  setSettingsData(data)
+                  // Save settings using the settings API
+                  try {
+                    const res = await fetch('/api/settings', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify(data),
+                    })
+                    if (res.ok) {
+                      setSaveMessage('Settings saved successfully!')
+                      setTimeout(() => setSaveMessage(''), 3000)
+                    }
+                  } catch (error) {
+                    alert('Error saving settings')
+                  }
+                }}
+              />
+            )}
           </>
         )}
       </div>
+    </div>
+  )
+}
+
+// Settings Editor Component
+function SettingsEditor({ data, onSave }: any) {
+  const [backgroundImage, setBackgroundImage] = useState(data.backgroundImage || '')
+  const [backgroundOpacity, setBackgroundOpacity] = useState(data.backgroundOpacity || 1)
+
+  return (
+    <div className="space-y-6">
+      <div className="p-6 bg-white/5 rounded-lg border border-white/10">
+        <h3 className="text-xl font-display font-bold text-white mb-6 flex items-center gap-2">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          Background Image
+        </h3>
+
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Image URL (Imgur, etc.)
+            </label>
+            <input
+              type="text"
+              value={backgroundImage}
+              onChange={(e) => setBackgroundImage(e.target.value)}
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-spectra-violet transition-colors"
+              placeholder="https://i.imgur.com/..."
+            />
+            <p className="text-xs text-gray-500 mt-2">
+              💡 Tip: Upload your image to <a href="https://imgur.com/upload" target="_blank" rel="noopener noreferrer" className="text-spectra-violet hover:underline">Imgur</a> and paste the direct link here
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Opacity: {Math.round(backgroundOpacity * 100)}%
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value={backgroundOpacity}
+              onChange={(e) => setBackgroundOpacity(parseFloat(e.target.value))}
+              className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer"
+              style={{
+                accentColor: '#8b5cf6'
+              }}
+            />
+            <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <span>Transparent</span>
+              <span>Opaque</span>
+            </div>
+          </div>
+
+          {backgroundImage && (
+            <div className="mt-6 p-4 bg-white/5 rounded-lg border border-white/10">
+              <p className="text-sm text-gray-400 mb-3">Preview:</p>
+              <div className="relative h-48 rounded-lg overflow-hidden">
+                <img
+                  src={backgroundImage}
+                  alt="Background preview"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  style={{ opacity: backgroundOpacity }}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none'
+                    const parent = e.currentTarget.parentElement
+                    if (parent) {
+                      const errorDiv = document.createElement('div')
+                      errorDiv.className = 'absolute inset-0 flex items-center justify-center text-red-400 text-sm'
+                      errorDiv.textContent = 'Invalid image URL'
+                      parent.appendChild(errorDiv)
+                    }
+                  }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <p className="text-white text-lg font-display drop-shadow-lg">This is how your background will look</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <button
+        onClick={() => onSave({ backgroundImage, backgroundOpacity })}
+        className="w-full px-6 py-4 bg-spectra-violet hover:bg-spectra-purple text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+      >
+        <Save size={20} />
+        Save Settings
+      </button>
     </div>
   )
 }
@@ -536,13 +671,23 @@ function TeamsEditor({ data, onSave }: any) {
                           placeholder="Role"
                         />
                       </div>
-                      <input
-                        type="text"
-                        value={player.photo || ''}
-                        onChange={(e) => updatePlayer(teamIndex, playerIndex, 'photo', e.target.value)}
-                        className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
-                        placeholder="Photo URL (https://i.imgur.com/...)"
-                      />
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <input
+                          type="text"
+                          value={player.photo || ''}
+                          onChange={(e) => updatePlayer(teamIndex, playerIndex, 'photo', e.target.value)}
+                          className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
+                          placeholder="Photo URL (https://i.imgur.com/...)"
+                        />
+                        <input
+                          type="text"
+                          value={player.country || ''}
+                          onChange={(e) => updatePlayer(teamIndex, playerIndex, 'country', e.target.value)}
+                          className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs uppercase"
+                          placeholder="Country code (CH, FR, BE, etc.)"
+                          maxLength={2}
+                        />
+                      </div>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                         <input
                           type="text"
@@ -596,13 +741,23 @@ function TeamsEditor({ data, onSave }: any) {
                     className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
                     placeholder="Coach name"
                   />
-                  <input
-                    type="text"
-                    value={team.coach?.photo || ''}
-                    onChange={(e) => updateCoach(teamIndex, 'photo', e.target.value)}
-                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
-                    placeholder="Photo URL (https://i.imgur.com/...)"
-                  />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <input
+                      type="text"
+                      value={team.coach?.photo || ''}
+                      onChange={(e) => updateCoach(teamIndex, 'photo', e.target.value)}
+                      className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
+                      placeholder="Photo URL (https://i.imgur.com/...)"
+                    />
+                    <input
+                      type="text"
+                      value={team.coach?.country || ''}
+                      onChange={(e) => updateCoach(teamIndex, 'country', e.target.value)}
+                      className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs uppercase"
+                      placeholder="Country code (CH, FR, BE, etc.)"
+                      maxLength={2}
+                    />
+                  </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     <input
                       type="text"
@@ -647,13 +802,23 @@ function TeamsEditor({ data, onSave }: any) {
                   placeholder="Role"
                 />
               </div>
-              <input
-                type="text"
-                value={member.photo || ''}
-                onChange={(e) => updateStaffMember(index, 'photo', e.target.value)}
-                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs mb-3"
-                placeholder="Photo URL"
-              />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <input
+                  type="text"
+                  value={member.photo || ''}
+                  onChange={(e) => updateStaffMember(index, 'photo', e.target.value)}
+                  className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
+                  placeholder="Photo URL"
+                />
+                <input
+                  type="text"
+                  value={member.country || ''}
+                  onChange={(e) => updateStaffMember(index, 'country', e.target.value)}
+                  className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs uppercase"
+                  placeholder="Country code (CH, FR, BE, etc.)"
+                  maxLength={2}
+                />
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <input
                   type="text"

@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import StructuredData from '@/components/StructuredData'
+import BackgroundImage from '@/components/BackgroundImage'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://spectra-esport.vercel.app'),
@@ -94,6 +95,7 @@ export default function RootLayout({
         <StructuredData />
       </head>
       <body>
+        <BackgroundImage />
         <Navbar />
         <main className="min-h-screen">
           {children}

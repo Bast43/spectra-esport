@@ -25,7 +25,8 @@
             "twitter": "",
             "twitch": "",
             "instagram": ""
-          }
+          },
+          "country": "FR"
         },
         {
           "id": "r6s-main-p2",
@@ -243,7 +244,8 @@
       "socials": {
         "twitter": "",
         "linkedin": ""
-      }
+      },
+      "country": "CH"
     },
     {
       "id": "staff-2",
@@ -253,7 +255,8 @@
       "socials": {
         "twitter": "",
         "linkedin": ""
-      }
+      },
+      "country": "fr"
     },
     {
       "id": "staff-3",
@@ -263,7 +266,8 @@
       "socials": {
         "twitter": "",
         "linkedin": ""
-      }
+      },
+      "country": "fr"
     },
     {
       "id": "staff-4",
@@ -273,7 +277,8 @@
       "socials": {
         "twitter": "",
         "linkedin": ""
-      }
+      },
+      "country": "BE"
     }
   ]
 }
