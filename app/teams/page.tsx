@@ -498,9 +498,9 @@ export default function TeamsPage() {
             <div className="flex justify-center w-full">
               <div className={`grid gap-6 w-full ${
                 staff.length === 1 ? 'grid-cols-1 max-w-xs' :
-                staff.length === 2 ? 'grid-cols-2 max-w-2xl' :
-                staff.length === 3 ? 'grid-cols-3 max-w-4xl' :
-                staff.length === 4 ? 'grid-cols-4 max-w-6xl' :
+                staff.length === 2 ? 'grid-cols-1 md:grid-cols-2 max-w-2xl' :
+                staff.length === 3 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-4xl' :
+                staff.length === 4 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4 max-w-6xl' :
                 'grid-cols-1 md:grid-cols-2 lg:grid-cols-5'
               }`}>
                 {staff.map((member, index) => (
