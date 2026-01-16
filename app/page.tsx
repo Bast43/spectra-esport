@@ -10,7 +10,7 @@ interface Team {
   name: string
   game: string
   description: string
-  logo?: string 
+  logo?: string
   players: any[]
 }
 
@@ -140,21 +140,28 @@ export default function Home() {
               const gameLogo = gameTeams[0]?.logo
               
               return (
-                <div key={game} className="glass-card group cursor-pointer overflow-hidden">
-                  <div className="relative h-48 mb-6 -mx-6 -mt-6">
-                    <div className={`absolute inset-0 ${
-                      index % 2 === 0 
-                        ? 'bg-gradient-to-br from-spectra-violet/20 to-spectra-purple/20'
-                        : 'bg-gradient-to-br from-spectra-purple/20 to-spectra-mauve/20'
-                    }`} />
-                    <div className="absolute inset-0 flex items-center justify-center">
+                <div 
+                  key={game} 
+                  className="group cursor-pointer overflow-hidden bg-black/40 backdrop-blur-sm rounded-xl border-2 border-spectra-violet/50 hover:border-spectra-violet shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:shadow-[0_0_60px_rgba(139,92,246,0.8)] transition-all duration-300"
+                >
+                  <div className="relative h-64 mb-6">
+                    {/* Fond noir avec glow */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-spectra-violet/30 via-black/50 to-spectra-purple/30" />
+                    
+                    {/* Lignes néon animées */}
+                    <div className="absolute inset-0 opacity-20">
+                      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-spectra-violet to-transparent animate-pulse" />
+                      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-spectra-violet to-transparent animate-pulse" style={{ animationDelay: '1s' }} />
+                    </div>
+                    
+                    <div className="absolute inset-0 p-8 flex items-center justify-center">
                       {gameLogo && gameLogo !== '/images/default-team.png' ? (
-                        <div className="relative w-32 h-32">
+                        <div className="relative w-full h-full transition-transform duration-300 group-hover:scale-105">
                           <Image
                             src={gameLogo}
                             alt={`${game} logo`}
                             fill
-                            className="object-contain drop-shadow-[0_0_20px_rgba(139,92,246,0.5)]"
+                            className="object-contain drop-shadow-[0_0_60px_rgba(139,92,246,1)] group-hover:drop-shadow-[0_0_80px_rgba(139,92,246,1)]"
                           />
                         </div>
                       ) : (
@@ -162,17 +169,20 @@ export default function Home() {
                       )}
                     </div>
                   </div>
-                  <p className="text-gray-400 mb-4">
-                    {gameTeams.length > 1 
-                      ? `${gameTeams.length} elite teams competing at the highest level.`
-                      : gameTeams[0]?.description || 'Our competitive roster.'}
-                  </p>
-                  <Link 
-                    href={`/teams?team=${gameTeams[0]?.id}`} 
-                    className="text-spectra-mauve hover:text-spectra-violet transition-colors inline-flex items-center gap-2"
-                  >
-                    View roster{gameTeams.length > 1 ? 's' : ''} <ChevronRight size={16} />
-                  </Link>
+                  
+                  <div className="px-6 pb-6">
+                    <p className="text-gray-400 mb-4">
+                      {gameTeams.length > 1 
+                        ? `${gameTeams.length} elite teams competing at the highest level.`
+                        : gameTeams[0]?.description || 'Our competitive roster.'}
+                    </p>
+                    <Link 
+                      href={`/teams?team=${gameTeams[0]?.id}`} 
+                      className="text-spectra-mauve hover:text-spectra-violet transition-colors inline-flex items-center gap-2"
+                    >
+                      View roster{gameTeams.length > 1 ? 's' : ''} <ChevronRight size={16} />
+                    </Link>
+                  </div>
                 </div>
               )
             })}

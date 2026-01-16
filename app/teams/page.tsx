@@ -180,9 +180,9 @@ export default function TeamsPage() {
               <p className="text-lg text-gray-400 max-w-2xl mx-auto">{activeTeam.description}</p>
             </div>
 
-            {/* Players Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-              {activeTeam.players.map((player, index) => (
+            {/* Players Grid - Main 5 players */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-6">
+              {activeTeam.players.slice(0, 5).map((player, index) => (
                 <div
                   key={player.id}
                   className="glass-card group"
@@ -265,6 +265,99 @@ export default function TeamsPage() {
               ))}
             </div>
 
+            {/* Substitute Players (6th and 7th) - Centered */}
+            {activeTeam.players.length > 5 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-16">
+                {activeTeam.players.slice(5, 7).map((player, index) => (
+                  <div
+                    key={player.id}
+                    className={`glass-card group ${
+                      activeTeam.players.length === 6 
+                        ? 'lg:col-start-3' 
+                        : index === 0 
+                          ? 'lg:col-start-2' 
+                          : 'lg:col-start-4'
+                    }`}
+                      style={{ animationDelay: `${(5 + index) * 50}ms` }}
+                    >
+                      {/* Player Photo */}
+                      <div className="relative w-full aspect-square mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
+                        <div className="absolute inset-0 bg-gradient-to-br from-spectra-violet/20 to-spectra-purple/20" />
+                        {player.photo && player.photo !== '/images/default-player.jpg' ? (
+                          <img
+                            src={player.photo}
+                            alt={player.name}
+                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                            onError={(e) => {
+                              // Fallback to initials if image fails to load
+                              e.currentTarget.style.display = 'none'
+                              const fallback = e.currentTarget.nextElementSibling
+                              if (fallback) fallback.classList.remove('hidden')
+                            }}
+                          />
+                        ) : null}
+                        <div className={`absolute inset-0 flex items-center justify-center ${player.photo && player.photo !== '/images/default-player.jpg' ? 'hidden' : ''}`}>
+                          <div className="w-32 h-32 rounded-full bg-spectra-violet/20 border-4 border-spectra-violet/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <span className="text-4xl font-display font-bold text-white">
+                              {player.name.charAt(0)}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Player Info */}
+                      <div className="space-y-3">
+                        <div>
+                          <h3 className="text-2xl font-display font-bold text-white mb-1 flex items-center gap-2">
+                            {player.name}
+                            {player.country && <CountryFlag countryCode={player.country} className="w-6 h-4" />}
+                          </h3>
+                          <p className="text-spectra-mauve text-sm font-medium uppercase tracking-wider">
+                            {player.role}
+                          </p>
+                        </div>
+
+                        {/* Social Links */}
+                        {(player.socials.twitter || player.socials.twitch || player.socials.instagram) && (
+                          <div className="flex gap-2 pt-2">
+                            {player.socials.twitter && (
+                              <a
+                                href={player.socials.twitter}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300"
+                              >
+                                <XIcon className="w-[18px] h-[18px]" />
+                              </a>
+                            )}
+                            {player.socials.twitch && (
+                              <a
+                                href={player.socials.twitch}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#9146FF] hover:bg-white/10 hover:border-[#9146FF]/50 transition-all duration-300"
+                              >
+                                <Twitch size={18} />
+                              </a>
+                            )}
+                            {player.socials.instagram && (
+                              <a
+                                href={player.socials.instagram}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#E4405F] hover:bg-white/10 hover:border-[#E4405F]/50 transition-all duration-300"
+                              >
+                                <Instagram size={18} />
+                              </a>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+            )}
+
             {/* Coach */}
             {activeTeam.coach && (
               <div className="mb-16">
@@ -274,8 +367,8 @@ export default function TeamsPage() {
                     Coach
                   </h3>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  <div className="glass-card group lg:col-start-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                  <div className="glass-card group lg:col-start-3">
                     {/* Coach Photo */}
                     <div className="relative w-full aspect-square mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
                       <div className="absolute inset-0 bg-gradient-to-br from-spectra-purple/20 to-spectra-mauve/20" />
@@ -401,77 +494,86 @@ export default function TeamsPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {staff.map((member, index) => (
-                <div
-                  key={member.id}
-                  className="glass-card text-center group"
-                  style={{ animationDelay: `${index * 50}ms` }}
-                >
-                  {/* Staff Photo */}
-                  <div className="relative w-full aspect-square mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
-                    <div className="absolute inset-0 bg-gradient-to-br from-spectra-purple/20 to-spectra-mauve/20" />
-                    {member.photo && member.photo !== '/images/default-staff.jpg' ? (
-                      <img
-                        src={member.photo}
-                        alt={member.name}
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none'
-                          const fallback = e.currentTarget.nextElementSibling
-                          if (fallback) fallback.classList.remove('hidden')
-                        }}
-                      />
-                    ) : null}
-                    <div className={`absolute inset-0 flex items-center justify-center ${member.photo && member.photo !== '/images/default-staff.jpg' ? 'hidden' : ''}`}>
-                      <div className="w-24 h-24 rounded-full bg-spectra-purple/20 border-4 border-spectra-purple/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <span className="text-3xl font-display font-bold text-white">
-                          {member.name.charAt(0)}
-                        </span>
+            {/* Staff grid - centered with flex wrapper */}
+            <div className="flex justify-center w-full">
+              <div className={`grid gap-6 w-full ${
+                staff.length === 1 ? 'grid-cols-1 max-w-xs' :
+                staff.length === 2 ? 'grid-cols-2 max-w-2xl' :
+                staff.length === 3 ? 'grid-cols-3 max-w-4xl' :
+                staff.length === 4 ? 'grid-cols-4 max-w-6xl' :
+                'grid-cols-1 md:grid-cols-2 lg:grid-cols-5'
+              }`}>
+                {staff.map((member, index) => (
+                  <div
+                    key={member.id}
+                    className="glass-card text-center group"
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    {/* Staff Photo */}
+                    <div className="relative w-full aspect-square mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
+                      <div className="absolute inset-0 bg-gradient-to-br from-spectra-purple/20 to-spectra-mauve/20" />
+                      {member.photo && member.photo !== '/images/default-staff.jpg' ? (
+                        <img
+                          src={member.photo}
+                          alt={member.name}
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none'
+                            const fallback = e.currentTarget.nextElementSibling
+                            if (fallback) fallback.classList.remove('hidden')
+                          }}
+                        />
+                      ) : null}
+                      <div className={`absolute inset-0 flex items-center justify-center ${member.photo && member.photo !== '/images/default-staff.jpg' ? 'hidden' : ''}`}>
+                        <div className="w-24 h-24 rounded-full bg-spectra-purple/20 border-4 border-spectra-purple/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                          <span className="text-3xl font-display font-bold text-white">
+                            {member.name.charAt(0)}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Staff Info */}
-                  <div className="space-y-3">
-                    <div>
-                      <h3 className="text-xl font-display font-bold text-white mb-1 flex items-center justify-center gap-2">
-                        {member.name}
-                        {member.country && <CountryFlag countryCode={member.country} className="w-6 h-4" />}
-                      </h3>
-                      <p className="text-spectra-mauve text-sm font-medium uppercase tracking-wider">
-                        {member.role}
-                      </p>
-                    </div>
-
-                    {/* Social Links */}
-                    {(member.socials.twitter || member.socials.linkedin) && (
-                      <div className="flex justify-center gap-2 pt-2">
-                        {member.socials.twitter && (
-                          <a
-                            href={member.socials.twitter}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300"
-                          >
-                            <XIcon className="w-[18px] h-[18px]" />
-                          </a>
-                        )}
-                        {member.socials.linkedin && (
-                          <a
-                            href={member.socials.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#0A66C2] hover:bg-white/10 hover:border-[#0A66C2]/50 transition-all duration-300"
-                          >
-                            <Linkedin size={18} />
-                          </a>
-                        )}
+                    {/* Staff Info */}
+                    <div className="space-y-3">
+                      <div>
+                        <h3 className="text-xl font-display font-bold text-white mb-1 flex items-center justify-center gap-2">
+                          {member.name}
+                          {member.country && <CountryFlag countryCode={member.country} className="w-6 h-4" />}
+                        </h3>
+                        <p className="text-spectra-mauve text-sm font-medium uppercase tracking-wider">
+                          {member.role}
+                        </p>
                       </div>
-                    )}
+
+                      {/* Social Links */}
+                      {(member.socials.twitter || member.socials.linkedin) && (
+                        <div className="flex justify-center gap-2 pt-2">
+                          {member.socials.twitter && (
+                            <a
+                              href={member.socials.twitter}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300"
+                            >
+                              <XIcon className="w-[18px] h-[18px]" />
+                            </a>
+                          )}
+                          {member.socials.linkedin && (
+                            <a
+                              href={member.socials.linkedin}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#0A66C2] hover:bg-white/10 hover:border-[#0A66C2]/50 transition-all duration-300"
+                            >
+                              <Linkedin size={18} />
+                            </a>
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         )}

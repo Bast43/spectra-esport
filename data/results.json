@@ -1,26 +1,3 @@
 {
-  "results": [
-    {
-      "id": "result-1",
-      "opponent": "Exemple Team",
-      "game": "Rainbow Six Siege",
-      "teamId": "r6s-main",
-      "teamName": "R6S Main",
-      "date": "2025-01-01",
-      "score": "2-1",
-      "result": "Win",
-      "competition": "ESL Challenger"
-    },
-    {
-      "id": "result-2",
-      "opponent": "Rival Gaming",
-      "game": "Counter-Strike 2",
-      "teamId": "cs2-main",
-      "teamName": "CS2 Main",
-      "date": "2024-12-15",
-      "score": "13-16",
-      "result": "Loss",
-      "competition": "ESEA Advanced"
-    }
-  ]
+  "results": []
 }

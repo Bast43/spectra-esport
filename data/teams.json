@@ -13,7 +13,8 @@
         "socials": {
           "twitter": "",
           "linkedin": ""
-        }
+        },
+        "country": "FR"
       },
       "players": [
         {
@@ -37,7 +38,8 @@
             "twitter": "",
             "twitch": "",
             "instagram": ""
-          }
+          },
+          "country": "FR"
         },
         {
           "id": "r6s-main-p3",
@@ -48,7 +50,8 @@
             "twitter": "",
             "twitch": "",
             "instagram": ""
-          }
+          },
+          "country": "PL"
         },
         {
           "id": "r6s-main-p4",
@@ -59,21 +62,23 @@
             "twitter": "",
             "twitch": "",
             "instagram": ""
-          }
+          },
+          "country": "FR"
         },
         {
           "id": "r6s-main-p5",
-          "name": "Psy4",
+          "name": "Zyrox",
           "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
             "twitter": "",
             "twitch": "",
             "instagram": ""
-          }
+          },
+          "country": "BE"
         }
       ],
-      "logo": "https://i.imgur.com/SwOOsvh.png"
+      "logo": "https://i.imgur.com/kZ6mya6.png"
     },
     {
       "id": "r6s-academy",
@@ -158,7 +163,7 @@
           }
         }
       ],
-      "logo": "https://i.imgur.com/SwOOsvh.png"
+      "logo": "https://i.imgur.com/kZ6mya6.png"
     },
     {
       "id": "cs2-main",
@@ -168,7 +173,7 @@
       "description": "Our CS2 lineup, perfect alliance between experience and young talent.",
       "coach": {
         "id": "cs2-main-coach",
-        "name": "Coach Name",
+        "name": "Wxy",
         "photo": "/images/default-coach.jpg",
         "socials": {
           "twitter": "",
@@ -185,7 +190,8 @@
             "twitter": "",
             "twitch": "",
             "instagram": ""
-          }
+          },
+          "country": "RS"
         },
         {
           "id": "cs2-main-p2",
@@ -196,7 +202,8 @@
             "twitter": "",
             "twitch": "",
             "instagram": ""
-          }
+          },
+          "country": "RS"
         },
         {
           "id": "cs2-main-p3",
@@ -207,7 +214,8 @@
             "twitter": "",
             "twitch": "",
             "instagram": ""
-          }
+          },
+          "country": "RS"
         },
         {
           "id": "cs2-main-p4",
@@ -218,7 +226,8 @@
             "twitter": "",
             "twitch": "",
             "instagram": ""
-          }
+          },
+          "country": "RS"
         },
         {
           "id": "cs2-main-p5",
@@ -229,10 +238,11 @@
             "twitter": "",
             "twitch": "",
             "instagram": ""
-          }
+          },
+          "country": "RS"
         }
       ],
-      "logo": "https://i.imgur.com/svA0I0m.png"
+      "logo": "https://i.imgur.com/0B1hVXt.png"
     }
   ],
   "staff": [
