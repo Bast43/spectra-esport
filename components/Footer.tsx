@@ -61,7 +61,7 @@ export default function Footer() {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-display font-bold text-white tracking-wider">
+                <span className="text-xl font-exo2 font-bold text-white tracking-wider">
                   SPECTRA
                 </span>
                 <span className="text-xs text-spectra-mauve font-light tracking-[0.2em] uppercase">
@@ -72,9 +72,12 @@ export default function Footer() {
             <p className="text-sm text-gray-400 max-w-xs">
               Swiss esports organization competing at the highest European level.
             </p>
-            <div className="flex items-center gap-2 px-3 py-2 bg-white/5 rounded-lg border border-white/10">
-              <SwissFlag className="w-6 h-6" />
-              <span className="text-sm font-semibold text-white">Switzerland</span>
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2 px-3 py-2 bg-white/5 rounded-lg border border-white/10">
+                <SwissFlag className="w-6 h-6" />
+                <span className="text-sm font-semibold text-white">Switzerland</span>
+              </div>
+              <span className="text-xs text-gray-500 mt-1 ml-3 select-all">CHE-461.603.543</span>
             </div>
           </div>
 
@@ -107,8 +110,15 @@ export default function Footer() {
                 >
                   <social.icon size={20} />
                 </a>
+                
               ))}
             </div>
+            <a
+              href="mailto:spectraeu.contact@gmail.com"
+              className="inline-block text-spectra-mauve hover:text-spectra-violet font-medium transition-colors underline mt-4"
+            >
+              Nous contacter
+            </a>
           </div>
         </div>
 

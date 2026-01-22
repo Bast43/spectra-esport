@@ -68,7 +68,7 @@ export default function Home() {
 
             {/* Titre principal */}
             <div className={`transition-all duration-1000 delay-200 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <h1 className="text-6xl md:text-8xl font-display font-black text-white tracking-tight mb-4">
+              <h1 className="text-6xl md:text-8xl font-exo2 font-black text-white tracking-tight mb-4">
                 SPECTRA
               </h1>
               <p className="text-2xl md:text-3xl text-spectra-mauve font-light tracking-[0.3em] uppercase mb-8">

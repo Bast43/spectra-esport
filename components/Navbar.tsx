@@ -31,7 +31,7 @@ export default function Navbar() {
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-2xl font-display font-bold text-white group-hover:text-spectra-violet transition-colors">
+              <span className="text-2xl font-exo2 font-bold text-white group-hover:text-spectra-violet transition-colors">
                 SPECTRA
               </span>
               <span className="text-xs text-spectra-mauve font-light tracking-[0.2em] uppercase">
