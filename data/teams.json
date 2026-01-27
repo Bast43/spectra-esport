@@ -174,7 +174,7 @@
       "coach": {
         "id": "cs2-main-coach",
         "name": "Wxy",
-        "photo": "/images/default-coach.jpg",
+        "photo": "https://i.imgur.com/DaVU8xt.png",
         "socials": {
           "twitter": "",
           "linkedin": ""
@@ -250,7 +250,7 @@
       "id": "staff-1",
       "name": "Neio",
       "role": "CEO",
-      "photo": "https://i.imgur.com/qzx8kAB.png",
+      "photo": "https://i.imgur.com/3oX9v4S.png",
       "socials": {
         "twitter": "",
         "linkedin": ""
@@ -261,7 +261,7 @@
       "id": "staff-2",
       "name": "Kalt",
       "role": "CEO",
-      "photo": "https://i.imgur.com/RbteMXZ.png",
+      "photo": "https://i.imgur.com/IOH1otY.png",
       "socials": {
         "twitter": "",
         "linkedin": ""
@@ -283,7 +283,7 @@
       "id": "staff-4",
       "name": "Darkfox",
       "role": "Moderator",
-      "photo": "https://i.imgur.com/vYDvGV1.png",
+      "photo": "https://i.imgur.com/eT1kGVB.png",
       "socials": {
         "twitter": "",
         "linkedin": ""
