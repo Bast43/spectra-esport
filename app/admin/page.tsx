@@ -850,7 +850,7 @@ function TeamsEditor({ data, onSave }: any) {
                   className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
                   placeholder="X (Twitter) URL"
                 />
-                {member.socialsLinks && member.socialsLinks.map((link, idx) => (
+                {member.socialsLinks && member.socialsLinks.map((link: { url: string }, idx: number) => (
                   <div key={idx} className="flex gap-2 items-center">
                     <input
                       type="text"
@@ -864,7 +864,7 @@ function TeamsEditor({ data, onSave }: any) {
                       placeholder="Lien social (YouTube, TikTok, Kick, etc.)"
                     />
                     <button type="button" onClick={() => {
-                      const newLinks = member.socialsLinks.filter((_, i) => i !== idx);
+                      const newLinks = member.socialsLinks.filter((_: { url: string }, i: number) => i !== idx);
                       updateStaffSocialLinks(index, newLinks);
                     }} className="text-red-400 hover:text-red-600"><Trash2 size={16} /></button>
                   </div>
