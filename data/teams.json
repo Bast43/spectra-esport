@@ -18,9 +18,68 @@
       },
       "players": [
         {
+          "id": "r6s-main-p2",
+          "name": "Sopra",
+          "role": "Support",
+          "photo": "https://i.imgur.com/50hUql4.png",
+          "socials": {
+            "twitter": "https://x.com/soprar6s"
+          },
+          "country": "BR",
+          "socialsLinks": [
+            {
+              "url": "https://www.youtube.com/@sopraytb"
+            }
+          ]
+        },
+        {
+          "id": "r6s-main-p4",
+          "name": "Anton",
+          "role": "Entry",
+          "photo": "https://i.imgur.com/zpJA1rU.png",
+          "socials": {
+            "twitter": "https://x.com/Antondrx"
+          },
+          "country": "GP",
+          "socialsLinks": [
+            {
+              "url": "https://www.youtube.com/@antondrx"
+            }
+          ]
+        },
+        {
+          "id": "r6s-main-p5",
+          "name": "Zyrox",
+          "role": "IGL",
+          "photo": "https://i.imgur.com/5nlOg9W.png",
+          "socials": {
+            "twitter": ""
+          },
+          "country": "BE",
+          "socialsLinks": []
+        },
+        {
+          "id": "r6s-main-p3",
+          "name": "Ayow",
+          "role": "Flex",
+          "photo": "https://i.imgur.com/eeGu84y.png",
+          "socials": {
+            "twitter": "https://x.com/nz0_r6s"
+          },
+          "country": "PL",
+          "socialsLinks": [
+            {
+              "url": "https://www.twitch.tv/ayoww__"
+            },
+            {
+              "url": "https://www.youtube.com/@ayoww"
+            }
+          ]
+        },
+        {
           "id": "r6s-main-p1",
           "name": "Dogewyn",
-          "role": "",
+          "role": "Flex",
           "photo": "https://i.imgur.com/Utiqj1E.png",
           "socials": {
             "twitter": "https://x.com/dogewyn"
@@ -39,68 +98,9 @@
           ]
         },
         {
-          "id": "r6s-main-p2",
-          "name": "Sopra",
-          "role": "",
-          "photo": "https://i.imgur.com/50hUql4.png",
-          "socials": {
-            "twitter": "https://x.com/soprar6s"
-          },
-          "country": "BR",
-          "socialsLinks": [
-            {
-              "url": "https://www.youtube.com/@sopraytb"
-            }
-          ]
-        },
-        {
-          "id": "r6s-main-p3",
-          "name": "Ayow",
-          "role": "",
-          "photo": "https://i.imgur.com/eeGu84y.png",
-          "socials": {
-            "twitter": "https://x.com/nz0_r6s"
-          },
-          "country": "PL",
-          "socialsLinks": [
-            {
-              "url": "https://www.twitch.tv/ayoww__"
-            },
-            {
-              "url": "https://www.youtube.com/@ayoww"
-            }
-          ]
-        },
-        {
-          "id": "r6s-main-p4",
-          "name": "Anton",
-          "role": "",
-          "photo": "https://i.imgur.com/j6zGB5Y.png",
-          "socials": {
-            "twitter": "https://x.com/Antondrx"
-          },
-          "country": "FR",
-          "socialsLinks": [
-            {
-              "url": "https://www.youtube.com/@antondrx"
-            }
-          ]
-        },
-        {
-          "id": "r6s-main-p5",
-          "name": "Zyrox",
-          "role": "",
-          "photo": "https://i.imgur.com/5nlOg9W.png",
-          "socials": {
-            "twitter": ""
-          },
-          "country": "BE",
-          "socialsLinks": []
-        },
-        {
           "id": "r6s-main-player-1769559722813",
           "name": "Psy4",
-          "role": "",
+          "role": "Subsitute",
           "photo": "https://i.imgur.com/0Cwj0KO.png",
           "socials": {
             "twitter": "https://x.com/maitrepsy"
@@ -137,37 +137,40 @@
         {
           "id": "r6s-academy-p1",
           "name": "Aieroz",
-          "role": "Entry Fragger",
+          "role": "Flex Entry",
           "photo": "https://i.imgur.com/aLq6fTI.png",
           "socials": {
             "twitter": "https://x.com/AierozR6s"
           },
-          "socialsLinks": []
+          "socialsLinks": [],
+          "country": "PT"
         },
         {
           "id": "r6s-academy-p2",
           "name": "Luizi",
-          "role": "Support",
+          "role": "IGL Entry",
           "photo": "https://i.imgur.com/U9aAtRD.png",
           "socials": {
             "twitter": "https://x.com/luizir6"
           },
-          "socialsLinks": []
+          "socialsLinks": [],
+          "country": "FR"
         },
         {
           "id": "r6s-academy-p3",
           "name": "Slow",
-          "role": "IGL",
+          "role": "Support",
           "photo": "https://i.imgur.com/0LJQe3y.png",
           "socials": {
             "twitter": ""
           },
-          "socialsLinks": []
+          "socialsLinks": [],
+          "country": "FR"
         },
         {
           "id": "r6s-academy-p4",
           "name": "Player4",
-          "role": "Flex",
+          "role": "",
           "photo": "https://i.imgur.com/5nlOg9W.png",
           "socials": {
             "twitter": ""
@@ -177,7 +180,7 @@
         {
           "id": "r6s-academy-p5",
           "name": "Player5",
-          "role": "Anchor",
+          "role": "",
           "photo": "https://i.imgur.com/5nlOg9W.png",
           "socials": {
             "twitter": ""
@@ -254,7 +257,7 @@
           "id": "cs2-main-p3",
           "name": "Djolerdy",
           "role": "",
-          "photo": "/images/default-player.jpg",
+          "photo": "https://i.imgur.com/09EPclJ.png",
           "socials": {
             "twitter": ""
           },
@@ -276,7 +279,7 @@
           "id": "cs2-main-p5",
           "name": "Zuuphler",
           "role": "",
-          "photo": "/images/default-player.jpg",
+          "photo": "https://i.imgur.com/KSeIrAJ.png",
           "socials": {
             "twitter": ""
           },

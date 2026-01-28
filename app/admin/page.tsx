@@ -388,6 +388,16 @@ function SettingsEditor({ data, onSave }: any) {
 
 // Teams Editor Component
 function TeamsEditor({ data, onSave }: any) {
+  // Déplacer un joueur dans la liste (up/down)
+  const movePlayer = (teamIndex: number, playerIndex: number, direction: number) => {
+    const newTeams = [...teams];
+    const players = [...newTeams[teamIndex].players];
+    const newIndex = playerIndex + direction;
+    if (newIndex < 0 || newIndex >= players.length) return;
+    [players[playerIndex], players[newIndex]] = [players[newIndex], players[playerIndex]];
+    newTeams[teamIndex].players = players;
+    setTeams(newTeams);
+  };
   const [teams, setTeams] = useState(data.teams)
   const [staff, setStaff] = useState(data.staff || [])
   const [activeSection, setActiveSection] = useState<'teams' | 'staff'>('teams')
@@ -644,6 +654,27 @@ function TeamsEditor({ data, onSave }: any) {
                 <div className="space-y-4">
                   {team.players.map((player: any, playerIndex: number) => (
                     <div key={player.id} className="p-4 bg-black/20 rounded-lg space-y-3 relative">
+                      {/* Move Player Up/Down Buttons */}
+                      <div className="absolute left-2 top-2 flex flex-col gap-1 z-10">
+                        <button
+                          type="button"
+                          disabled={playerIndex === 0}
+                          onClick={() => movePlayer(teamIndex, playerIndex, -1)}
+                          className="p-1 bg-white/10 hover:bg-white/20 border border-white/20 rounded text-white disabled:opacity-30"
+                          title="Monter le joueur"
+                        >
+                          ↑
+                        </button>
+                        <button
+                          type="button"
+                          disabled={playerIndex === team.players.length - 1}
+                          onClick={() => movePlayer(teamIndex, playerIndex, 1)}
+                          className="p-1 bg-white/10 hover:bg-white/20 border border-white/20 rounded text-white disabled:opacity-30"
+                          title="Descendre le joueur"
+                        >
+                          ↓
+                        </button>
+                      </div>
                       {/* Remove Player Button */}
                       <button
                         onClick={() => removePlayer(teamIndex, playerIndex)}
