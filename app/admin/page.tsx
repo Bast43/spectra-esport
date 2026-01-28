@@ -773,7 +773,7 @@ function TeamsEditor({ data, onSave }: any) {
                       className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
                       placeholder="X (Twitter) URL"
                     />
-                    {team.coach?.socialsLinks && team.coach.socialsLinks.map((link, idx) => (
+                    {team.coach?.socialsLinks && team.coach.socialsLinks.map((link: { url: string }, idx: number) => (
                       <div key={idx} className="flex gap-2 items-center">
                         <input
                           type="text"
