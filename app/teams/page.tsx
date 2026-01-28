@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { Twitch, Instagram, Users, Linkedin, Trophy } from 'lucide-react'
+import { Twitch, Instagram, Users, Trophy } from 'lucide-react'
+import { YouTubeIcon } from '@/components/YouTubeIcon'
 import { XIcon } from '@/components/XIcon'
 import { CountryFlag } from '@/components/CountryFlag'
 
@@ -16,6 +17,7 @@ interface Player {
     twitter?: string
     twitch?: string
     instagram?: string
+    youtube?: string
   }
 }
 
@@ -51,15 +53,9 @@ interface StaffMember {
 }
 
 interface Result {
-  id: string
-  opponent: string
-  game: string
-  teamId: string
-  teamName: string
-  date: string
-  score: string
-  result: 'Win' | 'Loss'
-  competition: string
+  id: string;
+  teamId: string;
+  image: string;
 }
 
 export default function TeamsPage() {
@@ -189,7 +185,7 @@ export default function TeamsPage() {
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
                   {/* Player Photo */}
-                  <div className="relative w-full aspect-square mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
+                  <div className="relative w-full aspect-[2/3] mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
                     <div className="absolute inset-0 bg-gradient-to-br from-spectra-violet/20 to-spectra-purple/20" />
                     {player.photo && player.photo !== '/images/default-player.jpg' ? (
                       <img
@@ -226,7 +222,7 @@ export default function TeamsPage() {
                     </div>
 
                     {/* Social Links */}
-                    {(player.socials.twitter || player.socials.twitch || player.socials.instagram) && (
+                    {(player.socials.twitter || player.socials.twitch || player.socials.instagram || player.socials.youtube) && (
                       <div className="flex gap-2 pt-2">
                         {player.socials.twitter && (
                           <a
@@ -258,6 +254,16 @@ export default function TeamsPage() {
                             <Instagram size={18} />
                           </a>
                         )}
+                        {player.socials.youtube && (
+                          <a
+                            href={player.socials.youtube}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#FF0000] hover:bg-white/10 hover:border-[#FF0000]/50 transition-all duration-300"
+                          >
+                            <YouTubeIcon className="w-[18px] h-[18px]" />
+                          </a>
+                        )}
                       </div>
                     )}
                   </div>
@@ -281,7 +287,7 @@ export default function TeamsPage() {
                       style={{ animationDelay: `${(5 + index) * 50}ms` }}
                     >
                       {/* Player Photo */}
-                      <div className="relative w-full aspect-square mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
+                      <div className="relative w-full aspect-[2/3] mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
                         <div className="absolute inset-0 bg-gradient-to-br from-spectra-violet/20 to-spectra-purple/20" />
                         {player.photo && player.photo !== '/images/default-player.jpg' ? (
                           <img
@@ -370,7 +376,7 @@ export default function TeamsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                   <div className="glass-card group lg:col-start-3">
                     {/* Coach Photo */}
-                    <div className="relative w-full aspect-square mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
+                    <div className="relative w-full aspect-[2/3] mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
                       <div className="absolute inset-0 bg-gradient-to-br from-spectra-purple/20 to-spectra-mauve/20" />
                       {activeTeam.coach.photo && activeTeam.coach.photo !== '/images/default-coach.jpg' ? (
                         <img
@@ -442,40 +448,22 @@ export default function TeamsPage() {
                 <div className="flex items-center gap-3 mb-6">
                   <Trophy className="w-6 h-6 text-spectra-violet" />
                   <h3 className="text-2xl font-display font-bold text-white">
-                    Recent Matches
+                    Results
                   </h3>
                 </div>
-                <div className="space-y-4">
-                  {teamResults.map((result) => (
-                    <div key={result.id} className="glass-card">
-                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div className="flex items-start gap-4">
-                          <div className={`flex-shrink-0 w-14 h-14 rounded-full flex items-center justify-center shadow-lg ${
-                            result.result === 'Win'
-                              ? 'bg-gradient-to-br from-green-500 to-emerald-600 shadow-green-500/30'
-                              : 'bg-gradient-to-br from-red-500 to-rose-600 shadow-red-500/30'
-                          }`}>
-                            <span className="text-xl font-display font-bold text-white">
-                              {result.result === 'Win' ? 'W' : 'L'}
-                            </span>
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <h4 className="text-lg font-display font-bold text-white">
-                                vs {result.opponent}
-                              </h4>
-                              <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                                result.result === 'Win'
-                                  ? 'bg-green-500/20 text-green-400'
-                                  : 'bg-red-500/20 text-red-400'
-                              }`}>
-                                {result.score}
-                              </span>
-                            </div>
-                            <p className="text-sm text-gray-400">{result.competition} • {formatDate(result.date)}</p>
-                          </div>
-                        </div>
-                      </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                  {[...teamResults].reverse().map((result) => (
+                    <div key={result.id} className="glass-card flex items-center justify-center">
+                      {result.image && (
+                        <a href={result.image} target="_blank" rel="noopener noreferrer">
+                          <img
+                            src={result.image}
+                            alt="Result image"
+                            className="max-h-64 rounded-lg border border-white/10 shadow-lg mx-auto"
+                            style={{ maxWidth: '100%', objectFit: 'contain' }}
+                          />
+                        </a>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -509,14 +497,15 @@ export default function TeamsPage() {
                     className="glass-card text-center group"
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
-                    {/* Staff Photo */}
-                    <div className="relative w-full aspect-square mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
+                    {/* Staff Photo - format portrait */}
+                    <div className="relative w-full aspect-[2/3] mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
                       <div className="absolute inset-0 bg-gradient-to-br from-spectra-purple/20 to-spectra-mauve/20" />
                       {member.photo && member.photo !== '/images/default-staff.jpg' ? (
                         <img
                           src={member.photo}
                           alt={member.name}
-                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                           onError={(e) => {
                             e.currentTarget.style.display = 'none'
                             const fallback = e.currentTarget.nextElementSibling
@@ -525,7 +514,7 @@ export default function TeamsPage() {
                         />
                       ) : null}
                       <div className={`absolute inset-0 flex items-center justify-center ${member.photo && member.photo !== '/images/default-staff.jpg' ? 'hidden' : ''}`}>
-                        <div className="w-24 h-24 rounded-full bg-spectra-purple/20 border-4 border-spectra-purple/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <div className="w-20 h-32 rounded-lg bg-spectra-purple/20 border-4 border-spectra-purple/40 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                           <span className="text-3xl font-display font-bold text-white">
                             {member.name.charAt(0)}
                           </span>

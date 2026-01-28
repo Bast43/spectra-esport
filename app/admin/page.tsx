@@ -688,7 +688,7 @@ function TeamsEditor({ data, onSave }: any) {
                           maxLength={2}
                         />
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                      <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
                         <input
                           type="text"
                           value={player.socials.twitter || ''}
@@ -709,6 +709,13 @@ function TeamsEditor({ data, onSave }: any) {
                           onChange={(e) => updatePlayerSocial(teamIndex, playerIndex, 'instagram', e.target.value)}
                           className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
                           placeholder="Instagram URL"
+                        />
+                        <input
+                          type="text"
+                          value={player.socials.youtube || ''}
+                          onChange={(e) => updatePlayerSocial(teamIndex, playerIndex, 'youtube', e.target.value)}
+                          className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
+                          placeholder="YouTube URL"
                         />
                       </div>
                     </div>
@@ -860,6 +867,7 @@ function ResultsEditor({ data, teams, onSave }: any) {
     const newResult = {
       id: `result-${Date.now()}`,
       teamId: teams[0]?.id || '',
+      image: '', // Champ URL image
       opponent: '',
       score: '',
       result: 'win',
@@ -901,7 +909,6 @@ function ResultsEditor({ data, teams, onSave }: any) {
           >
             <Trash2 className="w-4 h-4" />
           </button>
-          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-12">
             <div>
               <label className="block text-sm text-gray-400 mb-2">Team</label>
@@ -918,54 +925,13 @@ function ResultsEditor({ data, teams, onSave }: any) {
               </select>
             </div>
             <div>
-              <label className="block text-sm text-gray-400 mb-2">Result</label>
-              <select
-                value={result.result}
-                onChange={(e) => updateResult(index, 'result', e.target.value)}
-                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
-              >
-                <option value="win">Win</option>
-                <option value="loss">Loss</option>
-                <option value="draw">Draw</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Opponent</label>
+              <label className="block text-sm text-gray-400 mb-2">Image (URL hébergée)</label>
               <input
                 type="text"
-                value={result.opponent}
-                onChange={(e) => updateResult(index, 'opponent', e.target.value)}
+                value={result.image || ''}
+                onChange={(e) => updateResult(index, 'image', e.target.value)}
                 className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
-                placeholder="Opponent name"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Score</label>
-              <input
-                type="text"
-                value={result.score}
-                onChange={(e) => updateResult(index, 'score', e.target.value)}
-                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
-                placeholder="e.g., 2-1, 16-14"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Competition</label>
-              <input
-                type="text"
-                value={result.competition}
-                onChange={(e) => updateResult(index, 'competition', e.target.value)}
-                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
-                placeholder="e.g., EUL Stage 1"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Date</label>
-              <input
-                type="date"
-                value={result.date}
-                onChange={(e) => updateResult(index, 'date', e.target.value)}
-                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
+                placeholder="https://..."
               />
             </div>
           </div>

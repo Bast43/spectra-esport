@@ -4,15 +4,9 @@ import { useEffect, useState } from 'react'
 import { Trophy, Calendar, Award } from 'lucide-react'
 
 interface Result {
-  id: string
-  opponent: string
-  game: string
-  teamId: string
-  teamName: string
-  date: string
-  score: string
-  result: 'Win' | 'Loss'
-  competition: string
+  id: string;
+  teamId: string;
+  image: string;
 }
 
 interface Team {
@@ -106,66 +100,23 @@ export default function ResultsPage() {
 
         {/* Results */}
         {filteredResults.length > 0 ? (
-          <div className="space-y-6">
-            {filteredResults.map((result, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {[...filteredResults].reverse().map((result, index) => (
               <div
                 key={result.id}
-                className="glass-card fade-in"
+                className="glass-card fade-in flex items-center justify-center"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                  {/* Left side - Match info */}
-                  <div className="flex-1">
-                    <div className="flex items-start gap-4">
-                      {/* Result badge */}
-                      <div className={`flex-shrink-0 w-20 h-20 rounded-full flex items-center justify-center shadow-lg ${
-                        result.result === 'Win'
-                          ? 'bg-gradient-to-br from-green-500 to-emerald-600 shadow-green-500/30'
-                          : 'bg-gradient-to-br from-red-500 to-rose-600 shadow-red-500/30'
-                      }`}>
-                        <span className="text-2xl font-display font-bold text-white">
-                          {result.result === 'Win' ? 'W' : 'L'}
-                        </span>
-                      </div>
-
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2 flex-wrap">
-                          <h3 className="text-xl font-display font-bold text-white">
-                            vs {result.opponent}
-                          </h3>
-                          <span className={`px-3 py-1 rounded-full text-sm font-bold ${
-                            result.result === 'Win'
-                              ? 'bg-green-500/20 text-green-400'
-                              : 'bg-red-500/20 text-red-400'
-                          }`}>
-                            {result.score}
-                          </span>
-                        </div>
-                        <div className="flex flex-wrap gap-4 text-sm text-gray-400">
-                          <div className="flex items-center gap-2">
-                            <Award className="w-4 h-4 text-spectra-mauve" />
-                            <span>{result.competition}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Trophy className="w-4 h-4 text-spectra-mauve" />
-                            <span>{result.teamName}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Calendar className="w-4 h-4 text-spectra-mauve" />
-                            <span>{formatDate(result.date)}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right side - Game badge */}
-                  <div className="px-4 py-2 bg-spectra-violet/10 border border-spectra-violet/30 rounded-lg">
-                    <span className="text-sm font-display font-bold text-spectra-mauve whitespace-nowrap">
-                      {result.game}
-                    </span>
-                  </div>
-                </div>
+                {result.image && (
+                  <a href={result.image} target="_blank" rel="noopener noreferrer">
+                    <img
+                      src={result.image}
+                      alt="Result image"
+                      className="max-h-64 rounded-lg border border-white/10 shadow-lg mx-auto"
+                      style={{ maxWidth: '100%', objectFit: 'contain' }}
+                    />
+                  </a>
+                )}
               </div>
             ))}
           </div>
