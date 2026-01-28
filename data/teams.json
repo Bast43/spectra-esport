@@ -90,7 +90,7 @@
           "id": "r6s-main-p5",
           "name": "Zyrox",
           "role": "",
-          "photo": "/images/default-player.jpg",
+          "photo": "https://i.imgur.com/5nlOg9W.png",
           "socials": {
             "twitter": ""
           },
@@ -127,7 +127,7 @@
       "coach": {
         "id": "r6s-academy-coach",
         "name": "LFC",
-        "photo": "/images/default-player.jpg",
+        "photo": "https://i.imgur.com/5nlOg9W.png",
         "socials": {
           "twitter": "",
           "linkedin": ""
@@ -148,7 +148,7 @@
           "id": "r6s-academy-p2",
           "name": "Luizi",
           "role": "Support",
-          "photo": "/images/default-player.jpg",
+          "photo": "https://i.imgur.com/U9aAtRD.png",
           "socials": {
             "twitter": "https://x.com/luizir6"
           },
@@ -168,7 +168,7 @@
           "id": "r6s-academy-p4",
           "name": "Player4",
           "role": "Flex",
-          "photo": "/images/default-player.jpg",
+          "photo": "https://i.imgur.com/5nlOg9W.png",
           "socials": {
             "twitter": ""
           },
@@ -178,7 +178,7 @@
           "id": "r6s-academy-p5",
           "name": "Player5",
           "role": "Anchor",
-          "photo": "/images/default-player.jpg",
+          "photo": "https://i.imgur.com/5nlOg9W.png",
           "socials": {
             "twitter": ""
           },
@@ -188,7 +188,7 @@
           "id": "r6s-academy-p6",
           "name": "Player6",
           "role": "Substitute",
-          "photo": "/images/default-player.jpg",
+          "photo": "https://i.imgur.com/5nlOg9W.png",
           "socials": {
             "twitter": ""
           },
@@ -297,7 +297,17 @@
         "twitter": "https://x.com/NeioSPECTRA"
       },
       "country": "CH",
-      "socialsLinks": []
+      "socialsLinks": [
+        {
+          "url": "https://www.twitch.tv/neiostream"
+        },
+        {
+          "url": "https://www.youtube.com/@neio4567"
+        },
+        {
+          "url": "https://www.instagram.com/neio._"
+        }
+      ]
     },
     {
       "id": "staff-2",
