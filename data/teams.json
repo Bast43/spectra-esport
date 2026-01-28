@@ -21,13 +21,22 @@
           "id": "r6s-main-p1",
           "name": "Dogewyn",
           "role": "",
-          "photo": "https://i.imgur.com/5VJypmD.png",
+          "photo": "https://i.imgur.com/Utiqj1E.png",
           "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
+            "twitter": "https://x.com/dogewyn"
           },
-          "country": "FR"
+          "country": "FR",
+          "socialsLinks": [
+            {
+              "url": "https://www.twitch.tv/dogewyn"
+            },
+            {
+              "url": "https://www.tiktok.com/@dogewyn"
+            },
+            {
+              "url": "https://www.youtube.com/@dogewyn"
+            }
+          ]
         },
         {
           "id": "r6s-main-p2",
@@ -35,12 +44,14 @@
           "role": "",
           "photo": "https://i.imgur.com/50hUql4.png",
           "socials": {
-            "twitter": "https://x.com/soprar6s?s=21",
-            "twitch": "",
-            "instagram": "",
-            "youtube": "https://youtube.com/@sopraytb?si=_9D1wYr80zVxEGem"
+            "twitter": "https://x.com/soprar6s"
           },
-          "country": "BR"
+          "country": "BR",
+          "socialsLinks": [
+            {
+              "url": "https://www.youtube.com/@sopraytb"
+            }
+          ]
         },
         {
           "id": "r6s-main-p3",
@@ -48,11 +59,17 @@
           "role": "",
           "photo": "https://i.imgur.com/eeGu84y.png",
           "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
+            "twitter": "https://x.com/nz0_r6s"
           },
-          "country": "PL"
+          "country": "PL",
+          "socialsLinks": [
+            {
+              "url": "https://www.twitch.tv/ayoww__"
+            },
+            {
+              "url": "https://www.youtube.com/@ayoww"
+            }
+          ]
         },
         {
           "id": "r6s-main-p4",
@@ -60,11 +77,14 @@
           "role": "",
           "photo": "https://i.imgur.com/j6zGB5Y.png",
           "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
+            "twitter": "https://x.com/Antondrx"
           },
-          "country": "FR"
+          "country": "FR",
+          "socialsLinks": [
+            {
+              "url": "https://www.youtube.com/@antondrx"
+            }
+          ]
         },
         {
           "id": "r6s-main-p5",
@@ -72,11 +92,10 @@
           "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
+            "twitter": ""
           },
-          "country": "BE"
+          "country": "BE",
+          "socialsLinks": []
         },
         {
           "id": "r6s-main-player-1769559722813",
@@ -84,10 +103,17 @@
           "role": "",
           "photo": "https://i.imgur.com/0Cwj0KO.png",
           "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
-          }
+            "twitter": "https://x.com/maitrepsy"
+          },
+          "socialsLinks": [
+            {
+              "url": "https://m.twitch.tv/Psy4_iD/home"
+            },
+            {
+              "url": "https://www.youtube.com/@psy4732"
+            }
+          ],
+          "country": "FR"
         }
       ],
       "logo": "https://i.imgur.com/kZ6mya6.png"
@@ -112,12 +138,11 @@
           "id": "r6s-academy-p1",
           "name": "Aieroz",
           "role": "Entry Fragger",
-          "photo": "/images/default-player.jpg",
+          "photo": "https://i.imgur.com/aLq6fTI.png",
           "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
-          }
+            "twitter": "https://x.com/AierozR6s"
+          },
+          "socialsLinks": []
         },
         {
           "id": "r6s-academy-p2",
@@ -125,10 +150,9 @@
           "role": "Support",
           "photo": "/images/default-player.jpg",
           "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
-          }
+            "twitter": "https://x.com/luizir6"
+          },
+          "socialsLinks": []
         },
         {
           "id": "r6s-academy-p3",
@@ -136,10 +160,9 @@
           "role": "IGL",
           "photo": "https://i.imgur.com/0LJQe3y.png",
           "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
-          }
+            "twitter": ""
+          },
+          "socialsLinks": []
         },
         {
           "id": "r6s-academy-p4",
@@ -147,10 +170,9 @@
           "role": "Flex",
           "photo": "/images/default-player.jpg",
           "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
-          }
+            "twitter": ""
+          },
+          "socialsLinks": []
         },
         {
           "id": "r6s-academy-p5",
@@ -158,10 +180,9 @@
           "role": "Anchor",
           "photo": "/images/default-player.jpg",
           "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
-          }
+            "twitter": ""
+          },
+          "socialsLinks": []
         },
         {
           "id": "r6s-academy-p6",
@@ -169,10 +190,9 @@
           "role": "Substitute",
           "photo": "/images/default-player.jpg",
           "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
-          }
+            "twitter": ""
+          },
+          "socialsLinks": []
         }
       ],
       "logo": "https://i.imgur.com/kZ6mya6.png"
@@ -188,9 +208,20 @@
         "name": "Wxy",
         "photo": "https://i.imgur.com/zhsfyJX.png",
         "socials": {
-          "twitter": "",
-          "linkedin": ""
-        }
+          "twitter": "https://x.com/WxyCsgo"
+        },
+        "country": "RS",
+        "socialsLinks": [
+          {
+            "url": "https://www.youtube.com/@WXY15"
+          },
+          {
+            "url": "https://kick.com/wxyyyyy"
+          },
+          {
+            "url": "https://www.tiktok.com/@wxy15__"
+          }
+        ]
       },
       "players": [
         {
@@ -199,11 +230,10 @@
           "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
+            "twitter": ""
           },
-          "country": "RS"
+          "country": "RS",
+          "socialsLinks": []
         },
         {
           "id": "cs2-main-p2",
@@ -211,12 +241,14 @@
           "role": "",
           "photo": "https://i.imgur.com/2e4Fwzw.png",
           "socials": {
-            "twitter": "https://x.com/hejzzzzz7",
-            "twitch": "https://www.twitch.tv/hejz7",
-            "instagram": "",
-            "youtube": "https://www.youtube.com/@hejzzz7"
+            "twitter": ""
           },
-          "country": "RS"
+          "country": "RS",
+          "socialsLinks": [
+            {
+              "url": "https://www.youtube.com/@hejzzz7"
+            }
+          ]
         },
         {
           "id": "cs2-main-p3",
@@ -224,11 +256,10 @@
           "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
+            "twitter": ""
           },
-          "country": "RS"
+          "country": "RS",
+          "socialsLinks": []
         },
         {
           "id": "cs2-main-p4",
@@ -236,11 +267,10 @@
           "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
+            "twitter": ""
           },
-          "country": "RS"
+          "country": "RS",
+          "socialsLinks": []
         },
         {
           "id": "cs2-main-p5",
@@ -248,11 +278,10 @@
           "role": "",
           "photo": "/images/default-player.jpg",
           "socials": {
-            "twitter": "",
-            "twitch": "",
-            "instagram": ""
+            "twitter": ""
           },
-          "country": "RS"
+          "country": "RS",
+          "socialsLinks": []
         }
       ],
       "logo": "https://i.imgur.com/0B1hVXt.png"
@@ -265,10 +294,10 @@
       "role": "CEO",
       "photo": "https://i.imgur.com/A5HeEUW.png",
       "socials": {
-        "twitter": "",
-        "linkedin": ""
+        "twitter": "https://x.com/NeioSPECTRA"
       },
-      "country": "CH"
+      "country": "CH",
+      "socialsLinks": []
     },
     {
       "id": "staff-2",
@@ -276,10 +305,10 @@
       "role": "CEO",
       "photo": "https://i.imgur.com/Nsbaq0X.png",
       "socials": {
-        "twitter": "",
-        "linkedin": ""
+        "twitter": "https://x.com/KaLTouu"
       },
-      "country": "fr"
+      "country": "fr",
+      "socialsLinks": []
     },
     {
       "id": "staff-3",
@@ -287,10 +316,10 @@
       "role": "Moderator",
       "photo": "https://i.imgur.com/Vt7H5rB.png",
       "socials": {
-        "twitter": "",
-        "linkedin": ""
+        "twitter": "https://x.com/MaverikR6"
       },
-      "country": "fr"
+      "country": "fr",
+      "socialsLinks": []
     },
     {
       "id": "staff-4",
@@ -298,10 +327,10 @@
       "role": "Moderator",
       "photo": "https://i.imgur.com/cL8kwmT.png",
       "socials": {
-        "twitter": "",
-        "linkedin": ""
+        "twitter": "https://x.com/BastienC43"
       },
-      "country": "BE"
+      "country": "BE",
+      "socialsLinks": []
     }
   ]
 }

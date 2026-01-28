@@ -398,9 +398,9 @@ function TeamsEditor({ data, onSave }: any) {
     setTeams(newTeams)
   }
 
-  const updatePlayerSocial = (teamIndex: number, playerIndex: number, platform: string, value: string) => {
+  const updatePlayerSocialLinks = (teamIndex: number, playerIndex: number, socialsLinks: string[]) => {
     const newTeams = [...teams]
-    newTeams[teamIndex].players[playerIndex].socials[platform] = value
+    newTeams[teamIndex].players[playerIndex].socialsLinks = socialsLinks
     setTeams(newTeams)
   }
 
@@ -418,20 +418,18 @@ function TeamsEditor({ data, onSave }: any) {
     setTeams(newTeams)
   }
 
-  const updateCoachSocial = (teamIndex: number, platform: string, value: string) => {
+  const updateCoachSocialLinks = (teamIndex: number, socialsLinks: string[]) => {
     const newTeams = [...teams]
     if (!newTeams[teamIndex].coach) {
       newTeams[teamIndex].coach = {
         id: `${newTeams[teamIndex].id}-coach`,
         name: '',
         photo: '/images/default-coach.jpg',
-        socials: { twitter: '', linkedin: '' }
+        socials: { twitter: '' },
+        socialsLinks: []
       }
     }
-    if (!newTeams[teamIndex].coach.socials) {
-      newTeams[teamIndex].coach.socials = {}
-    }
-    newTeams[teamIndex].coach.socials[platform] = value
+    newTeams[teamIndex].coach.socialsLinks = socialsLinks
     setTeams(newTeams)
   }
 
@@ -441,9 +439,9 @@ function TeamsEditor({ data, onSave }: any) {
     setStaff(newStaff)
   }
 
-  const updateStaffSocial = (index: number, platform: string, value: string) => {
+  const updateStaffSocialLinks = (index: number, socialsLinks: string[]) => {
     const newStaff = [...staff]
-    newStaff[index].socials[platform] = value
+    newStaff[index].socialsLinks = socialsLinks
     setStaff(newStaff)
   }
 
@@ -692,31 +690,33 @@ function TeamsEditor({ data, onSave }: any) {
                         <input
                           type="text"
                           value={player.socials.twitter || ''}
-                          onChange={(e) => updatePlayerSocial(teamIndex, playerIndex, 'twitter', e.target.value)}
+                          onChange={(e) => updatePlayer(teamIndex, playerIndex, 'socials', { ...player.socials, twitter: e.target.value })}
                           className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
                           placeholder="X (Twitter) URL"
                         />
-                        <input
-                          type="text"
-                          value={player.socials.twitch || ''}
-                          onChange={(e) => updatePlayerSocial(teamIndex, playerIndex, 'twitch', e.target.value)}
-                          className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
-                          placeholder="Twitch URL"
-                        />
-                        <input
-                          type="text"
-                          value={player.socials.instagram || ''}
-                          onChange={(e) => updatePlayerSocial(teamIndex, playerIndex, 'instagram', e.target.value)}
-                          className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
-                          placeholder="Instagram URL"
-                        />
-                        <input
-                          type="text"
-                          value={player.socials.youtube || ''}
-                          onChange={(e) => updatePlayerSocial(teamIndex, playerIndex, 'youtube', e.target.value)}
-                          className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
-                          placeholder="YouTube URL"
-                        />
+                        {player.socialsLinks && player.socialsLinks.map((link, idx) => (
+                          <div key={idx} className="flex gap-2 items-center">
+                            <input
+                              type="text"
+                              value={link.url}
+                              onChange={e => {
+                                const newLinks = [...player.socialsLinks];
+                                newLinks[idx].url = e.target.value;
+                                updatePlayerSocialLinks(teamIndex, playerIndex, newLinks);
+                              }}
+                              className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs w-full"
+                              placeholder="Lien social (YouTube, TikTok, Kick, etc.)"
+                            />
+                            <button type="button" onClick={() => {
+                              const newLinks = player.socialsLinks.filter((_, i) => i !== idx);
+                              updatePlayerSocialLinks(teamIndex, playerIndex, newLinks);
+                            }} className="text-red-400 hover:text-red-600"><Trash2 size={16} /></button>
+                          </div>
+                        ))}
+                        <button type="button" onClick={() => {
+                          const newLinks = player.socialsLinks ? [...player.socialsLinks, { url: '' }] : [{ url: '' }];
+                          updatePlayerSocialLinks(teamIndex, playerIndex, newLinks);
+                        }} className="p-2 bg-spectra-violet/20 border border-spectra-violet/40 rounded text-spectra-violet hover:bg-spectra-violet/40"><Plus size={16} /></button>
                       </div>
                     </div>
                   ))}
@@ -765,21 +765,37 @@ function TeamsEditor({ data, onSave }: any) {
                       maxLength={2}
                     />
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
                     <input
                       type="text"
                       value={team.coach?.socials?.twitter || ''}
-                      onChange={(e) => updateCoachSocial(teamIndex, 'twitter', e.target.value)}
+                      onChange={(e) => updateCoach(teamIndex, 'socials', { ...team.coach?.socials, twitter: e.target.value })}
                       className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
                       placeholder="X (Twitter) URL"
                     />
-                    <input
-                      type="text"
-                      value={team.coach?.socials?.linkedin || ''}
-                      onChange={(e) => updateCoachSocial(teamIndex, 'linkedin', e.target.value)}
-                      className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
-                      placeholder="LinkedIn URL"
-                    />
+                    {team.coach?.socialsLinks && team.coach.socialsLinks.map((link, idx) => (
+                      <div key={idx} className="flex gap-2 items-center">
+                        <input
+                          type="text"
+                          value={link.url}
+                          onChange={e => {
+                            const newLinks = [...team.coach.socialsLinks];
+                            newLinks[idx].url = e.target.value;
+                            updateCoachSocialLinks(teamIndex, newLinks);
+                          }}
+                          className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs w-full"
+                          placeholder="Lien social (YouTube, TikTok, Kick, etc.)"
+                        />
+                        <button type="button" onClick={() => {
+                          const newLinks = team.coach.socialsLinks.filter((_, i) => i !== idx);
+                          updateCoachSocialLinks(teamIndex, newLinks);
+                        }} className="text-red-400 hover:text-red-600"><Trash2 size={16} /></button>
+                      </div>
+                    ))}
+                    <button type="button" onClick={() => {
+                      const newLinks = team.coach?.socialsLinks ? [...team.coach.socialsLinks, { url: '' }] : [{ url: '' }];
+                      updateCoachSocialLinks(teamIndex, newLinks);
+                    }} className="p-2 bg-spectra-violet/20 border border-spectra-violet/40 rounded text-spectra-violet hover:bg-spectra-violet/40"><Plus size={16} /></button>
                   </div>
                 </div>
               </div>
@@ -826,21 +842,37 @@ function TeamsEditor({ data, onSave }: any) {
                   maxLength={2}
                 />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
                 <input
                   type="text"
                   value={member.socials.twitter || ''}
-                  onChange={(e) => updateStaffSocial(index, 'twitter', e.target.value)}
+                  onChange={(e) => updateStaffMember(index, 'socials', { ...member.socials, twitter: e.target.value })}
                   className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
                   placeholder="X (Twitter) URL"
                 />
-                <input
-                  type="text"
-                  value={member.socials.linkedin || ''}
-                  onChange={(e) => updateStaffSocial(index, 'linkedin', e.target.value)}
-                  className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs"
-                  placeholder="LinkedIn URL"
-                />
+                {member.socialsLinks && member.socialsLinks.map((link, idx) => (
+                  <div key={idx} className="flex gap-2 items-center">
+                    <input
+                      type="text"
+                      value={link.url}
+                      onChange={e => {
+                        const newLinks = [...member.socialsLinks];
+                        newLinks[idx].url = e.target.value;
+                        updateStaffSocialLinks(index, newLinks);
+                      }}
+                      className="px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-xs w-full"
+                      placeholder="Lien social (YouTube, TikTok, Kick, etc.)"
+                    />
+                    <button type="button" onClick={() => {
+                      const newLinks = member.socialsLinks.filter((_, i) => i !== idx);
+                      updateStaffSocialLinks(index, newLinks);
+                    }} className="text-red-400 hover:text-red-600"><Trash2 size={16} /></button>
+                  </div>
+                ))}
+                <button type="button" onClick={() => {
+                  const newLinks = member.socialsLinks ? [...member.socialsLinks, { url: '' }] : [{ url: '' }];
+                  updateStaffSocialLinks(index, newLinks);
+                }} className="p-2 bg-spectra-violet/20 border border-spectra-violet/40 rounded text-spectra-violet hover:bg-spectra-violet/40"><Plus size={16} /></button>
               </div>
             </div>
           ))}

@@ -4,8 +4,14 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Twitch, Instagram, Users, Trophy } from 'lucide-react'
 import { YouTubeIcon } from '@/components/YouTubeIcon'
+import { TikTokIcon } from '@/components/TikTokIcon'
+import { KickIcon } from '@/components/KickIcon'
 import { XIcon } from '@/components/XIcon'
 import { CountryFlag } from '@/components/CountryFlag'
+
+interface SocialLink {
+  url: string;
+}
 
 interface Player {
   id: string
@@ -15,10 +21,21 @@ interface Player {
   country?: string
   socials: {
     twitter?: string
-    twitch?: string
-    instagram?: string
-    youtube?: string
+    // Les autres champs sont migrés dans socialsLinks
   }
+  socialsLinks?: SocialLink[]
+}
+
+interface Coach {
+  id: string
+  name: string
+  photo: string
+  country?: string
+  socials: {
+    twitter?: string
+    // Les autres champs sont migrés dans socialsLinks
+  }
+  socialsLinks?: SocialLink[]
 }
 
 interface Team {
@@ -27,16 +44,7 @@ interface Team {
   shortName?: string
   game: string
   description: string
-  coach?: {
-    id: string
-    name: string
-    photo: string
-    country?: string
-    socials: {
-      twitter?: string
-      linkedin?: string
-    }
-  }
+  coach?: Coach
   players: Player[]
 }
 
@@ -48,8 +56,9 @@ interface StaffMember {
   country?: string
   socials: {
     twitter?: string
-    linkedin?: string
+    // Les autres champs sont migrés dans socialsLinks
   }
+  socialsLinks?: SocialLink[]
 }
 
 interface Result {
@@ -212,9 +221,9 @@ export default function TeamsPage() {
                   {/* Player Info */}
                   <div className="space-y-3">
                     <div>
-                      <h3 className="text-2xl font-display font-bold text-white mb-1 flex items-center gap-2">
-                        {player.name}
-                        {player.country && <CountryFlag countryCode={player.country} className="w-6 h-4" />}
+                      <h3 className="text-2xl font-display font-bold text-white mb-1 flex items-center gap-2 overflow-hidden whitespace-nowrap max-w-full">
+                        <span className="truncate">{player.name}</span>
+                        {player.country && <CountryFlag countryCode={player.country} className="w-6 h-4 min-w-[1.5rem] max-w-[1.5rem] object-contain" />}
                       </h3>
                       <p className="text-spectra-mauve text-sm font-medium uppercase tracking-wider">
                         {player.role}
@@ -222,8 +231,8 @@ export default function TeamsPage() {
                     </div>
 
                     {/* Social Links */}
-                    {(player.socials.twitter || player.socials.twitch || player.socials.instagram || player.socials.youtube) && (
-                      <div className="flex gap-2 pt-2">
+                    {(player.socials.twitter || (player.socialsLinks && player.socialsLinks.length > 0)) && (
+                      <div className="flex flex-wrap gap-2 pt-2 w-full justify-center overflow-hidden">
                         {player.socials.twitter && (
                           <a
                             href={player.socials.twitter}
@@ -234,36 +243,73 @@ export default function TeamsPage() {
                             <XIcon className="w-[18px] h-[18px]" />
                           </a>
                         )}
-                        {player.socials.twitch && (
-                          <a
-                            href={player.socials.twitch}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#9146FF] hover:bg-white/10 hover:border-[#9146FF]/50 transition-all duration-300"
-                          >
-                            <Twitch size={18} />
-                          </a>
-                        )}
-                        {player.socials.instagram && (
-                          <a
-                            href={player.socials.instagram}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#E4405F] hover:bg-white/10 hover:border-[#E4405F]/50 transition-all duration-300"
-                          >
-                            <Instagram size={18} />
-                          </a>
-                        )}
-                        {player.socials.youtube && (
-                          <a
-                            href={player.socials.youtube}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#FF0000] hover:bg-white/10 hover:border-[#FF0000]/50 transition-all duration-300"
-                          >
-                            <YouTubeIcon className="w-[18px] h-[18px]" />
-                          </a>
-                        )}
+                        {player.socialsLinks && player.socialsLinks.map((link, idx) => {
+                          const url = link.url;
+                          if (!url) return null;
+                          if (url.includes('kick.com')) {
+                            return (
+                              <a
+                                key={idx}
+                                href={url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#53FC18] hover:bg-white/10 hover:border-[#53FC18]/50 transition-all duration-300"
+                              >
+                                <KickIcon className="w-[18px] h-[18px]" />
+                              </a>
+                            );
+                          } else if (url.includes('tiktok.com')) {
+                            return (
+                              <a
+                                key={idx}
+                                href={url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#25F4EE] hover:bg-white/10 hover:border-[#25F4EE]/50 transition-all duration-300"
+                              >
+                                <TikTokIcon className="w-[18px] h-[18px]" />
+                              </a>
+                            );
+                          } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                            return (
+                              <a
+                                key={idx}
+                                href={url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#FF0000] hover:bg-white/10 hover:border-[#FF0000]/50 transition-all duration-300"
+                              >
+                                <YouTubeIcon className="w-[18px] h-[18px]" />
+                              </a>
+                            );
+                          } else if (url.includes('twitch.tv')) {
+                            return (
+                              <a
+                                key={idx}
+                                href={url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#9146FF] hover:bg-white/10 hover:border-[#9146FF]/50 transition-all duration-300"
+                              >
+                                <Twitch size={18} />
+                              </a>
+                            );
+                          } else if (url.includes('instagram.com')) {
+                            return (
+                              <a
+                                key={idx}
+                                href={url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#E4405F] hover:bg-white/10 hover:border-[#E4405F]/50 transition-all duration-300"
+                              >
+                                <Instagram size={18} />
+                              </a>
+                            );
+                          } else {
+                            return null;
+                          }
+                        })}
                       </div>
                     )}
                   </div>
@@ -324,7 +370,7 @@ export default function TeamsPage() {
                         </div>
 
                         {/* Social Links */}
-                        {(player.socials.twitter || player.socials.twitch || player.socials.instagram) && (
+                        {(player.socials.twitter || (player.socialsLinks && player.socialsLinks.length > 0)) && (
                           <div className="flex gap-2 pt-2">
                             {player.socials.twitter && (
                               <a
@@ -336,26 +382,73 @@ export default function TeamsPage() {
                                 <XIcon className="w-[18px] h-[18px]" />
                               </a>
                             )}
-                            {player.socials.twitch && (
-                              <a
-                                href={player.socials.twitch}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#9146FF] hover:bg-white/10 hover:border-[#9146FF]/50 transition-all duration-300"
-                              >
-                                <Twitch size={18} />
-                              </a>
-                            )}
-                            {player.socials.instagram && (
-                              <a
-                                href={player.socials.instagram}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#E4405F] hover:bg-white/10 hover:border-[#E4405F]/50 transition-all duration-300"
-                              >
-                                <Instagram size={18} />
-                              </a>
-                            )}
+                            {player.socialsLinks && player.socialsLinks.map((link, idx) => {
+                              const url = link.url;
+                              if (!url) return null;
+                              if (url.includes('kick.com')) {
+                                return (
+                                  <a
+                                    key={idx}
+                                    href={url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#53FC18] hover:bg-white/10 hover:border-[#53FC18]/50 transition-all duration-300"
+                                  >
+                                    <KickIcon className="w-[18px] h-[18px]" />
+                                  </a>
+                                );
+                              } else if (url.includes('tiktok.com')) {
+                                return (
+                                  <a
+                                    key={idx}
+                                    href={url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#25F4EE] hover:bg-white/10 hover:border-[#25F4EE]/50 transition-all duration-300"
+                                  >
+                                    <TikTokIcon className="w-[18px] h-[18px]" />
+                                  </a>
+                                );
+                              } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                                return (
+                                  <a
+                                    key={idx}
+                                    href={url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#FF0000] hover:bg-white/10 hover:border-[#FF0000]/50 transition-all duration-300"
+                                  >
+                                    <YouTubeIcon className="w-[18px] h-[18px]" />
+                                  </a>
+                                );
+                              } else if (url.includes('twitch.tv')) {
+                                return (
+                                  <a
+                                    key={idx}
+                                    href={url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#9146FF] hover:bg-white/10 hover:border-[#9146FF]/50 transition-all duration-300"
+                                  >
+                                    <Twitch size={18} />
+                                  </a>
+                                );
+                              } else if (url.includes('instagram.com')) {
+                                return (
+                                  <a
+                                    key={idx}
+                                    href={url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#E4405F] hover:bg-white/10 hover:border-[#E4405F]/50 transition-all duration-300"
+                                  >
+                                    <Instagram size={18} />
+                                  </a>
+                                );
+                              } else {
+                                return null;
+                              }
+                            })}
                           </div>
                         )}
                       </div>
@@ -412,7 +505,7 @@ export default function TeamsPage() {
                       </div>
 
                       {/* Social Links */}
-                      {(activeTeam.coach.socials?.twitter || activeTeam.coach.socials?.linkedin) && (
+                      {(activeTeam.coach.socials?.twitter || (activeTeam.coach.socialsLinks && activeTeam.coach.socialsLinks.length > 0)) && (
                         <div className="flex gap-2 pt-2">
                           {activeTeam.coach.socials.twitter && (
                             <a
@@ -424,7 +517,73 @@ export default function TeamsPage() {
                               <XIcon className="w-[18px] h-[18px]" />
                             </a>
                           )}
-                          {/* Lien Linkedin supprimé, remplacé par YouTube */}
+                          {activeTeam.coach.socialsLinks && activeTeam.coach.socialsLinks.map((link, idx) => {
+                            const url = link.url;
+                            if (!url) return null;
+                            if (url.includes('kick.com')) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#53FC18] hover:bg-white/10 hover:border-[#53FC18]/50 transition-all duration-300"
+                                >
+                                  <KickIcon className="w-[18px] h-[18px]" />
+                                </a>
+                              );
+                            } else if (url.includes('tiktok.com')) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#25F4EE] hover:bg-white/10 hover:border-[#25F4EE]/50 transition-all duration-300"
+                                >
+                                  <TikTokIcon className="w-[18px] h-[18px]" />
+                                </a>
+                              );
+                            } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#FF0000] hover:bg-white/10 hover:border-[#FF0000]/50 transition-all duration-300"
+                                >
+                                  <YouTubeIcon className="w-[18px] h-[18px]" />
+                                </a>
+                              );
+                            } else if (url.includes('twitch.tv')) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#9146FF] hover:bg-white/10 hover:border-[#9146FF]/50 transition-all duration-300"
+                                >
+                                  <Twitch size={18} />
+                                </a>
+                              );
+                            } else if (url.includes('instagram.com')) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#E4405F] hover:bg-white/10 hover:border-[#E4405F]/50 transition-all duration-300"
+                                >
+                                  <Instagram size={18} />
+                                </a>
+                              );
+                            } else {
+                              return null;
+                            }
+                          })}
                         </div>
                       )}
                     </div>
@@ -526,7 +685,7 @@ export default function TeamsPage() {
                       </div>
 
                       {/* Social Links */}
-                      {(member.socials.twitter || member.socials.linkedin) && (
+                      {(member.socials.twitter || (member.socialsLinks && member.socialsLinks.length > 0)) && (
                         <div className="flex justify-center gap-2 pt-2">
                           {member.socials.twitter && (
                             <a
@@ -538,7 +697,73 @@ export default function TeamsPage() {
                               <XIcon className="w-[18px] h-[18px]" />
                             </a>
                           )}
-                          {/* Lien Linkedin supprimé, remplacé par YouTube */}
+                          {member.socialsLinks && member.socialsLinks.map((link, idx) => {
+                            const url = link.url;
+                            if (!url) return null;
+                            if (url.includes('kick.com')) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#53FC18] hover:bg-white/10 hover:border-[#53FC18]/50 transition-all duration-300"
+                                >
+                                  <KickIcon className="w-[18px] h-[18px]" />
+                                </a>
+                              );
+                            } else if (url.includes('tiktok.com')) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#25F4EE] hover:bg-white/10 hover:border-[#25F4EE]/50 transition-all duration-300"
+                                >
+                                  <TikTokIcon className="w-[18px] h-[18px]" />
+                                </a>
+                              );
+                            } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#FF0000] hover:bg-white/10 hover:border-[#FF0000]/50 transition-all duration-300"
+                                >
+                                  <YouTubeIcon className="w-[18px] h-[18px]" />
+                                </a>
+                              );
+                            } else if (url.includes('twitch.tv')) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#9146FF] hover:bg-white/10 hover:border-[#9146FF]/50 transition-all duration-300"
+                                >
+                                  <Twitch size={18} />
+                                </a>
+                              );
+                            } else if (url.includes('instagram.com')) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#E4405F] hover:bg-white/10 hover:border-[#E4405F]/50 transition-all duration-300"
+                                >
+                                  <Instagram size={18} />
+                                </a>
+                              );
+                            } else {
+                              return null;
+                            }
+                          })}
                         </div>
                       )}
                     </div>
