@@ -424,16 +424,7 @@ export default function TeamsPage() {
                               <XIcon className="w-[18px] h-[18px]" />
                             </a>
                           )}
-                          {activeTeam.coach.socials.linkedin && (
-                            <a
-                              href={activeTeam.coach.socials.linkedin}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#0077B5] hover:bg-white/10 hover:border-[#0077B5]/50 transition-all duration-300"
-                            >
-                              <Linkedin size={18} />
-                            </a>
-                          )}
+                          {/* Lien Linkedin supprimé, remplacé par YouTube */}
                         </div>
                       )}
                     </div>
@@ -547,16 +538,7 @@ export default function TeamsPage() {
                               <XIcon className="w-[18px] h-[18px]" />
                             </a>
                           )}
-                          {member.socials.linkedin && (
-                            <a
-                              href={member.socials.linkedin}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#0A66C2] hover:bg-white/10 hover:border-[#0A66C2]/50 transition-all duration-300"
-                            >
-                              <Linkedin size={18} />
-                            </a>
-                          )}
+                          {/* Lien Linkedin supprimé, remplacé par YouTube */}
                         </div>
                       )}
                     </div>
