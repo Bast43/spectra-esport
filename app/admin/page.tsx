@@ -708,7 +708,7 @@ function TeamsEditor({ data, onSave }: any) {
                               placeholder="Lien social (YouTube, TikTok, Kick, etc.)"
                             />
                             <button type="button" onClick={() => {
-                              const newLinks = player.socialsLinks.filter((_, i) => i !== idx);
+                              const newLinks = player.socialsLinks.filter((_: { url: string }, i: number) => i !== idx);
                               updatePlayerSocialLinks(teamIndex, playerIndex, newLinks);
                             }} className="text-red-400 hover:text-red-600"><Trash2 size={16} /></button>
                           </div>
