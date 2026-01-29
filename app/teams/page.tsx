@@ -506,7 +506,7 @@ export default function TeamsPage() {
 
                       {/* Social Links */}
                       {(activeTeam.coach.socials?.twitter || (activeTeam.coach.socialsLinks && activeTeam.coach.socialsLinks.length > 0)) && (
-                        <div className="flex gap-2 pt-2">
+                        <div className="flex flex-wrap gap-2 pt-2 w-full justify-center overflow-hidden">
                           {activeTeam.coach.socials.twitter && (
                             <a
                               href={activeTeam.coach.socials.twitter}
@@ -686,7 +686,7 @@ export default function TeamsPage() {
 
                       {/* Social Links */}
                       {(member.socials.twitter || (member.socialsLinks && member.socialsLinks.length > 0)) && (
-                        <div className="flex justify-center gap-2 pt-2">
+                        <div className="flex flex-wrap gap-2 pt-2 w-full justify-center overflow-hidden">
                           {member.socials.twitter && (
                             <a
                               href={member.socials.twitter}
