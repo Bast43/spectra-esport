@@ -80,11 +80,11 @@
           "id": "r6s-main-p1",
           "name": "Dogewyn",
           "role": "Flex",
-          "photo": "https://i.imgur.com/3S8ePj3.png",
+          "photo": "https://i.imgur.com/EWn1fQN.png",
           "socials": {
             "twitter": "https://x.com/dogewyn"
           },
-          "country": "ES",
+          "country": "FR",
           "socialsLinks": [
             {
               "url": "https://www.twitch.tv/dogewyn"
@@ -209,7 +209,7 @@
       "coach": {
         "id": "cs2-main-coach",
         "name": "Wxy",
-        "photo": "https://i.imgur.com/Xmv2HWT.png",
+        "photo": "https://i.imgur.com/FurbyG8.png",
         "socials": {
           "twitter": "https://x.com/WxyCsgo"
         },
@@ -231,7 +231,7 @@
           "id": "cs2-main-p1",
           "name": "Taskela",
           "role": "",
-          "photo": "https://i.imgur.com/TmGmEp9.png",
+          "photo": "https://i.imgur.com/XMLHc8w.png",
           "socials": {
             "twitter": ""
           },
@@ -244,12 +244,15 @@
           "role": "",
           "photo": "https://i.imgur.com/2e4Fwzw.png",
           "socials": {
-            "twitter": ""
+            "twitter": "https://x.com/hejzzzzz7"
           },
           "country": "RS",
           "socialsLinks": [
             {
               "url": "https://www.youtube.com/@hejzzz7"
+            },
+            {
+              "url": "https://www.twitch.tv/hejz7"
             }
           ]
         },
@@ -257,7 +260,7 @@
           "id": "cs2-main-p3",
           "name": "Djolerdy",
           "role": "",
-          "photo": "https://i.imgur.com/09EPclJ.png",
+          "photo": "https://i.imgur.com/oWFMBfR.png",
           "socials": {
             "twitter": ""
           },
