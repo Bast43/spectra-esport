@@ -114,7 +114,7 @@ export default function Footer() {
               ))}
             </div>
             <a
-              href="mailto:spectraeu.contact@gmail.com"
+              href="mailto:contact@spectra-esports.eu"
               className="inline-block text-spectra-mauve hover:text-spectra-violet font-medium transition-colors underline mt-4"
             >
               Nous contacter
