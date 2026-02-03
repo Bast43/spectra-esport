@@ -1,98 +1,106 @@
 import { NextResponse } from 'next/server'
 
-// Cache simple en mémoire
-let tweetCache: any = null
-let lastFetchTime = 0
-const CACHE_DURATION = 30 * 60 * 1000 // 30 minutes en millisecondes
+// Cache en mémoire
+let cachedTweets: any = null
+let lastFetch: number = 0
+const CACHE_DURATION = 15 * 60 * 1000 // 15 minutes
 
 export async function GET() {
   try {
-    // Vérifier si on a un cache valide
     const now = Date.now()
-    if (tweetCache && (now - lastFetchTime) < CACHE_DURATION) {
+    
+    // Retourner le cache si moins de 15 minutes
+    if (cachedTweets && (now - lastFetch) < CACHE_DURATION) {
       console.log('Returning cached tweets')
-      return NextResponse.json({ tweets: tweetCache, cached: true })
+      return NextResponse.json({
+        ...cachedTweets,
+        cached: true,
+        cacheAge: Math.floor((now - lastFetch) / 1000)
+      })
     }
 
-    // Récupérer les variables d'environnement
+    console.log('Fetching fresh tweets from Twitter API')
+    
     const bearerToken = process.env.TWITTER_BEARER_TOKEN
-    const username = process.env.TWITTER_USERNAME || 'SpectraEU'
-
+    
     if (!bearerToken) {
       return NextResponse.json(
-        { error: 'Twitter API credentials not configured' },
+        { tweets: [], error: 'Twitter Bearer Token not configured' },
         { status: 500 }
       )
     }
 
-    console.log(`Fetching tweets for @${username}`)
-
-    // Étape 1: Récupérer l'ID du user
+    // Récupérer l'ID utilisateur
     const userResponse = await fetch(
-      `https://api.twitter.com/2/users/by/username/${username}`,
+      'https://api.twitter.com/2/users/by/username/SpectraEU',
       {
-        headers: {
+        headers: { 
           'Authorization': `Bearer ${bearerToken}`,
-        },
+          'User-Agent': 'v2UserTweetsJS'
+        }
       }
     )
 
     if (!userResponse.ok) {
-      const errorText = await userResponse.text()
-      console.error('Twitter API user error:', errorText)
-      return NextResponse.json(
-        { error: 'Failed to fetch user data', details: errorText },
-        { status: userResponse.status }
-      )
+      const errorData = await userResponse.json()
+      throw new Error(JSON.stringify(errorData))
     }
-
+    
     const userData = await userResponse.json()
-    const userId = userData.data?.id
+    const userId = userData.data.id
 
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
-      )
-    }
-
-    // Étape 2: Récupérer les tweets
+    // Récupérer les tweets
     const tweetsResponse = await fetch(
-      `https://api.twitter.com/2/users/${userId}/tweets?max_results=10&tweet.fields=created_at,public_metrics,entities&expansions=attachments.media_keys&media.fields=url,preview_image_url`,
+      `https://api.twitter.com/2/users/${userId}/tweets?max_results=10&tweet.fields=created_at,public_metrics`,
       {
-        headers: {
+        headers: { 
           'Authorization': `Bearer ${bearerToken}`,
-        },
+          'User-Agent': 'v2UserTweetsJS'
+        }
       }
     )
 
     if (!tweetsResponse.ok) {
-      const errorText = await tweetsResponse.text()
-      console.error('Twitter API tweets error:', errorText)
-      return NextResponse.json(
-        { error: 'Failed to fetch tweets', details: errorText },
-        { status: tweetsResponse.status }
-      )
+      const errorData = await tweetsResponse.json()
+      throw new Error(JSON.stringify(errorData))
     }
 
     const tweetsData = await tweetsResponse.json()
 
     // Mettre en cache
-    tweetCache = tweetsData.data || []
-    lastFetchTime = now
+    cachedTweets = {
+      tweets: tweetsData.data || [],
+      fetchedAt: new Date().toISOString()
+    }
+    lastFetch = now
 
-    console.log(`Successfully fetched ${tweetCache.length} tweets`)
+    console.log(`Cached ${tweetsData.data?.length || 0} tweets`)
 
-    return NextResponse.json({ 
-      tweets: tweetCache, 
-      cached: false,
-      fetchedAt: new Date(now).toISOString()
+    return NextResponse.json({
+      ...cachedTweets,
+      cached: false
     })
 
   } catch (error: any) {
-    console.error('Twitter API error:', error)
+    console.error('Twitter API Error:', error)
+    
+    // Si on a un cache, le retourner même s'il est vieux
+    if (cachedTweets) {
+      console.log('Returning stale cache due to error')
+      return NextResponse.json({
+        ...cachedTweets,
+        cached: true,
+        warning: 'Using cached data due to API error',
+        error: error.message
+      })
+    }
+
     return NextResponse.json(
-      { error: 'Internal server error', message: error.message },
+      { 
+        tweets: [], 
+        error: 'Failed to fetch tweets',
+        details: error.message 
+      },
       { status: 500 }
     )
   }
