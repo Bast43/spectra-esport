@@ -12,6 +12,7 @@ interface Team {
   description: string
   logo?: string
   players: any[]
+  shortName?: string // Ajouté pour compatibilité avec le JSON et le code
 }
 
 export default function Home() {
