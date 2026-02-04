@@ -110,7 +110,7 @@ export default function Home() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: Users, value: teams.reduce((sum, t) => sum + t.players.length, 0).toString(), label: 'Professional Players', color: 'text-spectra-violet' },
+              { icon: Users, value: teams.reduce((sum, t) => sum + t.players.length, 0).toString(), label: 'Competitive Players', color: 'text-spectra-violet' },
               { icon: Trophy, value: Object.keys(gameGroups).length.toString(), label: 'Active Disciplines', color: 'text-spectra-purple' },
               { icon: Target, value: '∞', label: 'Victories to Come', color: 'text-spectra-mauve' },
             ].map((stat, index) => (
@@ -139,6 +139,68 @@ export default function Home() {
               // Get logo from first team of this game
               const gameLogo = gameTeams[0]?.logo
               
+              // Si le jeu est Rainbow Six Siege, afficher deux liens côte à côte pour Main et Academy
+              if (game === 'Rainbow Six Siege') {
+                // Chercher les deux équipes par leur shortName
+                const mainTeam = gameTeams.find(t => t.shortName?.toLowerCase().includes('main'));
+                const acaTeam = gameTeams.find(t => t.shortName?.toLowerCase().includes('academy'));
+                return (
+                  <div 
+                    key={game} 
+                    className="group cursor-pointer overflow-hidden bg-black/40 backdrop-blur-sm rounded-xl border-2 border-spectra-violet/50 hover:border-spectra-violet shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:shadow-[0_0_60px_rgba(139,92,246,0.8)] transition-all duration-300"
+                  >
+                    <div className="relative h-64 mb-6">
+                      {/* Fond noir avec glow */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-spectra-violet/30 via-black/50 to-spectra-purple/30" />
+                      {/* Lignes néon animées */}
+                      <div className="absolute inset-0 opacity-20">
+                        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-spectra-violet to-transparent animate-pulse" />
+                        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-spectra-violet to-transparent animate-pulse" style={{ animationDelay: '1s' }} />
+                      </div>
+                      <div className="absolute inset-0 p-8 flex items-center justify-center">
+                        {gameLogo && gameLogo !== '/images/default-team.png' ? (
+                          <div className="relative w-full h-full transition-transform duration-300 group-hover:scale-105">
+                            <Image
+                              src={gameLogo}
+                              alt={`${game} logo`}
+                              fill
+                              className="object-contain drop-shadow-[0_0_60px_rgba(139,92,246,1)] group-hover:drop-shadow-[0_0_80px_rgba(139,92,246,1)]"
+                            />
+                          </div>
+                        ) : (
+                          <h3 className="text-3xl font-display font-bold text-white">{game}</h3>
+                        )}
+                      </div>
+                    </div>
+                    <div className="px-6 pb-6">
+                      <p className="text-gray-400 mb-4">
+                        {gameTeams.length > 1 
+                          ? `${gameTeams.length} elite teams competing at the highest level.`
+                          : gameTeams[0]?.description || 'Our competitive roster.'}
+                      </p>
+                      <div className="flex flex-col md:flex-row gap-2 md:gap-4 justify-between">
+                        {mainTeam && (
+                          <Link 
+                            href={`/teams?team=${mainTeam.id}`} 
+                            className="text-spectra-mauve hover:text-spectra-violet transition-colors inline-flex items-center gap-2 w-full md:w-auto justify-center"
+                          >
+                            View roster Main <ChevronRight size={16} />
+                          </Link>
+                        )}
+                        {acaTeam && (
+                          <Link 
+                            href={`/teams?team=${acaTeam.id}`} 
+                            className="text-spectra-mauve hover:text-spectra-violet transition-colors inline-flex items-center gap-2 w-full md:w-auto justify-center"
+                          >
+                            View roster ACA <ChevronRight size={16} />
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+              // Sinon, comportement par défaut
               return (
                 <div 
                   key={game} 
@@ -147,13 +209,11 @@ export default function Home() {
                   <div className="relative h-64 mb-6">
                     {/* Fond noir avec glow */}
                     <div className="absolute inset-0 bg-gradient-to-br from-spectra-violet/30 via-black/50 to-spectra-purple/30" />
-                    
                     {/* Lignes néon animées */}
                     <div className="absolute inset-0 opacity-20">
                       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-spectra-violet to-transparent animate-pulse" />
                       <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-spectra-violet to-transparent animate-pulse" style={{ animationDelay: '1s' }} />
                     </div>
-                    
                     <div className="absolute inset-0 p-8 flex items-center justify-center">
                       {gameLogo && gameLogo !== '/images/default-team.png' ? (
                         <div className="relative w-full h-full transition-transform duration-300 group-hover:scale-105">
@@ -169,7 +229,6 @@ export default function Home() {
                       )}
                     </div>
                   </div>
-                  
                   <div className="px-6 pb-6">
                     <p className="text-gray-400 mb-4">
                       {gameTeams.length > 1 

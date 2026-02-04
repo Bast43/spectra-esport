@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     default: 'Spectra Esport | Silent Impact - Swiss Esports Organization',
     template: '%s | Spectra Esport'
   },
-  description: 'Swiss esports organization competing at the highest European level. Professional teams in Rainbow Six Siege, Counter-Strike 2, and more.',
+  description: 'Swiss esports organization competing at the highest European level. Semi-Professional teams in Rainbow Six Siege, Counter-Strike 2, and more.',
   keywords: [
     'Spectra Esport',
     'Spectra EU',
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     url: 'https://spectra-esport.vercel.app',
     siteName: 'Spectra Esport',
     title: 'Spectra Esport | Silent Impact - Swiss Esports Organization',
-    description: 'Swiss esports organization competing at the highest European level. Professional teams in Rainbow Six Siege, Counter-Strike 2, and more.',
+    description: 'Swiss esports organization competing at the highest European level. Semi-Professional teams in Rainbow Six Siege, Counter-Strike 2, and more.',
     images: [
       {
         url: '/logo.png',
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     site: '@SpectraEU',
     creator: '@SpectraEU',
     title: 'Spectra Esport | Silent Impact',
-    description: 'Swiss esports organization competing at the highest European level.',
+    description: 'Swiss esports organization competing at the highest European level. Semi-Professional teams in Rainbow Six Siege, Counter-Strike 2, and more.',
     images: ['/logo.png'],
   },
   icons: {
