@@ -5,7 +5,7 @@
       "name": "Rainbow Six Siege - Main",
       "shortName": "R6S Main",
       "game": "Rainbow Six Siege",
-      "description": "Our main Rainbow Six Siege team, competing at the highest European level.",
+      "description": "Rainbow Six Siege team, competing at the highest European level.",
       "coach": {
         "id": "r6s-main-coach",
         "name": "Rom",
@@ -120,10 +120,10 @@
     },
     {
       "id": "r6s-academy",
-      "name": "Rainbow Six Siege - Academy",
+      "name": "Rainbow Six Siege - 67",
       "shortName": "R6S Academy",
       "game": "Rainbow Six Siege",
-      "description": "Our Academy team, training ground for future champions.",
+      "description": "Rainbow Six Siege team, competing at the highest European level.",
       "coach": {
         "id": "r6s-academy-coach",
         "name": "LFC",
