@@ -185,7 +185,7 @@ export default function Home() {
                             href={`/teams?team=${mainTeam.id}`} 
                             className="text-spectra-mauve hover:text-spectra-violet transition-colors inline-flex items-center gap-2 w-full md:w-auto justify-center"
                           >
-                            View roster Main <ChevronRight size={16} />
+                            View roster SPECTRA <ChevronRight size={16} />
                           </Link>
                         )}
                         {acaTeam && (
@@ -193,7 +193,7 @@ export default function Home() {
                             href={`/teams?team=${acaTeam.id}`} 
                             className="text-spectra-mauve hover:text-spectra-violet transition-colors inline-flex items-center gap-2 w-full md:w-auto justify-center"
                           >
-                            View roster 67 <ChevronRight size={16} />
+                            View roster SPECTRA 67 <ChevronRight size={16} />
                           </Link>
                         )}
                       </div>

@@ -141,7 +141,7 @@ export default function TeamsPage() {
             Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-spectra-violet to-spectra-mauve">Teams</span>
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Découvrez les rosters d'élite qui composent l'organisation Spectra
+            Discover the elite rosters that make up the Spectra organization
           </p>
         </div>
 

@@ -2,7 +2,7 @@
   "teams": [
     {
       "id": "r6s-main",
-      "name": "Rainbow Six Siege - Main",
+      "name": "Rainbow Six Siege",
       "shortName": "R6S Main",
       "game": "Rainbow Six Siege",
       "description": "Rainbow Six Siege team, competing at the highest European level.",
@@ -137,7 +137,7 @@
         {
           "id": "r6s-academy-p1",
           "name": "Aieroz",
-          "role": "Flex Entry",
+          "role": "Support Flex",
           "photo": "https://i.imgur.com/aLq6fTI.png",
           "socials": {
             "twitter": "https://x.com/AierozR6s"
@@ -148,7 +148,7 @@
         {
           "id": "r6s-academy-p2",
           "name": "Luizi",
-          "role": "IGL Entry",
+          "role": "Entry Flex",
           "photo": "https://i.imgur.com/ZFwwVim.png",
           "socials": {
             "twitter": "https://x.com/luizir6"
@@ -159,7 +159,7 @@
         {
           "id": "r6s-academy-p3",
           "name": "Slow",
-          "role": "Support",
+          "role": "Support Flex",
           "photo": "https://i.imgur.com/0LJQe3y.png",
           "socials": {
             "twitter": ""
@@ -169,46 +169,38 @@
         },
         {
           "id": "r6s-academy-p4",
-          "name": "Player4",
-          "role": "",
-          "photo": "https://i.imgur.com/5nlOg9W.png",
+          "name": "Jniort",
+          "role": "HB IGL",
+          "photo": "https://i.imgur.com/cTi5w0n.png",
           "socials": {
-            "twitter": ""
+            "twitter": "https://x.com/jNiort_dltt"
           },
-          "socialsLinks": []
+          "socialsLinks": [],
+          "country": "FR"
         },
         {
           "id": "r6s-academy-p5",
-          "name": "Player5",
-          "role": "",
-          "photo": "https://i.imgur.com/5nlOg9W.png",
+          "name": "Laywooo",
+          "role": "Entry Flex",
+          "photo": "https://i.imgur.com/7QxaCNl.png",
           "socials": {
             "twitter": ""
           },
-          "socialsLinks": []
-        },
-        {
-          "id": "r6s-academy-p6",
-          "name": "Player6",
-          "role": "Substitute",
-          "photo": "https://i.imgur.com/5nlOg9W.png",
-          "socials": {
-            "twitter": ""
-          },
-          "socialsLinks": []
+          "socialsLinks": [],
+          "country": "FR"
         }
       ],
       "logo": "https://i.imgur.com/pGLcnVA.png"
     },
     {
       "id": "cs2-main",
-      "name": "Counter-Strike 2 - Main",
+      "name": "Counter-Strike 2",
       "shortName": "CS2 Main",
       "game": "Counter-Strike 2",
       "description": "Our CS2 lineup, perfect alliance between experience and young talent.",
       "coach": {
         "id": "cs2-main-coach",
-        "name": "Wxy",
+        "name": "WXY",
         "photo": "https://i.imgur.com/FurbyG8.png",
         "socials": {
           "twitter": "https://x.com/WxyCsgo"
