@@ -169,12 +169,38 @@ export default function AdminPage() {
           </button>
         </div>
 
-        {/* Save Message */}
-        {saveMessage && (
-          <div className="mb-6 p-4 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400 text-center">
-            {saveMessage}
-          </div>
-        )}
+        {/* Global Save Button */}
+        <div className="mb-6 flex flex-col sm:flex-row gap-2 items-center justify-between">
+          <button
+            onClick={() => {
+              if (activeTab === 'teams' && teamsData) handleSave('teams', teamsData)
+              if (activeTab === 'results' && resultsData) handleSave('results', resultsData)
+              if (activeTab === 'sponsors' && sponsorsData) handleSave('sponsors', sponsorsData)
+              if (activeTab === 'settings' && settingsData) {
+                // Save settings using the settings API
+                fetch('/api/settings', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(settingsData),
+                }).then(res => {
+                  if (res.ok) {
+                    setSaveMessage('Settings saved successfully!')
+                    setTimeout(() => setSaveMessage(''), 3000)
+                  }
+                }).catch(() => alert('Error saving settings'))
+              }
+            }}
+            className="btn-primary flex items-center gap-2 px-6 py-3"
+          >
+            <Save size={20} />
+            Sauvegarder
+          </button>
+          {saveMessage && (
+            <div className="p-2 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400 text-center w-full sm:w-auto">
+              {saveMessage}
+            </div>
+          )}
+        </div>
 
         {/* Tabs */}
         <div className="flex gap-3 mb-8">
@@ -924,12 +950,37 @@ function TeamsEditor({ data, onSave }: any) {
 
 // Results Editor Component
 function ResultsEditor({ data, teams, onSave }: any) {
-  const [results, setResults] = useState(data.results || [])
+  type Result = {
+    id: string;
+    teamId: string;
+    image: string;
+    opponent: string;
+    score: string;
+    result: string;
+    competition: string;
+    date: string;
+  };
+  const [results, setResults] = useState<Result[]>(data.results || [])
+  const [selectedTeamId, setSelectedTeamId] = useState(teams && teams.length > 0 ? teams[0].id : '')
 
+  // Filtrer les résultats pour l'équipe sélectionnée
+  const filteredResults = results.filter((r: Result) => r.teamId === selectedTeamId)
+
+  // Move a result up or down in the list
+  const moveResult = (index: number, direction: number) => {
+    const newResults = [...results];
+    const newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= newResults.length) return;
+    [newResults[index], newResults[newIndex]] = [newResults[newIndex], newResults[index]];
+    setResults(newResults);
+  }
+
+  // Always use the latest teams list for the dropdown
   const addResult = () => {
-    const newResult = {
+    if (!selectedTeamId) return;
+    const newResult: Result = {
       id: `result-${Date.now()}`,
-      teamId: teams[0]?.id || '',
+      teamId: selectedTeamId,
       image: '', // Champ URL image
       opponent: '',
       score: '',
@@ -937,13 +988,13 @@ function ResultsEditor({ data, teams, onSave }: any) {
       competition: '',
       date: new Date().toISOString().split('T')[0],
     }
-    setResults([newResult, ...results])
+    setResults((prev: Result[] = []) => [newResult, ...(prev || [])])
   }
 
   const updateResult = (index: number, field: string, value: string) => {
-    const newResults = [...results]
-    newResults[index][field] = value
-    setResults(newResults)
+    const newResults: Result[] = [...results];
+    (newResults[index] as any)[field] = value;
+    setResults(newResults);
   }
 
   const deleteResult = (index: number) => {
@@ -956,46 +1007,128 @@ function ResultsEditor({ data, teams, onSave }: any) {
 
   return (
     <div className="space-y-6">
+      {/* Team Selector */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {teams && teams.length > 0 ? (
+          teams.map((team: any) => (
+            <button
+              key={team.id}
+              onClick={() => setSelectedTeamId(team.id)}
+              className={`px-4 py-2 rounded-lg font-medium transition-all ${selectedTeamId === team.id ? 'bg-spectra-violet text-white' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}
+            >
+              {team.name}
+            </button>
+          ))
+        ) : (
+          <span className="text-gray-400">No teams available</span>
+        )}
+      </div>
+
       <button
         onClick={addResult}
         className="w-full btn-primary flex items-center justify-center gap-2"
+        disabled={!selectedTeamId}
       >
         <Plus size={20} />
         Add Result
       </button>
 
-      {results.map((result: any, index: number) => (
+      {/* Results for selected team */}
+      {filteredResults.length === 0 && (
+        <div className="text-center text-gray-400 py-8">No results for this team yet.</div>
+      )}
+      {filteredResults.map((result: Result, index: number) => (
         <div key={result.id} className="p-6 bg-white/5 rounded-lg border border-white/10 relative">
+          {/* Move Result Up/Down Buttons */}
+          <div className="absolute left-2 top-2 flex flex-col gap-1 z-10">
+            <button
+              type="button"
+              disabled={index === 0}
+              onClick={() => {
+                // Move only within filteredResults
+                const globalIndex = results.findIndex((r: Result) => r.id === filteredResults[index].id);
+                const prevGlobalIndex = results.findIndex((r: Result) => r.id === filteredResults[index - 1]?.id);
+                if (globalIndex > 0 && prevGlobalIndex >= 0) {
+                  const newResults = [...results];
+                  [newResults[globalIndex], newResults[prevGlobalIndex]] = [newResults[prevGlobalIndex], newResults[globalIndex]];
+                  setResults(newResults);
+                }
+              }}
+              className="p-1 bg-white/10 hover:bg-white/20 border border-white/20 rounded text-white disabled:opacity-30"
+              title="Monter le résultat"
+            >
+              ↑
+            </button>
+            <button
+              type="button"
+              disabled={index === filteredResults.length - 1}
+              onClick={() => {
+                // Move only within filteredResults
+                const globalIndex = results.findIndex((r: Result) => r.id === filteredResults[index].id);
+                const nextGlobalIndex = results.findIndex((r: Result) => r.id === filteredResults[index + 1]?.id);
+                if (globalIndex >= 0 && nextGlobalIndex >= 0) {
+                  const newResults = [...results];
+                  [newResults[globalIndex], newResults[nextGlobalIndex]] = [newResults[nextGlobalIndex], newResults[globalIndex]];
+                  setResults(newResults);
+                }
+              }}
+              className="p-1 bg-white/10 hover:bg-white/20 border border-white/20 rounded text-white disabled:opacity-30"
+              title="Descendre le résultat"
+            >
+              ↓
+            </button>
+          </div>
           <button
-            onClick={() => deleteResult(index)}
+            onClick={() => {
+              const globalIndex = results.findIndex((r: Result) => r.id === result.id);
+              deleteResult(globalIndex);
+              onSave({ results: results.filter((_: Result, i: number) => i !== globalIndex) });
+            }}
             className="absolute top-4 right-4 p-2 bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 rounded text-red-400 transition-all"
           >
             <Trash2 className="w-4 h-4" />
           </button>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-12 items-center">
             <div>
               <label className="block text-sm text-gray-400 mb-2">Team</label>
               <select
                 value={result.teamId}
-                onChange={(e) => updateResult(index, 'teamId', e.target.value)}
+                onChange={(e) => updateResult(results.findIndex((r: Result) => r.id === result.id), 'teamId', e.target.value)}
                 className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
               >
-                {teams.map((team: any) => (
-                  <option key={team.id} value={team.id}>
-                    {team.name}
-                  </option>
-                ))}
+                {teams && teams.length > 0 ? (
+                  teams.map((team: any) => (
+                    <option key={team.id} value={team.id}>
+                      {team.name}
+                    </option>
+                  ))
+                ) : (
+                  <option value="">No teams available</option>
+                )}
               </select>
             </div>
             <div>
               <label className="block text-sm text-gray-400 mb-2">Image (URL hébergée)</label>
-              <input
-                type="text"
-                value={result.image || ''}
-                onChange={(e) => updateResult(index, 'image', e.target.value)}
-                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
-                placeholder="https://..."
-              />
+              <div className="flex items-center gap-3">
+                <input
+                  type="text"
+                  value={result.image || ''}
+                  onChange={(e) => {
+                    updateResult(results.findIndex((r: Result) => r.id === result.id), 'image', e.target.value);
+                    onSave({ results: results.map((r: Result) => r.id === result.id ? { ...r, image: e.target.value } : r) });
+                  }}
+                  className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
+                  placeholder="https://..."
+                />
+                {result.image && (
+                  <img
+                    src={result.image}
+                    alt="Aperçu"
+                    className="w-16 h-16 object-cover rounded border border-white/20 bg-black/30"
+                    onError={e => { e.currentTarget.style.display = 'none'; }}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
