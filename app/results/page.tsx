@@ -27,7 +27,13 @@ export default function ResultsPage() {
       fetch('/api/data/teams').then((res) => res.json()),
     ])
       .then(([resultsData, teamsData]) => {
-        setResults(resultsData.results || [])
+        // Convertir la structure {r6x:[], cs2:[], aca:[]} en liste plate
+        const allResults = [
+          ...(resultsData.r6x || []).map((r: any) => ({ ...r, teamId: 'r6x' })),
+          ...(resultsData.cs2 || []).map((r: any) => ({ ...r, teamId: 'cs2' })),
+          ...(resultsData.aca || []).map((r: any) => ({ ...r, teamId: 'aca' }))
+        ]
+        setResults(allResults)
         setTeams(teamsData.teams || [])
         
         // Set first team as default filter

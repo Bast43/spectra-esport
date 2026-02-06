@@ -949,52 +949,44 @@ function TeamsEditor({ data, onSave }: any) {
 }
 
 // Results Editor Component
-function ResultsEditor({ data, teams, onSave }: any) {
-  type Result = {
-    id: string;
-    teamId: string;
-    image: string;
-    opponent: string;
-    score: string;
-    result: string;
-    competition: string;
-    date: string;
-  };
-  const [results, setResults] = useState<Result[]>(data.results || [])
-  const [selectedTeamId, setSelectedTeamId] = useState(teams && teams.length > 0 ? teams[0].id : '')
+function ResultsEditor({ data, onSave, teams }: { data: any; onSave: (data: any) => void; teams: any[] }) {
+  const [results, setResults] = useState(() => {
+    const allResults = [
+      ...(data.r6x || []).map((r: any) => ({ ...r, teamId: 'r6x' })),
+      ...(data.cs2 || []).map((r: any) => ({ ...r, teamId: 'cs2' })),
+      ...(data.aca || []).map((r: any) => ({ ...r, teamId: 'aca' }))
+    ]
+    return allResults
+  })
 
-  // Filtrer les résultats pour l'équipe sélectionnée
-  const filteredResults = results.filter((r: Result) => r.teamId === selectedTeamId)
+  const [selectedTeamId, setSelectedTeamId] = useState<string>('')
 
-  // Move a result up or down in the list
-  const moveResult = (index: number, direction: number) => {
-    const newResults = [...results];
-    const newIndex = index + direction;
-    if (newIndex < 0 || newIndex >= newResults.length) return;
-    [newResults[index], newResults[newIndex]] = [newResults[newIndex], newResults[index]];
-    setResults(newResults);
-  }
+  useEffect(() => {
+    if (!selectedTeamId && teams && teams.length > 0) {
+      setSelectedTeamId(teams[0].id)
+    }
+  }, [teams, selectedTeamId])
 
-  // Always use the latest teams list for the dropdown
   const addResult = () => {
-    if (!selectedTeamId) return;
-    const newResult: Result = {
+    if (!selectedTeamId) {
+      alert('Please select a team first')
+      return
+    }
+
+    const newResult = {
       id: `result-${Date.now()}`,
       teamId: selectedTeamId,
-      image: '', // Champ URL image
-      opponent: '',
-      score: '',
-      result: 'win',
-      competition: '',
-      date: new Date().toISOString().split('T')[0],
+      image: ''
     }
-    setResults((prev: Result[] = []) => [newResult, ...(prev || [])])
+    const newResults = [...results, newResult]
+    setResults(newResults)
+    saveResults(newResults)
   }
 
   const updateResult = (index: number, field: string, value: string) => {
-    const newResults: Result[] = [...results];
-    (newResults[index] as any)[field] = value;
-    setResults(newResults);
+    const newResults = [...results]
+    newResults[index][field] = value
+    setResults(newResults)
   }
 
   const deleteResult = (index: number) => {
@@ -1002,13 +994,25 @@ function ResultsEditor({ data, teams, onSave }: any) {
       const newResults = [...results]
       newResults.splice(index, 1)
       setResults(newResults)
+      saveResults(newResults)
     }
   }
 
+  const saveResults = (resultsToSave: any[]) => {
+    const structuredData = {
+      r6x: resultsToSave.filter(r => r.teamId === 'r6x'),
+      cs2: resultsToSave.filter(r => r.teamId === 'cs2'),
+      aca: resultsToSave.filter(r => r.teamId === 'aca')
+    }
+    onSave(structuredData)
+  }
+
+  const filteredResults = results.filter((r: any) => r.teamId === selectedTeamId)
+
   return (
     <div className="space-y-6">
-      {/* Team Selector */}
-      <div className="flex flex-wrap gap-2 mb-4">
+      <div className="flex flex-wrap gap-2 items-center">
+        <span className="text-gray-400 text-sm">Filter by team:</span>
         {teams && teams.length > 0 ? (
           teams.map((team: any) => (
             <button
@@ -1033,109 +1037,125 @@ function ResultsEditor({ data, teams, onSave }: any) {
         Add Result
       </button>
 
-      {/* Results for selected team */}
       {filteredResults.length === 0 && (
         <div className="text-center text-gray-400 py-8">No results for this team yet.</div>
       )}
-      {filteredResults.map((result: Result, index: number) => (
-        <div key={result.id} className="p-6 bg-white/5 rounded-lg border border-white/10 relative">
-          {/* Move Result Up/Down Buttons */}
-          <div className="absolute left-2 top-2 flex flex-col gap-1 z-10">
-            <button
-              type="button"
-              disabled={index === 0}
-              onClick={() => {
-                // Move only within filteredResults
-                const globalIndex = results.findIndex((r: Result) => r.id === filteredResults[index].id);
-                const prevGlobalIndex = results.findIndex((r: Result) => r.id === filteredResults[index - 1]?.id);
-                if (globalIndex > 0 && prevGlobalIndex >= 0) {
-                  const newResults = [...results];
-                  [newResults[globalIndex], newResults[prevGlobalIndex]] = [newResults[prevGlobalIndex], newResults[globalIndex]];
-                  setResults(newResults);
-                }
-              }}
-              className="p-1 bg-white/10 hover:bg-white/20 border border-white/20 rounded text-white disabled:opacity-30"
-              title="Monter le résultat"
-            >
-              ↑
-            </button>
-            <button
-              type="button"
-              disabled={index === filteredResults.length - 1}
-              onClick={() => {
-                // Move only within filteredResults
-                const globalIndex = results.findIndex((r: Result) => r.id === filteredResults[index].id);
-                const nextGlobalIndex = results.findIndex((r: Result) => r.id === filteredResults[index + 1]?.id);
-                if (globalIndex >= 0 && nextGlobalIndex >= 0) {
-                  const newResults = [...results];
-                  [newResults[globalIndex], newResults[nextGlobalIndex]] = [newResults[nextGlobalIndex], newResults[globalIndex]];
-                  setResults(newResults);
-                }
-              }}
-              className="p-1 bg-white/10 hover:bg-white/20 border border-white/20 rounded text-white disabled:opacity-30"
-              title="Descendre le résultat"
-            >
-              ↓
-            </button>
-          </div>
-          <button
-            onClick={() => {
-              const globalIndex = results.findIndex((r: Result) => r.id === result.id);
-              deleteResult(globalIndex);
-              onSave({ results: results.filter((_: Result, i: number) => i !== globalIndex) });
-            }}
-            className="absolute top-4 right-4 p-2 bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 rounded text-red-400 transition-all"
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-12 items-center">
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Team</label>
-              <select
-                value={result.teamId}
-                onChange={(e) => updateResult(results.findIndex((r: Result) => r.id === result.id), 'teamId', e.target.value)}
-                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
+      
+      {filteredResults.map((result: any, index: number) => {
+        const globalIndex = results.findIndex((r: any) => r.id === result.id)
+        
+        return (
+          <div key={result.id} className="p-6 bg-white/5 rounded-lg border border-white/10 relative">
+            <div className="absolute left-2 top-2 flex flex-col gap-1 z-10">
+              <button
+                type="button"
+                disabled={index === 0}
+                onClick={() => {
+                  const prevGlobalIndex = results.findIndex((r: any) => r.id === filteredResults[index - 1]?.id)
+                  if (globalIndex > 0 && prevGlobalIndex >= 0) {
+                    const newResults = [...results]
+                    ;[newResults[globalIndex], newResults[prevGlobalIndex]] = [newResults[prevGlobalIndex], newResults[globalIndex]]
+                    setResults(newResults)
+                  }
+                }}
+                className="p-1 bg-white/10 hover:bg-white/20 border border-white/20 rounded text-white disabled:opacity-30"
+                title="Monter le résultat"
               >
-                {teams && teams.length > 0 ? (
-                  teams.map((team: any) => (
-                    <option key={team.id} value={team.id}>
-                      {team.name}
-                    </option>
-                  ))
-                ) : (
-                  <option value="">No teams available</option>
-                )}
-              </select>
+                ↑
+              </button>
+              <button
+                type="button"
+                disabled={index === filteredResults.length - 1}
+                onClick={() => {
+                  const nextGlobalIndex = results.findIndex((r: any) => r.id === filteredResults[index + 1]?.id)
+                  if (globalIndex >= 0 && nextGlobalIndex >= 0) {
+                    const newResults = [...results]
+                    ;[newResults[globalIndex], newResults[nextGlobalIndex]] = [newResults[nextGlobalIndex], newResults[globalIndex]]
+                    setResults(newResults)
+                  }
+                }}
+                className="p-1 bg-white/10 hover:bg-white/20 border border-white/20 rounded text-white disabled:opacity-30"
+                title="Descendre le résultat"
+              >
+                ↓
+              </button>
             </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-2">Image (URL hébergée)</label>
-              <div className="flex items-center gap-3">
-                <input
-                  type="text"
-                  value={result.image || ''}
-                  onChange={(e) => {
-                    updateResult(results.findIndex((r: Result) => r.id === result.id), 'image', e.target.value);
-                    onSave({ results: results.map((r: Result) => r.id === result.id ? { ...r, image: e.target.value } : r) });
-                  }}
+
+            <button
+              onClick={() => deleteResult(globalIndex)}
+              className="absolute top-4 right-4 p-2 bg-red-500/20 hover:bg-red-500/40 border border-red-500/50 rounded text-red-400 transition-all"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pr-12">
+              <div>
+                <label className="block text-sm text-gray-400 mb-2">Team</label>
+                <select
+                  value={result.teamId}
+                  onChange={(e) => updateResult(globalIndex, 'teamId', e.target.value)}
                   className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
-                  placeholder="https://..."
-                />
-                {result.image && (
-                  <img
-                    src={result.image}
-                    alt="Aperçu"
-                    className="w-16 h-16 object-cover rounded border border-white/20 bg-black/30"
-                    onError={e => { e.currentTarget.style.display = 'none'; }}
+                >
+                  {teams && teams.length > 0 ? (
+                    teams.map((team: any) => (
+                      <option key={team.id} value={team.id}>
+                        {team.name}
+                      </option>
+                    ))
+                  ) : (
+                    <option value="">No teams available</option>
+                  )}
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm text-gray-400 mb-2">Image URL (Cloudinary)</label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="text"
+                    value={result.image || ''}
+                    onChange={(e) => updateResult(globalIndex, 'image', e.target.value)}
+                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white text-sm"
+                    placeholder="https://res.cloudinary.com/..."
                   />
-                )}
+                  {result.image && (
+                    <img
+                      src={result.image}
+                      alt="Aperçu"
+                      className="w-16 h-16 object-cover rounded border border-white/20 bg-black/30 cursor-pointer hover:scale-150 transition-transform"
+                      onClick={() => window.open(result.image, '_blank')}
+                      onError={(e) => { 
+                        const target = e.currentTarget as HTMLImageElement
+                        target.style.display = 'none'
+                      }}
+                    />
+                  )}
+                </div>
               </div>
             </div>
+
+            {result.image && (
+              <div className="mt-4 flex justify-center">
+                <a href={result.image} target="_blank" rel="noopener noreferrer">
+                  <img
+                    src={result.image}
+                    alt="Result preview"
+                    className="max-h-64 rounded-lg border border-white/10 shadow-lg hover:scale-105 transition-transform cursor-pointer"
+                    style={{ maxWidth: '100%', objectFit: 'contain' }}
+                    onError={(e) => { 
+                      const target = e.currentTarget as HTMLImageElement
+                      target.style.display = 'none'
+                    }}
+                  />
+                </a>
+              </div>
+            )}
           </div>
-        </div>
-      ))}
+        )
+      })}
 
       <button
-        onClick={() => onSave({ results })}
+        onClick={() => saveResults(results)}
         className="w-full btn-primary flex items-center justify-center gap-2"
       >
         <Save size={20} />

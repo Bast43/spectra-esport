@@ -82,7 +82,13 @@ export default function TeamsPage() {
       .then(([teamsData, resultsData]) => {
         setTeams(teamsData.teams || [])
         setStaff(teamsData.staff || [])
-        setResults(resultsData.results || [])
+        // Convertir la structure {r6x:[], cs2:[], aca:[]} en liste plate
+        const allResults = [
+          ...(resultsData.r6x || []).map((r: any) => ({ ...r, teamId: 'r6x' })),
+          ...(resultsData.cs2 || []).map((r: any) => ({ ...r, teamId: 'cs2' })),
+          ...(resultsData.aca || []).map((r: any) => ({ ...r, teamId: 'aca' }))
+        ]
+        setResults(allResults)
         setLoading(false)
         
         // Check for team parameter in URL
