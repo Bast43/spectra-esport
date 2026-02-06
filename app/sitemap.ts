@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://www.spectra-esports.eu/'
+  const baseUrl = 'https://www.spectra-esports.eu'
 
   // Pages statiques
   const staticPages = [
@@ -10,12 +10,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/news',
     '/results',
     '/sponsors',
-  ].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date().toISOString(),
-    changeFrequency: 'daily' as const,
-    priority: route === '' ? 1 : 0.8,
-  }))
+  ].map((route) => {
+    const cleanRoute = route.startsWith('/') ? route : `/${route}`;
+    const url = route === '' ? `${baseUrl}/` : `${baseUrl}${cleanRoute}`;
+    return {
+      url,
+      lastModified: new Date().toISOString(),
+      changeFrequency: 'daily' as const,
+      priority: route === '' ? 1 : 0.8,
+    };
+  })
 
   // Récupérer les équipes dynamiquement
   let teamPages: MetadataRoute.Sitemap = []
@@ -28,7 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const teams = teamsData.teams || []
       
       teamPages = teams.map((team: any) => ({
-        url: `${baseUrl}/teams?team=${team.id}`,
+        url: `${baseUrl}/teams?team=${encodeURIComponent(team.id)}`,
         lastModified: new Date().toISOString(),
         changeFrequency: 'weekly' as const,
         priority: 0.7,
@@ -49,7 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const news = newsData.news || []
       
       newsPages = news.map((article: any) => ({
-        url: `${baseUrl}/news#${article.id}`,
+        url: `${baseUrl}/news#${encodeURIComponent(article.id)}`,
         lastModified: article.date || new Date().toISOString(),
         changeFrequency: 'monthly' as const,
         priority: 0.6,
