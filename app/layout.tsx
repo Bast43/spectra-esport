@@ -7,7 +7,7 @@ import StructuredData from '@/components/StructuredData'
 import BackgroundImage from '@/components/BackgroundImage'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://spectra-esport.vercel.app'),
+  metadataBase: new URL('https://www.spectra-esports.eu/'),
   title: {
     default: 'Spectra Esport | Silent Impact - Swiss Esports Organization',
     template: '%s | Spectra Esport'
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://spectra-esport.vercel.app',
+    url: 'https://www.spectra-esports.eu/',
     siteName: 'Spectra Esport',
     title: 'Spectra Esport | Silent Impact - Swiss Esports Organization',
     description: 'Swiss esports organization competing at the highest European level. Semi-Professional teams in Rainbow Six Siege, Counter-Strike 2, and more.',
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     creator: '@SpectraEU',
     title: 'Spectra Esport | Silent Impact',
     description: 'Swiss esports organization competing at the highest European level. Semi-Professional teams in Rainbow Six Siege, Counter-Strike 2, and more.',
-    images: ['/logo.png'],
+    images: ['https://www.spectra-esports.eu/logo.png'],
   },
   icons: {
     icon: [
