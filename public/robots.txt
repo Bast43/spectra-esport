@@ -10,4 +10,4 @@ Disallow: /admin
 Disallow: /api
 
 # Sitemap location (Next.js generated)
-Sitemap: https://spectra-esport.vercel.app/sitemap.xml
+Sitemap: https://www.spectra-esports.eu/sitemap.xml
