@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://spectra-esport.vercel.app'
+  const baseUrl = 'https://www.spectra-esports.eu/'
 
   // Pages statiques
   const staticPages = [
