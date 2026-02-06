@@ -94,6 +94,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <StructuredData />
+        <meta name="google-site-verification" content="Nfnojo5geNVm8AP5VmMgF7b35K3dpdDXKDUmayt_sSI" />
       </head>
       <body>
         <BackgroundImage />
