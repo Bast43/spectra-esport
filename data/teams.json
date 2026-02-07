@@ -1,7 +1,7 @@
 {
   "teams": [
     {
-      "id": "r6s-main",
+      "id": "r6x",
       "name": "Rainbow Six Siege",
       "shortName": "R6S Main",
       "game": "Rainbow Six Siege",
@@ -119,7 +119,7 @@
       "logo": "https://i.imgur.com/pGLcnVA.png"
     },
     {
-      "id": "r6s-academy",
+      "id": "aca",
       "name": "Rainbow Six Siege - 67",
       "shortName": "R6S Academy",
       "game": "Rainbow Six Siege",
@@ -193,7 +193,7 @@
       "logo": "https://i.imgur.com/pGLcnVA.png"
     },
     {
-      "id": "cs2-main",
+      "id": "cs2",
       "name": "Counter-Strike 2",
       "shortName": "CS2 Main",
       "game": "Counter-Strike 2",

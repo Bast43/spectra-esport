@@ -58,7 +58,7 @@ export default function ResultsPage() {
     })
   }
 
-  const filteredResults = results.filter((result) => result.teamId === filter)
+  const filteredResults = results.filter((result) => result.teamId === filter).slice().reverse()
 
   if (loading) {
     return (
@@ -106,11 +106,11 @@ export default function ResultsPage() {
 
         {/* Results */}
         {filteredResults.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {filteredResults.map((result, index) => (
               <div
                 key={result.id}
-                className="glass-card fade-in flex items-center justify-center"
+                className="fade-in flex items-center justify-center"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 {result.image && (
@@ -118,8 +118,8 @@ export default function ResultsPage() {
                     <img
                       src={result.image}
                       alt="Result image"
-                      className="max-h-64 rounded-lg border border-white/10 shadow-lg mx-auto"
-                      style={{ maxWidth: '100%', objectFit: 'contain' }}
+                      className="rounded-lg border-2 border-white/20 shadow-md"
+                      style={{ width: '100%', height: '180px', objectFit: 'cover', display: 'block' }}
                     />
                   </a>
                 )}

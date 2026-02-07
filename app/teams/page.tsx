@@ -607,16 +607,16 @@ export default function TeamsPage() {
                     Results
                   </h3>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                  {[...teamResults].reverse().map((result) => (
-                    <div key={result.id} className="glass-card flex items-center justify-center">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  {[...teamResults].reverse().map((result, index) => (
+                    <div key={result.id} className="fade-in flex items-center justify-center" style={{ animationDelay: `${index * 50}ms` }}>
                       {result.image && (
                         <a href={result.image} target="_blank" rel="noopener noreferrer">
                           <img
                             src={result.image}
                             alt="Result image"
-                            className="max-h-64 rounded-lg border border-white/10 shadow-lg mx-auto"
-                            style={{ maxWidth: '100%', objectFit: 'contain' }}
+                            className="rounded-lg border-2 border-white/20 shadow-md"
+                            style={{ width: '100%', height: '180px', objectFit: 'cover', display: 'block' }}
                           />
                         </a>
                       )}
