@@ -1,16 +1,5 @@
 {
-  "r6x": [
-    {
-      "id": "result-1770347848",
-      "teamId": "r6x",
-      "image": "https://res.cloudinary.com/dospxidbp/image/upload/v1770347845/spectra-results/r6_match_match_t03_1770296021.png"
-    },
-    {
-      "id": "result-1770348441",
-      "teamId": "r6x",
-      "image": "https://res.cloudinary.com/dospxidbp/image/upload/v1770348439/spectra-results/r6_result_lose_t01_1770348419.png"
-    }
-  ],
+  "r6x": [],
   "cs2": [],
   "aca": []
 }
