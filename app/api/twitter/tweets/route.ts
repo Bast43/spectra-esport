@@ -78,16 +78,16 @@ export async function GET() {
     const tweetsData = await tweetsResponse.json()
 
     // Associer les médias aux tweets
-    let mediaMap = {}
+    const mediaMap: Record<string, any> = {}
     if (tweetsData.includes && tweetsData.includes.media) {
       for (const media of tweetsData.includes.media) {
-        mediaMap[media.media_key] = media
+        mediaMap[(media as any).media_key] = media
       }
     }
-    const tweetsWithMedia = (tweetsData.data || []).map((tweet) => {
+    const tweetsWithMedia = (tweetsData.data || []).map((tweet: any) => {
       let media = []
       if (tweet.attachments && tweet.attachments.media_keys) {
-        media = tweet.attachments.media_keys.map((key) => mediaMap[key]).filter(Boolean)
+        media = tweet.attachments.media_keys.map((key: string) => mediaMap[key]).filter(Boolean)
       }
       return { ...tweet, media }
     })
