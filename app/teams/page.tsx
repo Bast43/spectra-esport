@@ -466,9 +466,9 @@ export default function TeamsPage() {
             {/* Coach */}
             {activeTeam.coach && (
               <div className="mb-16">
-                <div className="flex items-center gap-3 mb-6">
-                  <Users className="w-6 h-6 text-spectra-violet" />
-                  <h3 className="text-2xl font-display font-bold text-white">
+                <div className="flex flex-col items-center mb-6">
+                  <Users className="w-6 h-6 text-spectra-violet mb-2" />
+                  <h3 className="text-2xl font-display font-bold text-white text-center">
                     Coach
                   </h3>
                 </div>

@@ -5,7 +5,7 @@ import fs from 'fs/promises'
 import path from 'path'
 
 const CACHE_FILE = path.resolve(process.cwd(), 'data/tweets-cache.json')
-const CACHE_DURATION = 60 * 60 * 1000 // 1 hour
+const CACHE_DURATION = 8 * 60 * 60 * 1000 // 8 hours
 
 export async function GET() {
   try {

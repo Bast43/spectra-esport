@@ -1,8 +1,11 @@
-'use client'
+
+"use client";
+import { ScrollToTopButton } from '@/components/ScrollToTopButton'
 
 import { useEffect, useState } from 'react'
-import { Twitch, Instagram, ExternalLink, Heart, MessageCircle, Repeat2, Calendar } from 'lucide-react'
+import { Twitch, Instagram, ExternalLink, Calendar } from 'lucide-react'
 import { XIcon } from '@/components/XIcon'
+import { TweetCard } from '@/components/TweetCard'
 
 interface TweetMedia {
   media_key: string
@@ -170,81 +173,16 @@ export default function NewsPage() {
 
           {/* Tweets List */}
           {!loading && !error && tweets.length > 0 && (
-            <div className="space-y-4">
-              {/* Update Info */}
+            <div className="space-y-8">
               {lastUpdate && (
                 <div className="text-center text-sm text-gray-500 mb-6">
                   <Calendar className="w-4 h-4 inline mr-2" />
                   Last updated: {new Date(lastUpdate).toLocaleString()}
                 </div>
               )}
-
               {tweets.map((tweet) => (
-                <div key={tweet.id} className="glass-card hover:border-spectra-violet/50 transition-all group">
-                  {/* Tweet Header */}
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-spectra-violet to-spectra-mauve rounded-full flex items-center justify-center flex-shrink-0">
-                      <XIcon className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-bold text-white">Spectra Esport</h3>
-                        <span className="text-gray-500">@SpectraEU</span>
-                        <span className="text-gray-600">·</span>
-                        <span className="text-gray-500 text-sm">{formatDate(tweet.created_at)}</span>
-                      </div>
-                    </div>
-                  </div>
-
-
-                  {/* Tweet Content */}
-                  <div className="mb-4">
-                    <p className="text-white whitespace-pre-wrap leading-relaxed">
-                      {tweet.text}
-                    </p>
-                    {/* Images si présentes */}
-                    {tweet.media && tweet.media.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mt-4">
-                        {tweet.media.filter(m => m.type === 'photo' && m.url).map((media) => (
-                          <img
-                            key={media.media_key}
-                            src={media.url}
-                            alt="Tweet media"
-                            className="rounded-lg max-h-64 object-cover border border-white/10 shadow"
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Tweet Stats */}
-                  <div className="flex items-center gap-6 text-gray-400 text-sm pt-4 border-t border-white/10">
-                    <div className="flex items-center gap-2 group-hover:text-red-400 transition-colors">
-                      <Heart className="w-4 h-4" />
-                      <span>{formatNumber(tweet.public_metrics.like_count)}</span>
-                    </div>
-                    <div className="flex items-center gap-2 group-hover:text-green-400 transition-colors">
-                      <Repeat2 className="w-4 h-4" />
-                      <span>{formatNumber(tweet.public_metrics.retweet_count)}</span>
-                    </div>
-                    <div className="flex items-center gap-2 group-hover:text-blue-400 transition-colors">
-                      <MessageCircle className="w-4 h-4" />
-                      <span>{formatNumber(tweet.public_metrics.reply_count)}</span>
-                    </div>
-                    <a
-                      href={`https://x.com/SpectraEU/status/${tweet.id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="ml-auto flex items-center gap-2 text-spectra-violet hover:text-spectra-mauve transition-colors"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      <span>View on Twitter</span>
-                    </a>
-                  </div>
-                </div>
+                <TweetCard key={tweet.id} tweet={tweet} />
               ))}
-
-              {/* Load More */}
               <div className="text-center pt-8">
                 <a
                   href="https://x.com/SpectraEU"
@@ -297,6 +235,7 @@ export default function NewsPage() {
           </div>
         </div>
       </div>
+      <ScrollToTopButton />
     </div>
   )
 }
