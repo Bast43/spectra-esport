@@ -4,6 +4,13 @@ import { useEffect, useState } from 'react'
 import { Twitch, Instagram, ExternalLink, Heart, MessageCircle, Repeat2, Calendar } from 'lucide-react'
 import { XIcon } from '@/components/XIcon'
 
+interface TweetMedia {
+  media_key: string
+  type: string
+  url?: string
+  preview_image_url?: string
+}
+
 interface Tweet {
   id: string
   text: string
@@ -13,6 +20,7 @@ interface Tweet {
     retweet_count: number
     reply_count: number
   }
+  media?: TweetMedia[]
 }
 
 export default function NewsPage() {
@@ -188,11 +196,25 @@ export default function NewsPage() {
                     </div>
                   </div>
 
+
                   {/* Tweet Content */}
                   <div className="mb-4">
                     <p className="text-white whitespace-pre-wrap leading-relaxed">
                       {tweet.text}
                     </p>
+                    {/* Images si présentes */}
+                    {tweet.media && tweet.media.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-4">
+                        {tweet.media.filter(m => m.type === 'photo' && m.url).map((media) => (
+                          <img
+                            key={media.media_key}
+                            src={media.url}
+                            alt="Tweet media"
+                            className="rounded-lg max-h-64 object-cover border border-white/10 shadow"
+                          />
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {/* Tweet Stats */}
