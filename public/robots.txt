@@ -1,0 +1,13 @@
+# Spectra Esport - Robots.txt
+# https://spectra-esport.vercel.app
+
+# Allow all bots to crawl the site
+User-agent: *
+Allow: /
+
+# Disallow admin pages (if you want to keep them private)
+Disallow: /admin
+Disallow: /api
+
+# Sitemap location (Next.js generated)
+Sitemap: https://www.spectra-esports.eu/sitemap.xml

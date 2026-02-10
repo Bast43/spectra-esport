@@ -1,0 +1,17 @@
+{
+  "sponsors": [
+    {
+      "id": "sponsor-1",
+      "name": "Offood",
+      "logo": "https://i.imgur.com/JDUzOTw.png",
+      "website": "https://www.offood.ch/fr",
+      "tier": "premium"
+    }
+  ],
+    "contact": {
+    "email": "contact@spectra-esports.eu",
+    "discord": "https://discord.com/invite/RH2SWyhYmA",
+    "description": "Interested in becoming a partner? We're looking for strategic partnerships to support our growth in European esports."
+  }
+  
+}

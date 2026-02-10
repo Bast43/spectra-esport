@@ -1,0 +1,344 @@
+{
+  "teams": [
+    {
+      "id": "r6x",
+      "name": "Rainbow Six Siege",
+      "shortName": "R6S Main",
+      "game": "Rainbow Six Siege",
+      "description": "Rainbow Six Siege team, competing at the highest European level.",
+      "coach": {
+        "id": "r6s-main-coach",
+        "name": "Rom",
+        "photo": "https://i.imgur.com/wFsf6rU.png",
+        "socials": {
+          "twitter": "",
+          "linkedin": ""
+        },
+        "country": "FR"
+      },
+      "players": [
+        {
+          "id": "r6s-main-p2",
+          "name": "Sopra",
+          "role": "Support",
+          "photo": "https://i.imgur.com/50hUql4.png",
+          "socials": {
+            "twitter": "https://x.com/soprar6s"
+          },
+          "country": "BR",
+          "socialsLinks": [
+            {
+              "url": "https://www.youtube.com/@sopraytb"
+            }
+          ]
+        },
+        {
+          "id": "r6s-main-p4",
+          "name": "Anton",
+          "role": "Entry",
+          "photo": "https://i.imgur.com/zpJA1rU.png",
+          "socials": {
+            "twitter": "https://x.com/Antondrx"
+          },
+          "country": "GP",
+          "socialsLinks": [
+            {
+              "url": "https://www.youtube.com/@antondrx"
+            }
+          ]
+        },
+        {
+          "id": "r6s-main-p5",
+          "name": "Zirox",
+          "role": "IGL",
+          "photo": "https://i.imgur.com/GwLZqgE.png",
+          "socials": {
+            "twitter": ""
+          },
+          "country": "BE",
+          "socialsLinks": []
+        },
+        {
+          "id": "r6s-main-p3",
+          "name": "Ayow",
+          "role": "Flex",
+          "photo": "https://i.imgur.com/eeGu84y.png",
+          "socials": {
+            "twitter": "https://x.com/nz0_r6s"
+          },
+          "country": "PL",
+          "socialsLinks": [
+            {
+              "url": "https://www.twitch.tv/ayoww__"
+            },
+            {
+              "url": "https://www.youtube.com/@ayoww"
+            }
+          ]
+        },
+        {
+          "id": "r6s-main-p1",
+          "name": "Dogewyn",
+          "role": "Flex",
+          "photo": "https://i.imgur.com/EWn1fQN.png",
+          "socials": {
+            "twitter": "https://x.com/dogewyn"
+          },
+          "country": "FR",
+          "socialsLinks": [
+            {
+              "url": "https://www.twitch.tv/dogewyn"
+            },
+            {
+              "url": "https://www.tiktok.com/@dogewyn"
+            },
+            {
+              "url": "https://www.youtube.com/@dogewyn"
+            }
+          ]
+        },
+        {
+          "id": "r6s-main-player-1769559722813",
+          "name": "Psy4",
+          "role": "Subsitute",
+          "photo": "https://i.imgur.com/0Cwj0KO.png",
+          "socials": {
+            "twitter": "https://x.com/maitrepsy"
+          },
+          "socialsLinks": [
+            {
+              "url": "https://m.twitch.tv/Psy4_iD/home"
+            },
+            {
+              "url": "https://www.youtube.com/@psy4732"
+            }
+          ],
+          "country": "FR"
+        }
+      ],
+      "logo": "https://i.imgur.com/pGLcnVA.png"
+    },
+    {
+      "id": "aca",
+      "name": "Rainbow Six Siege - NEXUS",
+      "shortName": "R6S Academy",
+      "game": "Rainbow Six Siege",
+      "description": "Rainbow Six Siege team, competing at the highest European level.",
+      "coach": {
+        "id": "r6s-academy-coach",
+        "name": "LFC",
+        "photo": "https://i.imgur.com/5nlOg9W.png",
+        "socials": {
+          "twitter": "",
+          "linkedin": ""
+        }
+      },
+      "players": [
+        {
+          "id": "r6s-academy-p1",
+          "name": "Aieroz",
+          "role": "Support Flex",
+          "photo": "https://i.imgur.com/aLq6fTI.png",
+          "socials": {
+            "twitter": "https://x.com/AierozR6s"
+          },
+          "socialsLinks": [],
+          "country": "PT"
+        },
+        {
+          "id": "r6s-academy-p2",
+          "name": "Luizi",
+          "role": "Entry Flex",
+          "photo": "https://i.imgur.com/ZFwwVim.png",
+          "socials": {
+            "twitter": "https://x.com/luizir6"
+          },
+          "socialsLinks": [],
+          "country": "FR"
+        },
+        {
+          "id": "r6s-academy-p3",
+          "name": "Slow",
+          "role": "Support Flex",
+          "photo": "https://i.imgur.com/0LJQe3y.png",
+          "socials": {
+            "twitter": ""
+          },
+          "socialsLinks": [],
+          "country": "FR"
+        },
+        {
+          "id": "r6s-academy-p4",
+          "name": "Jniort",
+          "role": "HB IGL",
+          "photo": "https://i.imgur.com/cTi5w0n.png",
+          "socials": {
+            "twitter": "https://x.com/jNiort_dltt"
+          },
+          "socialsLinks": [],
+          "country": "FR"
+        },
+        {
+          "id": "r6s-academy-p5",
+          "name": "Laywooo",
+          "role": "Entry Flex",
+          "photo": "https://i.imgur.com/7QxaCNl.png",
+          "socials": {
+            "twitter": "https://x.com/LaywoooR6"
+          },
+          "socialsLinks": [],
+          "country": "FR"
+        }
+      ],
+      "logo": "https://i.imgur.com/pGLcnVA.png"
+    },
+    {
+      "id": "cs2",
+      "name": "Counter-Strike 2",
+      "shortName": "CS2 Main",
+      "game": "Counter-Strike 2",
+      "description": "Our CS2 lineup, perfect alliance between experience and young talent.",
+      "coach": {
+        "id": "cs2-main-coach",
+        "name": "WXY",
+        "photo": "https://i.imgur.com/FurbyG8.png",
+        "socials": {
+          "twitter": "https://x.com/WxyCsgo"
+        },
+        "country": "RS",
+        "socialsLinks": [
+          {
+            "url": "https://www.youtube.com/@WXY15"
+          },
+          {
+            "url": "https://kick.com/wxyyyyy"
+          },
+          {
+            "url": "https://www.tiktok.com/@wxy15__"
+          }
+        ]
+      },
+      "players": [
+        {
+          "id": "cs2-main-p1",
+          "name": "Taskela",
+          "role": "",
+          "photo": "https://i.imgur.com/XMLHc8w.png",
+          "socials": {
+            "twitter": ""
+          },
+          "country": "RS",
+          "socialsLinks": []
+        },
+        {
+          "id": "cs2-main-p2",
+          "name": "Hejz",
+          "role": "",
+          "photo": "https://i.imgur.com/2e4Fwzw.png",
+          "socials": {
+            "twitter": "https://x.com/hejzzzzz7"
+          },
+          "country": "RS",
+          "socialsLinks": [
+            {
+              "url": "https://www.youtube.com/@hejzzz7"
+            },
+            {
+              "url": "https://www.twitch.tv/hejz7"
+            }
+          ]
+        },
+        {
+          "id": "cs2-main-p3",
+          "name": "Djolerdy",
+          "role": "",
+          "photo": "https://i.imgur.com/oWFMBfR.png",
+          "socials": {
+            "twitter": ""
+          },
+          "country": "RS",
+          "socialsLinks": []
+        },
+        {
+          "id": "cs2-main-p4",
+          "name": "DzoKARA",
+          "role": "",
+          "photo": "https://i.imgur.com/pIl7mUj.png",
+          "socials": {
+            "twitter": "https://x.com/DzoKARAcs2"
+          },
+          "country": "RS",
+          "socialsLinks": []
+        },
+        {
+          "id": "cs2-main-p5",
+          "name": "Zuuphler",
+          "role": "",
+          "photo": "https://i.imgur.com/KSeIrAJ.png",
+          "socials": {
+            "twitter": ""
+          },
+          "country": "RS",
+          "socialsLinks": []
+        }
+      ],
+      "logo": "https://i.imgur.com/0B1hVXt.png"
+    }
+  ],
+  "staff": [
+    {
+      "id": "staff-1",
+      "name": "Neio",
+      "role": "CEO",
+      "photo": "https://i.imgur.com/CQsESGK.png",
+      "socials": {
+        "twitter": "https://x.com/NeioSPECTRA"
+      },
+      "country": "CH",
+      "socialsLinks": [
+        {
+          "url": "https://www.twitch.tv/neiostream"
+        },
+        {
+          "url": "https://www.youtube.com/@neio4567"
+        },
+        {
+          "url": "https://www.instagram.com/neio._"
+        }
+      ]
+    },
+    {
+      "id": "staff-2",
+      "name": "Kalt",
+      "role": "CEO",
+      "photo": "https://i.imgur.com/Nsbaq0X.png",
+      "socials": {
+        "twitter": "https://x.com/KaLTouu"
+      },
+      "country": "fr",
+      "socialsLinks": []
+    },
+    {
+      "id": "staff-3",
+      "name": "Maverik",
+      "role": "Moderator",
+      "photo": "https://i.imgur.com/FEpKAcp.png",
+      "socials": {
+        "twitter": "https://x.com/MaverikR6"
+      },
+      "country": "fr",
+      "socialsLinks": []
+    },
+    {
+      "id": "staff-4",
+      "name": "Darkfox",
+      "role": "Moderator",
+      "photo": "https://i.imgur.com/NFHby18.png",
+      "socials": {
+        "twitter": "https://x.com/BastienC43"
+      },
+      "country": "BE",
+      "socialsLinks": []
+    }
+  ]
+}

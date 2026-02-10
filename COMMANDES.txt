@@ -1,0 +1,99 @@
+=== COMMANDES À COPIER-COLLER ===
+
+Votre repo GitHub : https://github.com/Bast43/spectra-esport.git
+
+=== ÉTAPE 1 : Ouvrir le terminal dans le dossier spectra-esport ===
+
+Windows : Shift + Clic droit dans le dossier → "Ouvrir PowerShell ici"
+Mac : Terminal → cd puis glisser le dossier
+
+
+=== ÉTAPE 2 : Copier-coller ces commandes UNE PAR UNE ===
+
+Commande 1 :
+git init
+
+Commande 2 :
+git add .
+
+Commande 3 :
+git commit -m "Initial commit - Spectra Esport website"
+
+Commande 4 :
+git branch -M main
+
+Commande 5 :
+git remote add origin https://github.com/Bast43/spectra-esport.git
+
+Commande 6 :
+git push -u origin main
+
+⚠️ Git va demander :
+Username: Bast43
+Password: VOTRE TOKEN (voir ci-dessous pour obtenir le token)
+
+
+=== OBTENIR UN TOKEN GITHUB ===
+
+1. Allez sur : https://github.com/settings/tokens
+2. Cliquez : "Generate new token" → "Generate new token (classic)"
+3. Note : Spectra Deploy
+4. Cochez : repo (toutes les cases)
+5. Generate token
+6. COPIEZ le token
+7. COLLEZ comme mot de passe dans le terminal
+
+
+=== VÉRIFIER ===
+
+Allez sur : https://github.com/Bast43/spectra-esport
+Vous devez voir tous vos fichiers !
+
+
+=== ÉTAPE 3 : DÉPLOYER SUR VERCEL ===
+
+1. Allez sur : https://vercel.com/signup
+2. "Continue with GitHub"
+3. Connectez-vous avec GitHub
+4. Autorisez Vercel
+5. Dashboard → "Add New..." → "Project"
+6. Trouvez : Bast43/spectra-esport
+7. Cliquez "Import"
+8. NE TOUCHEZ À RIEN
+9. Cliquez "Deploy"
+10. Attendez 2-3 minutes
+11. Site en ligne ! 🎉
+
+
+=== VOTRE SITE ===
+
+URL : https://spectra-esport-xxx.vercel.app
+Admin : https://spectra-esport-xxx.vercel.app/admin
+Password : Spectra2025!
+
+
+=== POUR MODIFIER LE SITE PLUS TARD ===
+
+Après avoir modifié des fichiers :
+
+git add .
+git commit -m "Description de vos changements"
+git push
+
+Vercel redéploie automatiquement !
+
+
+=== IMAGES ===
+
+Pour toutes les photos, utilisez Imgur :
+
+1. https://imgur.com
+2. Upload image
+3. Clic droit → Copier l'adresse
+4. https://i.imgur.com/abc123.jpg
+5. Coller dans l'admin
+
+
+=== FIN ===
+
+Vous avez terminé ! Site en ligne ! 🚀
