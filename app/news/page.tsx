@@ -1,6 +1,6 @@
 
 "use client";
-import { ScrollToTopButton } from '@/components/ScrollToTopButton'
+import ScrollToTopButton from '@/components/ScrollToTopButton'
 
 import { useEffect, useState } from 'react'
 import { Twitch, Instagram, ExternalLink, Calendar } from 'lucide-react'

@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import StructuredData from '@/components/StructuredData'
 import BackgroundImage from '@/components/BackgroundImage'
+import ScrollToTopButton from '@/components/ScrollToTopButton'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.spectra-esports.eu/'),
@@ -103,6 +104,8 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        {/* Ajout ScrollToTopButton */}
+        <ScrollToTopButton />
       </body>
     </html>
   )

@@ -192,135 +192,145 @@ export default function TeamsPage() {
             </div>
 
             {/* Players Grid - Main 5 players */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-6">
-              {activeTeam.players.slice(0, 5).map((player, index) => (
-                <div
-                  key={player.id}
-                  className="glass-card group"
-                  style={{ animationDelay: `${index * 50}ms` }}
-                >
-                  {/* Player Photo */}
-                  <div className="relative w-full aspect-[2/3] mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
-                    <div className="absolute inset-0 bg-gradient-to-br from-spectra-violet/20 to-spectra-purple/20" />
-                    {player.photo && player.photo !== '/images/default-player.jpg' ? (
-                      <img
-                        src={player.photo}
-                        alt={player.name}
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        onError={(e) => {
-                          // Fallback to initials if image fails to load
-                          e.currentTarget.style.display = 'none'
-                          const fallback = e.currentTarget.nextElementSibling
-                          if (fallback) fallback.classList.remove('hidden')
-                        }}
-                      />
-                    ) : null}
-                    <div className={`absolute inset-0 flex items-center justify-center ${player.photo && player.photo !== '/images/default-player.jpg' ? 'hidden' : ''}`}>
-                      <div className="w-32 h-32 rounded-full bg-spectra-violet/20 border-4 border-spectra-violet/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <span className="text-4xl font-display font-bold text-white">
-                          {player.name.charAt(0)}
-                        </span>
+            <div className="flex justify-center w-full">
+              <div
+                className={`grid gap-6 mb-6 w-full ${
+                  activeTeam.players.length === 1 ? 'grid-cols-1 max-w-xs' :
+                  activeTeam.players.length === 2 ? 'grid-cols-1 md:grid-cols-2 max-w-2xl' :
+                  activeTeam.players.length === 3 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-4xl' :
+                  activeTeam.players.length === 4 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4 max-w-6xl' :
+                  'grid-cols-1 md:grid-cols-2 lg:grid-cols-5'
+                }`}
+              >
+                {activeTeam.players.slice(0, 5).map((player, index) => (
+                  <div
+                    key={player.id}
+                    className="glass-card group"
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    {/* Player Photo */}
+                    <div className="relative w-full aspect-[2/3] mb-4 -mx-6 -mt-6 overflow-hidden rounded-t-xl">
+                      <div className="absolute inset-0 bg-gradient-to-br from-spectra-violet/20 to-spectra-purple/20" />
+                      {player.photo && player.photo !== '/images/default-player.jpg' ? (
+                        <img
+                          src={player.photo}
+                          alt={player.name}
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          onError={(e) => {
+                            // Fallback to initials if image fails to load
+                            e.currentTarget.style.display = 'none'
+                            const fallback = e.currentTarget.nextElementSibling
+                            if (fallback) fallback.classList.remove('hidden')
+                          }}
+                        />
+                      ) : null}
+                      <div className={`absolute inset-0 flex items-center justify-center ${player.photo && player.photo !== '/images/default-player.jpg' ? 'hidden' : ''}`}>
+                        <div className="w-32 h-32 rounded-full bg-spectra-violet/20 border-4 border-spectra-violet/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                          <span className="text-4xl font-display font-bold text-white">
+                            {player.name.charAt(0)}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Player Info */}
-                  <div className="space-y-3">
-                    <div>
-                      <h3 className="text-2xl font-display font-bold text-white mb-1 flex items-center gap-2 overflow-hidden whitespace-nowrap max-w-full">
-                        <span className="truncate">{player.name}</span>
-                        {player.country && <CountryFlag countryCode={player.country} className="w-6 h-4 min-w-[1.5rem] max-w-[1.5rem] object-contain" />}
-                      </h3>
-                      <p className="text-spectra-mauve text-sm font-medium uppercase tracking-wider">
-                        {player.role}
-                      </p>
-                    </div>
-
-                    {/* Social Links */}
-                    {(player.socials.twitter || (player.socialsLinks && player.socialsLinks.length > 0)) && (
-                      <div className="flex flex-wrap gap-2 pt-2 w-full justify-center overflow-hidden">
-                        {player.socials.twitter && (
-                          <a
-                            href={player.socials.twitter}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300"
-                          >
-                            <XIcon className="w-[18px] h-[18px]" />
-                          </a>
-                        )}
-                        {player.socialsLinks && player.socialsLinks.map((link, idx) => {
-                          const url = link.url;
-                          if (!url) return null;
-                          if (url.includes('kick.com')) {
-                            return (
-                              <a
-                                key={idx}
-                                href={url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#53FC18] hover:bg-white/10 hover:border-[#53FC18]/50 transition-all duration-300"
-                              >
-                                <KickIcon className="w-[18px] h-[18px]" />
-                              </a>
-                            );
-                          } else if (url.includes('tiktok.com')) {
-                            return (
-                              <a
-                                key={idx}
-                                href={url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#25F4EE] hover:bg-white/10 hover:border-[#25F4EE]/50 transition-all duration-300"
-                              >
-                                <TikTokIcon className="w-[18px] h-[18px]" />
-                              </a>
-                            );
-                          } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
-                            return (
-                              <a
-                                key={idx}
-                                href={url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#FF0000] hover:bg-white/10 hover:border-[#FF0000]/50 transition-all duration-300"
-                              >
-                                <YouTubeIcon className="w-[18px] h-[18px]" />
-                              </a>
-                            );
-                          } else if (url.includes('twitch.tv')) {
-                            return (
-                              <a
-                                key={idx}
-                                href={url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#9146FF] hover:bg-white/10 hover:border-[#9146FF]/50 transition-all duration-300"
-                              >
-                                <Twitch size={18} />
-                              </a>
-                            );
-                          } else if (url.includes('instagram.com')) {
-                            return (
-                              <a
-                                key={idx}
-                                href={url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#E4405F] hover:bg-white/10 hover:border-[#E4405F]/50 transition-all duration-300"
-                              >
-                                <Instagram size={18} />
-                              </a>
-                            );
-                          } else {
-                            return null;
-                          }
-                        })}
+                    {/* Player Info */}
+                    <div className="space-y-3">
+                      <div>
+                        <h3 className="text-2xl font-display font-bold text-white mb-1 flex items-center gap-2 overflow-hidden whitespace-nowrap max-w-full">
+                          <span className="truncate">{player.name}</span>
+                          {player.country && <CountryFlag countryCode={player.country} className="w-6 h-4 min-w-[1.5rem] max-w-[1.5rem] object-contain" />}
+                        </h3>
+                        <p className="text-spectra-mauve text-sm font-medium uppercase tracking-wider">
+                          {player.role}
+                        </p>
                       </div>
-                    )}
+
+                      {/* Social Links */}
+                      {(player.socials.twitter || (player.socialsLinks && player.socialsLinks.length > 0)) && (
+                        <div className="flex flex-wrap gap-2 pt-2 w-full justify-center overflow-hidden">
+                          {player.socials.twitter && (
+                            <a
+                              href={player.socials.twitter}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300"
+                            >
+                              <XIcon className="w-[18px] h-[18px]" />
+                            </a>
+                          )}
+                          {player.socialsLinks && player.socialsLinks.map((link, idx) => {
+                            const url = link.url;
+                            if (!url) return null;
+                            if (url.includes('kick.com')) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#53FC18] hover:bg-white/10 hover:border-[#53FC18]/50 transition-all duration-300"
+                                >
+                                  <KickIcon className="w-[18px] h-[18px]" />
+                                </a>
+                              );
+                            } else if (url.includes('tiktok.com')) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#25F4EE] hover:bg-white/10 hover:border-[#25F4EE]/50 transition-all duration-300"
+                                >
+                                  <TikTokIcon className="w-[18px] h-[18px]" />
+                                </a>
+                              );
+                            } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#FF0000] hover:bg-white/10 hover:border-[#FF0000]/50 transition-all duration-300"
+                                >
+                                  <YouTubeIcon className="w-[18px] h-[18px]" />
+                                </a>
+                              );
+                            } else if (url.includes('twitch.tv')) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#9146FF] hover:bg-white/10 hover:border-[#9146FF]/50 transition-all duration-300"
+                                >
+                                  <Twitch size={18} />
+                                </a>
+                              );
+                            } else if (url.includes('instagram.com')) {
+                              return (
+                                <a
+                                  key={idx}
+                                  href={url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-2 bg-white/5 rounded-lg border border-white/10 text-gray-400 hover:text-[#E4405F] hover:bg-white/10 hover:border-[#E4405F]/50 transition-all duration-300"
+                                >
+                                  <Instagram size={18} />
+                                </a>
+                              );
+                            } else {
+                              return null;
+                            }
+                          })}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             {/* Substitute Players (6th and 7th) - Centered */}
